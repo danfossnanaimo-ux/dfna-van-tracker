@@ -7,7 +7,7 @@ import os
 # -----------------------------
 GEOTAB_SERVER = "https://my.geotab.com/apiv1"
 GEOTAB_USERNAME = "kellyg@danfosscouriers.ca"
-GEOTAB_PASSWORD = os.getenv("GEOTAB_PASSWORD")  # pulled from GitHub Secrets
+GEOTAB_PASSWORD = os.getenv("GEOTAB_PASSWORD")
 GEOTAB_DATABASE = "dan_foss"
 
 OUTPUT_JSON = "data/locations.json"
@@ -46,19 +46,22 @@ def geotab_login():
     result = geotab_call(
         "Authenticate",
         {
-            "userName": GEOTAB_USERNAME,
-            "password": GEOTAB_PASSWORD,
-            "database": GEOTAB_DATABASE
+            "credentials": {
+                "userName": GEOTAB_USERNAME,
+                "password": GEOTAB_PASSWORD,
+                "database": GEOTAB_DATABASE
+            },
+            "rememberMe": True
         },
         GEOTAB_SERVER
     )
 
     session = result["credentials"]
     session_id = session["sessionId"]
-    path = result["path"]  # THIS IS THE REAL SERVER YOU MUST USE
+    server = result["path"]  # ALWAYS a full URL
 
-    print(f"Login successful. Using server: {path}")
-    return session_id, path
+    print(f"Login successful. Using server: {server}")
+    return session_id, server
 
 
 # -----------------------------
@@ -138,10 +141,8 @@ def main():
                 "timestamp": loc["timestamp"]
             })
 
-    # Ensure data folder exists
     os.makedirs("data", exist_ok=True)
 
-    # Write JSON
     with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2)
 
