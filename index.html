@@ -5,6 +5,19 @@
 <link rel="manifest" href="manifest.json">
 
 <script>
+async function loadLocations() {
+  const url = "https://drive.google.com/uc?export=download&id=1NsnzDRARFZylR22FVpN6P9s6GxuNlina";
+
+  const response = await fetch(url);
+  const data = await response.json();   // if your file is JSON
+
+  updateMap(data);
+}
+
+loadLocations();
+</script>
+
+<script>
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("service-worker.js");
 }
