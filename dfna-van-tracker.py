@@ -1,133 +1,136 @@
 import requests
-import csv
-from datetime import datetime
+import json
+import os
 
 # -----------------------------
-# CONFIG
+# CONFIGURATION
 # -----------------------------
-server = "https://my.geotab.com/apiv1"
-username = "kellyg@danfosscouriers.ca"
-password = "Liquid#99liber"
-database = "dan_foss"
+GEOTAB_SERVER = "https://my.geotab.com/apiv1"
+GEOTAB_USERNAME = "kellyg@danfosscouriers.ca"
+GEOTAB_PASSWORD = os.getenv("GEOTAB_PASSWORD")  # pulled from GitHub Secrets
+GEOTAB_DATABASE = "dan_foss"
 
-OUTPUT_CSV = r"C:/Users/Kelly/OneDrive - DanFoss Couriers & Freight/Desktop/Geotab Project/dfna_last_locations.csv"
-OUTPUT_JS  = r"C:/Users/Kelly/OneDrive - DanFoss Couriers & Freight/Desktop/Geotab Project/dfna_last_locations.js"
-
-# -----------------------------
-# AUTHENTICATE
-# -----------------------------
-auth_payload = {
-    "method": "Authenticate",
-    "params": {
-        "userName": username,
-        "password": password,
-        "database": database
-    },
-    "id": 1
-}
-
-auth = requests.post(server, json=auth_payload).json()
-session = auth["result"]["credentials"]
+OUTPUT_JSON = "data/locations.json"
 
 # -----------------------------
-# GET ALL DFNA DEVICES
+# GEOTAB API CALL
 # -----------------------------
-device_payload = {
-    "method": "Get",
-    "params": {
-        "typeName": "Device",
-        "search": {"name": "%DFNA%"},
-        "credentials": session
-    },
-    "id": 2
-}
+def geotab_call(method, params=None):
+    if params is None:
+        params = {}
 
-device_response = requests.post(server, json=device_payload).json()
-devices = device_response.get("result", [])
-
-dfna_devices = [
-    {"id": d["id"], "name": d["name"]}
-    for d in devices
-    if "DFNA" in d.get("name", "").upper()
-]
-
-print(f"Found {len(dfna_devices)} DFNA vehicles.")
-
-rows = []
-markers = []
-
-# -----------------------------
-# FOR EACH DFNA DEVICE: LAST FuelTaxDetail
-# -----------------------------
-def parse_dt(x):
-    return datetime.fromisoformat(x["exitTime"].replace("Z", "+00:00"))
-
-for dev in dfna_devices:
-    dev_id = dev["id"]
-    dev_name = dev["name"]
-    print(f"Processing {dev_name}...")
-
-    fuel_payload = {
-        "method": "Get",
-        "params": {
-            "typeName": "FuelTaxDetail",
-            "search": {
-                "deviceSearch": {"id": dev_id}
-            },
-            "credentials": session
-        },
-        "id": 3
+    payload = {
+        "method": method,
+        "params": params,
+        "id": 1,
+        "jsonrpc": "2.0"
     }
 
-    fuel_response = requests.post(server, json=fuel_payload).json()
+    response = requests.post(GEOTAB_SERVER, json=payload)
+    response.raise_for_status()
+    data = response.json()
 
-    if "error" in fuel_response:
-        print(f"FuelTaxDetail error for {dev_name}: {fuel_response['error']}")
-        continue
+    if "result" not in data:
+        raise Exception(f"Unexpected Geotab response: {data}")
 
-    records = fuel_response.get("result", [])
-    if not records:
-        # No data – still write a row with blanks
-        rows.append([dev_name, "", "", ""])
-        continue
-
-    latest = sorted(records, key=parse_dt)[-1]
-
-    ts  = latest.get("exitTime", "")
-    lat = latest.get("exitLatitude", "")
-    lon = latest.get("exitLongitude", "")
-
-    rows.append([dev_name, ts, lat, lon])
-
-    if lat != "" and lon != "":
-        markers.append({
-            "name": dev_name,
-            "timestamp": ts,
-            "lat": lat,
-            "lon": lon
-        })
+    return data["result"]
 
 # -----------------------------
-# WRITE CSV
+# LOGIN
 # -----------------------------
-with open(OUTPUT_CSV, "w", newline="", encoding="utf-8") as f:
-    writer = csv.writer(f)
-    writer.writerow(["name", "timestamp", "latitude", "longitude"])
-    writer.writerows(rows)
+def geotab_login():
+    print("Logging into Geotab...")
+    result = geotab_call("Authenticate", {
+        "userName": GEOTAB_USERNAME,
+        "password": GEOTAB_PASSWORD,
+        "database": GEOTAB_DATABASE
+    })
 
-print("CSV written:", OUTPUT_CSV)
+    session_id = result["credentials"]["sessionId"]
+    path = result["path"]
+
+    print("Login successful.")
+    return session_id, path
 
 # -----------------------------
-# WRITE JS FOR MAP
+# GET VEHICLES
 # -----------------------------
-with open(OUTPUT_JS, "w", encoding="utf-8") as f:
-    f.write("const vehicleLocations = [\n")
-    for m in markers:
-        f.write(
-            f'  {{ name: "{m["name"]}", timestamp: "{m["timestamp"]}", '
-            f'lat: {m["lat"]}, lon: {m["lon"]} }},\n'
-        )
-    f.write("];\n")
+def get_all_vehicles(session_id, path):
+    print("Fetching vehicles...")
+    result = geotab_call("Get", {
+        "typeName": "Device",
+        "credentials": {
+            "sessionId": session_id,
+            "database": GEOTAB_DATABASE
+        }
+    })
 
-print("JS written:", OUTPUT_JS)
-input("Press Enter to exit...")
+    vehicles = [v for v in result if "DFNA" in v.get("name", "")]
+    print(f"Found {len(vehicles)} DFNA vehicles.")
+    return vehicles
+
+# -----------------------------
+# GET LAST KNOWN LOCATION
+# -----------------------------
+def get_last_location(device_id, session_id):
+    result = geotab_call("Get", {
+        "typeName": "StatusData",
+        "search": {
+            "deviceSearch": {"id": device_id},
+            "diagnosticSearch": {"id": "DiagnosticLocation"}
+        },
+        "credentials": {
+            "sessionId": session_id,
+            "database": GEOTAB_DATABASE
+        }
+    })
+
+    if not result:
+        return None
+
+    latest = result[-1]
+    return {
+        "lat": latest["data"]["latitude"],
+        "lng": latest["data"]["longitude"],
+        "timestamp": latest["dateTime"]
+    }
+
+# -----------------------------
+# MAIN PROCESS
+# -----------------------------
+def main():
+    session_id, path = geotab_login()
+    vehicles = get_all_vehicles(session_id, path)
+
+    output = []
+
+    for v in vehicles:
+        name = v.get("name", "Unknown")
+        print(f"Processing {name}...")
+
+        loc = get_last_location(v["id"], session_id)
+
+        if loc:
+            output.append({
+                "name": name,
+                "lat": loc["lat"],
+                "lng": loc["lng"],
+                "timestamp": loc["timestamp"]
+            })
+
+    # Write JSON
+    os.makedirs("data", exist_ok=True)
+
+    with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
+        json.dump(output, f, indent=2)
+
+    print(f"Updated {len(output)} vehicle locations.")
+    print("Done.")
+
+# -----------------------------
+# RUN
+# -----------------------------
+if __name__ == "__main__":
+    if not GEOTAB_PASSWORD:
+        raise Exception("GEOTAB_PASSWORD environment variable is missing.")
+    main()
