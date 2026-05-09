@@ -2,7 +2,7 @@
 // CONFIG
 // -----------------------------------------------------
 const DATA_URL =
-  "https://drive.google.com/uc?export=download&id=1NsnzDRARFZylR22FVpN6P9s6GxuNlina&v=2";
+  "https://drive.google.com/uc?export=download&id=1NsnzDRARFZylR22FVpN6P9s6GxuNlina&v=3";
 
 let map;
 let markerLookup = {};
