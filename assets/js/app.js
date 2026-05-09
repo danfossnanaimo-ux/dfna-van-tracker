@@ -244,4 +244,16 @@ function zoomToVehicle(latlng) {
 }
 
 function zoomToUserAndVehicle(vehicleLatLng) {
-  if (!
+  if (!userMarker) return zoomToVehicle(vehicleLatLng);
+
+  const userLatLng = userMarker.getLatLng();
+  const bounds = L.latLngBounds([userLatLng, vehicleLatLng]);
+  map.fitBounds(bounds, { padding: [50, 50] });
+}
+
+// -----------------------------------------------------
+// STARTUP
+// -----------------------------------------------------
+initMap();
+loadLocations();
+setInterval(loadLocations, 30000);
