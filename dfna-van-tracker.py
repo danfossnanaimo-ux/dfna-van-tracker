@@ -41,6 +41,7 @@ def geotab_call(method, params=None, server=None):
 # LOGIN (AUTHENTICATE)
 # -----------------------------
 def geotab_login():
+    
     print("Logging into Geotab...")
     print("DEBUG: Password length =", len(GEOTAB_PASSWORD))
     print("DEBUG: First 3 chars =", GEOTAB_PASSWORD[:3])
