@@ -45,7 +45,7 @@ def geotab_login():
     print("DEBUG: Password length =", len(GEOTAB_PASSWORD))
     print("DEBUG: First 3 chars =", GEOTAB_PASSWORD[:3])
     print("DEBUG: Last 2 chars =", GEOTAB_PASSWORD[-2:])
-
+    
     result = geotab_call(
         "Authenticate",
         {
