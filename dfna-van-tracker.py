@@ -7,7 +7,7 @@ import os
 # -----------------------------
 GEOTAB_SERVER = "https://my.geotab.com/apiv1"
 GEOTAB_USERNAME = "kellyg@danfosscouriers.ca"
-GEOTAB_PASSWORD = os.getenv("GEOTAB_PASSWORD")
+GEOTAB_PASSWORD = os.getenv("GEOTAB_PASSWORD_RAW")
 GEOTAB_DATABASE = "dan_foss"
 
 OUTPUT_JSON = "data/locations.json"
