@@ -10,8 +10,8 @@ username = "kellyg@danfosscouriers.ca"
 password = "Liquid#99liber"
 database = "dan_foss"
 
-OUTPUT_CSV = "C:/Users/Kelly/OneDrive - DanFoss Couriers & Freight/Desktop/Geotab Project/dfna_last_locations.csv"
-OUTPUT_JS  = "C:/Users/Kelly/OneDrive - DanFoss Couriers & Freight/Desktop/Geotab Project/dfna_last_locations.js"
+OUTPUT_CSV = r"C:/Users/Kelly/OneDrive - DanFoss Couriers & Freight/Desktop/Geotab Project/dfna_last_locations.csv"
+OUTPUT_JS  = r"C:/Users/Kelly/OneDrive - DanFoss Couriers & Freight/Desktop/Geotab Project/dfna_last_locations.js"
 
 # -----------------------------
 # AUTHENTICATE
