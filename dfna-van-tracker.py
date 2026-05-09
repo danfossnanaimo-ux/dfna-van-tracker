@@ -62,15 +62,6 @@ def geotab_login():
     print(f"Login successful. Using server: {server}")
     return session_id, server
 
-
-    session = result["credentials"]
-    session_id = session["sessionId"]
-    server = result["path"]  # ALWAYS a full URL
-
-    print(f"Login successful. Using server: {server}")
-    return session_id, server
-
-
 # -----------------------------
 # GET ALL DFNA VEHICLES
 # -----------------------------
