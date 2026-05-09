@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link rel="manifest" href="manifest.json">
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js");
+}
+</script>
+<title>DFNA Vehicle Map</title>
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+  #map {
+    width: 100%;
+    height: 100%;
+  }
+
+  .user-pulse {
+  position: relative;
+}
+
+.user-pulse::after {
+  content: "";
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 150, 255, 0.4);
+  border-radius: 50%;
+  animation: pulse 1.8s ease-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.3);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.8);
+    opacity: 0;
+  }
+}
+
+.vehicle-label {
+    background: white;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-size: 12px;
+    border: 1px solid #333;
+  }
+
+  #controls {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 9999;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 6px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    width: 160px;
+  }
+
+  #vehicleSearch, #vehicleDropdown {
+    width: 100%;
+    padding: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+    margin-bottom: 6px;
+  }
+</style>
+</head>
+
+<body>
+
+<div id="controls">
+  <input type="text" id="vehicleSearch" placeholder="Search vehicle...">
+  <select id="vehicleDropdown"></select>
+</div>
+
+<div id="map"></div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- DFNA vehicle data -->
+<script src="dfna_last_locations.js"></script>
+
+<script>
+
+let selectedVehicleName = null;
+
+// -----------------------------------------------------
+// MAP INITIALIZATION
+// -----------------------------------------------------
+const map = L.map("map").setView([49.040359, -123.866226], 18);
+
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  maxZoom: 19,
+  attribution: "© OpenStreetMap contributors"
+}).addTo(map);
+
+// -----------------------------------------------------
+// YARD BOUNDARY
+// -----------------------------------------------------
+const yardBoundary = L.polygon([
+  [49.0410017, -123.8680194],
+  [49.0410226, -123.8680323],
+  [49.0410378, -123.868029],
+  [49.0410517, -123.8680267],
+  [49.0410698, -123.8680157],
+  [49.0410917, -123.8680034],
+  [49.0411048, -123.8679701],
+  [49.0411114, -123.867929],
+  [49.0411135, -123.8678859],
+  [49.0411087, -123.8652783],
+  [49.041106,  -123.8651884],
+  [49.0410897, -123.8650957],
+  [49.0410587, -123.8650422],
+  [49.0409912, -123.8650092],
+  [49.040289,  -123.8650175],
+  [49.0401243, -123.8670526],
+  [49.0410017, -123.8680194]
+], {
+  color: "#ff0000",
+  weight: 3,
+  fillOpacity: 0.15
+}).addTo(map);
+
+// -----------------------------------------------------
+// DEDUPLICATE VEHICLES BY NAME (keep the newest timestamp)
+// -----------------------------------------------------
+const uniqueVehicles = {};
+
+vehicleLocations.forEach(v => {
+  if (!uniqueVehicles[v.name]) {
+    uniqueVehicles[v.name] = v;
+  } else {
+    // Keep the one with the newest timestamp
+    if (new Date(v.timestamp) > new Date(uniqueVehicles[v.name].timestamp)) {
+      uniqueVehicles[v.name] = v;
+    }
+  }
+});
+
+// Convert back to array
+const cleanVehicleList = Object.values(uniqueVehicles);
+
+// -----------------------------------------------------
+// CREATE MARKERS + LABELS AND STORE THEM (ONE EACH)
+// -----------------------------------------------------
+const markerLookup = {};
+const labelLookup = {};
+
+cleanVehicleList.forEach(v => {
+  if (!v.lat || !v.lon) return;
+
+  // Main marker
+  const marker = L.marker([v.lat, v.lon]);
+  marker.bindPopup(`
+    <b>${v.name}</b><br>
+    Last update: ${v.timestamp}<br>
+    Lat: ${v.lat}<br>
+    Lon: ${v.lon}
+  `);
+  marker.addTo(map);
+
+  // Label
+  const label = L.marker([v.lat, v.lon], {
+    icon: L.divIcon({
+      className: "vehicle-label",
+      html: v.name,
+      iconSize: [60, 20],
+      iconAnchor: [30, -10]
+    })
+  });
+  label.addTo(map);
+
+  markerLookup[v.name] = marker;
+  labelLookup[v.name] = label;
+});
+
+// -----------------------------------------------------
+// SHOW ONLY ONE VEHICLE
+// -----------------------------------------------------
+function showOnlyVehicle(name) {
+  Object.keys(markerLookup).forEach(vName => {
+    const marker = markerLookup[vName];
+    const label = labelLookup[vName];
+
+    if (vName === name) {
+      if (!map.hasLayer(marker)) map.addLayer(marker);
+      if (!map.hasLayer(label)) map.addLayer(label);
+    } else {
+      if (map.hasLayer(marker)) map.removeLayer(marker);
+      if (map.hasLayer(label)) map.removeLayer(label);
+    }
+  });
+}
+
+// -----------------------------------------------------
+// SHOW ALL VEHICLES
+// -----------------------------------------------------
+function showAllVehicles() {
+  Object.keys(markerLookup).forEach(vName => {
+    map.addLayer(markerLookup[vName]);
+    map.addLayer(labelLookup[vName]);
+  });
+
+  map.setView([49.040359, -123.866226], 18);
+}
+
+// -----------------------------------------------------
+// DROPDOWN SETUP
+// -----------------------------------------------------
+const dropdown = document.getElementById("vehicleDropdown");
+
+function rebuildDropdown() {
+  dropdown.innerHTML = "";
+
+  const showAllOpt = document.createElement("option");
+  showAllOpt.value = "__show_all__";
+  showAllOpt.textContent = "Show All";
+  dropdown.appendChild(showAllOpt);
+
+  vehicleLocations.forEach(v => {
+    const opt = document.createElement("option");
+    opt.value = v.name;
+    opt.textContent = v.name;
+    dropdown.appendChild(opt);
+  });
+}
+
+rebuildDropdown();
+
+// -----------------------------------------------------
+// USER LOCATION MARKER (real icon only — no label)
+// -----------------------------------------------------
+const userIcon = L.divIcon({
+  className: "user-pulse",
+  html: `<img src="https://maps.gstatic.com/mapfiles/ms2/micons/man.png" style="width:32px;height:32px;">`,
+  iconSize: [32, 32],
+  iconAnchor: [16, 32]
+});
+
+let userMarker = null;
+
+function updateUserLocation(lat, lon) {
+  const pos = [lat, lon];
+
+  if (userMarker) {
+    userMarker.setLatLng(pos);
+  } else {
+    userMarker = L.marker(pos, { icon: userIcon }).addTo(map);
+  }
+
+  // AUTO-ZOOM TRACKING
+  if (selectedVehicleName) {
+    const vehicleMarker = markerLookup[selectedVehicleName];
+    if (vehicleMarker) {
+      zoomToUserAndVehicle(vehicleMarker.getLatLng());
+    }
+  }
+}
+
+if (navigator.geolocation) {
+  navigator.geolocation.watchPosition(
+    pos => updateUserLocation(pos.coords.latitude, pos.coords.longitude),
+    err => console.warn("GPS error:", err.message),
+    { enableHighAccuracy: true, maximumAge: 5000, timeout: 10000 }
+  );
+}
+
+// -----------------------------------------------------
+// ZOOM TO INCLUDE USER + VEHICLE
+// -----------------------------------------------------
+function zoomToUserAndVehicle(vehicleLatLng) {
+  if (!userMarker) {
+    map.setView(vehicleLatLng, 18);
+    return;
+  }
+
+  const userLatLng = userMarker.getLatLng();
+
+  const bounds = L.latLngBounds([
+    userLatLng,
+    vehicleLatLng
+  ]);
+
+  map.fitBounds(bounds, { padding: [50, 50] });
+}
+
+// -----------------------------------------------------
+// DROPDOWN HANDLER
+// -----------------------------------------------------
+dropdown.addEventListener("change", () => {
+  const name = dropdown.value;
+
+  if (name === "__show_all__") {
+    selectedVehicleName = null; // disable auto-zoom
+    showAllVehicles();
+    return;
+  }
+
+  selectedVehicleName = name;
+
+  const marker = markerLookup[name];
+  if (!marker) return;
+
+  showOnlyVehicle(name);
+  zoomToUserAndVehicle(marker.getLatLng());
+  marker.openPopup();
+});
+
+// -----------------------------------------------------
+// SEARCH HANDLER
+// -----------------------------------------------------
+document.getElementById("vehicleSearch").addEventListener("input", e => {
+  const text = e.target.value.toLowerCase();
+
+  if (text.trim() === "") {
+    rebuildDropdown();
+    showAllVehicles();
+    dropdown.value = "__show_all__";
+    return;
+  }
+
+  dropdown.innerHTML = "";
+
+  const filtered = vehicleLocations.filter(v =>
+    v.name.toLowerCase().includes(text)
+  );
+
+  filtered.forEach(v => {
+    const opt = document.createElement("option");
+    opt.value = v.name;
+    opt.textContent = v.name;
+    dropdown.appendChild(opt);
+  });
+
+if (filtered.length === 1) {
+  const name = filtered[0].name;
+  selectedVehicleName = name;
+
+  const marker = markerLookup[name];
+
+  showOnlyVehicle(name);
+  zoomToUserAndVehicle(marker.getLatLng());
+  marker.openPopup();
+}
+
+});
+
+</script>
+
+</body>
+</html>
