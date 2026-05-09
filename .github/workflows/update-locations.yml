@@ -8,7 +8,8 @@ on:
 jobs:
   update-locations:
     runs-on: ubuntu-latest
-
+    env:
+      GEOTAB_PASSWORD: ${{ secrets.GEOTAB_PASSWORD_RAW }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
