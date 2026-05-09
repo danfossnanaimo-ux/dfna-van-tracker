@@ -12,10 +12,11 @@ GEOTAB_DATABASE = "dan_foss"
 
 OUTPUT_JSON = "data/locations.json"
 
+
 # -----------------------------
-# GEOTAB API CALL
+# GENERIC GEOTAB API CALL
 # -----------------------------
-def geotab_call(method, params=None):
+def geotab_call(method, params=None, server=None):
     if params is None:
         params = {}
 
@@ -26,7 +27,7 @@ def geotab_call(method, params=None):
         "jsonrpc": "2.0"
     }
 
-    response = requests.post(GEOTAB_SERVER, json=payload)
+    response = requests.post(server, json=payload)
     response.raise_for_status()
     data = response.json()
 
@@ -35,55 +36,73 @@ def geotab_call(method, params=None):
 
     return data["result"]
 
+
 # -----------------------------
-# LOGIN
+# LOGIN (AUTHENTICATE)
 # -----------------------------
 def geotab_login():
     print("Logging into Geotab...")
-    result = geotab_call("Authenticate", {
-        "userName": GEOTAB_USERNAME,
-        "password": GEOTAB_PASSWORD,
-        "database": GEOTAB_DATABASE
-    })
 
-    session_id = result["credentials"]["sessionId"]
-    path = result["path"]
+    result = geotab_call(
+        "Authenticate",
+        {
+            "userName": GEOTAB_USERNAME,
+            "password": GEOTAB_PASSWORD,
+            "database": GEOTAB_DATABASE
+        },
+        GEOTAB_SERVER
+    )
 
-    print("Login successful.")
+    session = result["credentials"]
+    session_id = session["sessionId"]
+    path = result["path"]  # THIS IS THE REAL SERVER YOU MUST USE
+
+    print(f"Login successful. Using server: {path}")
     return session_id, path
 
+
 # -----------------------------
-# GET VEHICLES
+# GET ALL DFNA VEHICLES
 # -----------------------------
-def get_all_vehicles(session_id, path):
+def get_all_vehicles(session_id, server):
     print("Fetching vehicles...")
-    result = geotab_call("Get", {
-        "typeName": "Device",
-        "credentials": {
-            "sessionId": session_id,
-            "database": GEOTAB_DATABASE
-        }
-    })
+
+    result = geotab_call(
+        "Get",
+        {
+            "typeName": "Device",
+            "credentials": {
+                "sessionId": session_id,
+                "database": GEOTAB_DATABASE
+            }
+        },
+        server
+    )
 
     vehicles = [v for v in result if "DFNA" in v.get("name", "")]
     print(f"Found {len(vehicles)} DFNA vehicles.")
     return vehicles
 
+
 # -----------------------------
 # GET LAST KNOWN LOCATION
 # -----------------------------
-def get_last_location(device_id, session_id):
-    result = geotab_call("Get", {
-        "typeName": "StatusData",
-        "search": {
-            "deviceSearch": {"id": device_id},
-            "diagnosticSearch": {"id": "DiagnosticLocation"}
+def get_last_location(device_id, session_id, server):
+    result = geotab_call(
+        "Get",
+        {
+            "typeName": "StatusData",
+            "search": {
+                "deviceSearch": {"id": device_id},
+                "diagnosticSearch": {"id": "DiagnosticLocation"}
+            },
+            "credentials": {
+                "sessionId": session_id,
+                "database": GEOTAB_DATABASE
+            }
         },
-        "credentials": {
-            "sessionId": session_id,
-            "database": GEOTAB_DATABASE
-        }
-    })
+        server
+    )
 
     if not result:
         return None
@@ -95,12 +114,13 @@ def get_last_location(device_id, session_id):
         "timestamp": latest["dateTime"]
     }
 
+
 # -----------------------------
 # MAIN PROCESS
 # -----------------------------
 def main():
-    session_id, path = geotab_login()
-    vehicles = get_all_vehicles(session_id, path)
+    session_id, server = geotab_login()
+    vehicles = get_all_vehicles(session_id, server)
 
     output = []
 
@@ -108,7 +128,7 @@ def main():
         name = v.get("name", "Unknown")
         print(f"Processing {name}...")
 
-        loc = get_last_location(v["id"], session_id)
+        loc = get_last_location(v["id"], session_id, server)
 
         if loc:
             output.append({
@@ -118,14 +138,16 @@ def main():
                 "timestamp": loc["timestamp"]
             })
 
-    # Write JSON
+    # Ensure data folder exists
     os.makedirs("data", exist_ok=True)
 
+    # Write JSON
     with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2)
 
     print(f"Updated {len(output)} vehicle locations.")
     print("Done.")
+
 
 # -----------------------------
 # RUN
