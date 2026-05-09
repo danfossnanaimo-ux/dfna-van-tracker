@@ -47,14 +47,21 @@ def geotab_login():
         "Authenticate",
         {
             "credentials": {
+                "database": GEOTAB_DATABASE,
                 "userName": GEOTAB_USERNAME,
-                "password": GEOTAB_PASSWORD,
-                "database": GEOTAB_DATABASE
-            },
-            "rememberMe": True
+                "password": GEOTAB_PASSWORD
+            }
         },
         GEOTAB_SERVER
     )
+
+    session = result["credentials"]
+    session_id = session["sessionId"]
+    server = result["path"]  # ALWAYS a full URL like https://myXX.geotab.com/apiv1
+
+    print(f"Login successful. Using server: {server}")
+    return session_id, server
+
 
     session = result["credentials"]
     session_id = session["sessionId"]
