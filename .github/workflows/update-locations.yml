@@ -25,6 +25,8 @@ jobs:
           pip install -r requirements.txt || true
 
       - name: Run DFNA van tracker script
+        env:
+          GEOTAB_PASSWORD: ${{ secrets.GEOTAB_PASSWORD }}
         run: |
           python dfna-van-tracker.py
 
