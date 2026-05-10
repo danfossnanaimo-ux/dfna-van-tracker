@@ -214,7 +214,13 @@ document.getElementById("resetButton").addEventListener("click", () => {
   dropdown.style.display = "block";
   resetButton.style.display = "none";
 
-  dropdown.value = "__show_all__";  // FIXED
+  dropdown.value = "__show_all__";
+
+  // Remove selected styling from ALL markers
+  Object.keys(markerLookup).forEach(vName => {
+    const numEl = document.getElementById(`num-${vName}`);
+    if (numEl) numEl.classList.remove("selected");
+  });
 
   selectedVehicleName = null;
   showAllVehicles();
