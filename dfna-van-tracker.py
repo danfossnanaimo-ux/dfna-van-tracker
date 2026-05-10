@@ -207,63 +207,63 @@ def main():
         print("DeviceStatusInfo:", status)
         print()
 
-        # Determine freshest timestamp
-        timestamps = []
+        # Build list of candidate timestamps with source tags
+        candidates = []
 
-        if fueltax and fueltax.get("exitTime"):
-            timestamps.append(fueltax["exitTime"])
-        if logrec and logrec.get("dateTime"):
-            timestamps.append(logrec["dateTime"])
-        if status and status.get("dateTime"):
-            timestamps.append(status["dateTime"])
+        if fueltax and fueltax.get("exitTime") and fueltax.get("exitLat") and fueltax.get("exitLon"):
+            candidates.append(("fueltax", fueltax["exitTime"], fueltax))
+        if logrec and logrec.get("dateTime") and logrec.get("lat") and logrec.get("lon"):
+            candidates.append(("logrec", logrec["dateTime"], logrec))
+        if status and status.get("dateTime") and status.get("lat") and status.get("lon"):
+            candidates.append(("status", status["dateTime"], status))
 
-        if not timestamps:
+        if not candidates:
             continue
 
-        parsed_times = []
-        for t in timestamps:
+        # Parse timestamps and keep mapping to source
+        parsed = []
+        for source, ts, payload in candidates:
             try:
-                parsed_times.append(datetime.fromisoformat(t.replace("Z", "+00:00")))
+                dt = datetime.fromisoformat(ts.replace("Z", "+00:00"))
+                parsed.append((dt, source, payload))
             except:
-                pass
+                continue
 
-        if not parsed_times:
+        if not parsed:
             continue
 
-        newest = max(parsed_times)
+        # Pick freshest source
+        newest_dt, newest_source, newest_payload = max(parsed, key=lambda x: x[0])
 
-        # FILTER 2: Only vehicles active in last 30 days
-        if newest < THIRTY_DAYS_AGO:
+        # FILTER 2: Only vehicles active in last 30 days (based on freshest source)
+        if newest_dt < THIRTY_DAYS_AGO:
             continue
 
-        # Choose best GPS source
-        gps = None
-
-        if fueltax and fueltax.get("exitLat") and fueltax.get("exitLon"):
+        # Build gps from the same freshest source
+        if newest_source == "fueltax":
             gps = {
-                "latitude": fueltax["exitLat"],
-                "longitude": fueltax["exitLon"],
-                "dateTime": fueltax["exitTime"]
+                "latitude": newest_payload["exitLat"],
+                "longitude": newest_payload["exitLon"],
+                "dateTime": newest_payload["exitTime"]
             }
-        elif logrec:
+        elif newest_source == "logrec":
             gps = {
-                "latitude": logrec["lat"],
-                "longitude": logrec["lon"],
-                "dateTime": logrec["dateTime"]
+                "latitude": newest_payload["lat"],
+                "longitude": newest_payload["lon"],
+                "dateTime": newest_payload["dateTime"]
             }
-        elif status:
+        else:  # "status"
             gps = {
-                "latitude": status["lat"],
-                "longitude": status["lon"],
-                "dateTime": status["dateTime"]
+                "latitude": newest_payload["lat"],
+                "longitude": newest_payload["lon"],
+                "dateTime": newest_payload["dateTime"]
             }
 
-        if gps:
-            fleet_output.append({
-                "id": device_id,
-                "name": name,
-                "gps": gps
-            })
+        fleet_output.append({
+            "id": device_id,
+            "name": name,
+            "gps": gps
+        })
 
     print("===== END DIAGNOSTICS =====\n")
 
