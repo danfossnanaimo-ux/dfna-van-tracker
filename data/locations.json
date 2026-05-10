@@ -1,120 +1,5126 @@
 [
-  { "name": "102 DFNA", "timestamp": "2026-05-04T16:12:45.000Z", "lat": 49.005642, "lon": -123.833191 },
-  { "name": "201 DFNA", "timestamp": "2021-07-14T13:48:43.800Z", "lat": 49.858291, "lon": -125.114759 },
-  { "name": "202 DFNA", "timestamp": "2022-01-27T23:44:11.027Z", "lat": 49.220303, "lon": -122.646958 },
-  { "name": "204 DFNA", "timestamp": "2022-09-07T22:35:51.027Z", "lat": 49.247863, "lon": -122.761215 },
-  { "name": "206 DFNA", "timestamp": "2026-05-04T15:17:34.457Z", "lat": 49.107578, "lon": -123.892982 },
-  { "name": "209 DFNA", "timestamp": "2026-05-04T15:51:36.933Z", "lat": 49.040394, "lon": -123.865974 },
-  { "name": "210 DFNA", "timestamp": "2022-08-08T12:17:34.340Z", "lat": 49.251457, "lon": -122.861649 },
-  { "name": "211 DFNA", "timestamp": "2022-02-05T21:42:07.267Z", "lat": 49.234818, "lon": -123.154587 },
-  { "name": "212 DFNA", "timestamp": "2021-03-12T22:42:06.707Z", "lat": 49.667816, "lon": -124.981018 },
-  { "name": "213 DFNA", "timestamp": "2021-12-26T00:06:43.180Z", "lat": 49.207145, "lon": -122.574543 },
-  { "name": "214 DFNA", "timestamp": "2026-04-23T23:51:36.000Z", "lat": 49.107632, "lon": -123.893311 },
-  { "name": "217 DFNA", "timestamp": "2021-03-18T18:22:06.027Z", "lat": 48.943771, "lon": -125.552589 },
-  { "name": "219 DFNA", "timestamp": "2026-05-04T01:51:58.567Z", "lat": 49.040234, "lon": -123.866127 },
-  { "name": "220 DFNA", "timestamp": "2024-05-01T03:02:17.063Z", "lat": 49.040382, "lon": -123.865936 },
-  { "name": "229 DFNA", "timestamp": "2026-05-04T16:12:50.000Z", "lat": 49.018047, "lon": -123.858124 },
-  { "name": "233 DFNA", "timestamp": "2022-06-01T12:02:07.007Z", "lat": 49.230069, "lon": -122.817015 },
-  { "name": "47 DFNA", "timestamp": "2020-09-30T22:41:41.633Z", "lat": 49.262131, "lon": -123.258087 },
-  { "name": "501 DFNA", "timestamp": "2026-05-04T00:55:23.427Z", "lat": 49.040241, "lon": -123.866203 },
-  { "name": "502 DFNA", "timestamp": "2026-04-25T18:28:22.000Z", "lat": 49.16571, "lon": -123.979393 },
-  { "name": "503 DFNA", "timestamp": "2026-04-13T18:44:00.000Z", "lat": 49.107536, "lon": -123.893349 },
-  { "name": "504 DFNA", "timestamp": "2024-04-13T21:31:02.653Z", "lat": 49.205559, "lon": -123.038109 },
-  { "name": "505 DFNA", "timestamp": "2026-05-04T01:15:57.483Z", "lat": 49.040455, "lon": -123.865829 },
-  { "name": "506 DFNA", "timestamp": "2021-06-28T01:53:52.110Z", "lat": 49.25555, "lon": -122.915482 },
-  { "name": "507 DFNA", "timestamp": "2025-12-08T02:25:26.000Z", "lat": 49.206757, "lon": -123.978294 },
-  { "name": "508 DFNA", "timestamp": "2026-05-04T02:30:01.137Z", "lat": 49.040596, "lon": -123.865448 },
-  { "name": "509 DFNA", "timestamp": "2021-09-28T14:27:12.300Z", "lat": 49.137263, "lon": -123.018926 },
-  { "name": "510 DFNA", "timestamp": "2026-04-26T01:28:04.000Z", "lat": 49.040543, "lon": -123.86515 },
-  { "name": "511 DFNA", "timestamp": "2026-05-03T03:51:30.510Z", "lat": 49.040432, "lon": -123.866661 },
-  { "name": "512 DFNA", "timestamp": "2026-05-04T10:20:09.307Z", "lat": 49.04031, "lon": -123.866699 },
-  { "name": "513 DFNA", "timestamp": "2026-05-04T03:12:15.763Z", "lat": 49.040508, "lon": -123.865433 },
-  { "name": "514 DFNA", "timestamp": "2023-02-11T22:20:35.537Z", "lat": 49.206658, "lon": -123.1391 },
-  { "name": "515 DFNA", "timestamp": "2026-05-01T21:16:44.230Z", "lat": 49.040466, "lon": -123.866531 },
-  { "name": "516 DFNA", "timestamp": "2022-03-24T19:36:25.023Z", "lat": 49.142913, "lon": -123.030186 },
-  { "name": "518 DFNA", "timestamp": "2024-05-25T16:48:36.013Z", "lat": 49.136873, "lon": -123.020187 },
-  { "name": "519 DFNA", "timestamp": "2021-04-21T00:56:43.497Z", "lat": 49.25504, "lon": -122.915408 },
-  { "name": "52 DFNA", "timestamp": "2021-04-17T18:58:55.637Z", "lat": 49.289666, "lon": -123.141108 },
-  { "name": "521 DFNA", "timestamp": "2026-05-04T02:49:47.150Z", "lat": 49.040188, "lon": -123.866714 },
-  { "name": "522 DFNA", "timestamp": "2026-05-02T03:57:44.770Z", "lat": 49.040264, "lon": -123.865776 },
-  { "name": "523 DFNA", "timestamp": "2025-05-15T03:31:39.127Z", "lat": 49.040306, "lon": -123.865807 },
-  { "name": "524 DFNA", "timestamp": "2021-04-15T22:57:42.210Z", "lat": 49.167259, "lon": -122.976366 },
-  { "name": "525 DFNA", "timestamp": "2026-05-01T03:56:12.197Z", "lat": 49.040421, "lon": -123.866356 },
-  { "name": "526 DFNA", "timestamp": "2026-05-04T16:12:49.000Z", "lat": 49.140705, "lon": -123.961716 },
-  { "name": "530 DFNA", "timestamp": "2025-12-21T15:13:55.000Z", "lat": 49.04026, "lon": -123.865166 },
-  { "name": "531 DFNA", "timestamp": "2026-05-04T03:23:25.377Z", "lat": 49.040462, "lon": -123.865852 },
-  { "name": "532 DFNA", "timestamp": "2024-01-09T22:34:32.160Z", "lat": 49.17898, "lon": -123.094148 },
-  { "name": "533 DFNA", "timestamp": "2026-05-02T19:41:00.633Z", "lat": 49.040359, "lon": -123.866226 },
-  { "name": "536 DFNA", "timestamp": "2026-05-01T20:58:27.150Z", "lat": 48.955624, "lon": -123.780098 },
-  { "name": "537 DFNA", "timestamp": "2021-07-26T19:25:35.117Z", "lat": 49.16019, "lon": -122.965815 },
-  { "name": "539 DFNA", "timestamp": "2026-05-04T11:24:54.277Z", "lat": 49.040512, "lon": -123.865807 },
-  { "name": "54 DFNA", "timestamp": "2026-05-01T21:01:33.497Z", "lat": 49.040512, "lon": -123.865433 },
-  { "name": "540 DFNA", "timestamp": "2026-05-04T16:11:32.450Z", "lat": 49.04068, "lon": -123.865166 },
-  { "name": "542 DFNA", "timestamp": "2025-08-22T19:44:11.790Z", "lat": 49.68634, "lon": -124.943581 },
-  { "name": "544 DFNA", "timestamp": "2024-04-26T21:01:08.640Z", "lat": 49.206506, "lon": -123.043012 },
-  { "name": "545 DFNA", "timestamp": "2023-10-28T16:36:21.180Z", "lat": 49.13688, "lon": -123.025448 },
-  { "name": "546 DFNA", "timestamp": "2026-04-30T12:42:40.000Z", "lat": 49.040466, "lon": -123.865166 },
-  { "name": "547 DFNA", "timestamp": "2024-01-16T01:29:16.007Z", "lat": 49.284584, "lon": -123.005058 },
-  { "name": "548 DFNA", "timestamp": "2026-05-04T01:23:18.097Z", "lat": 49.040283, "lon": -123.866814 },
-  { "name": "549 DFNA", "timestamp": "2026-05-04T07:29:57.927Z", "lat": 48.763832, "lon": -123.691292 },
-  { "name": "55 DFNA", "timestamp": "2026-04-09T00:53:15.000Z", "lat": 49.231495, "lon": -123.984589 },
-  { "name": "550 DFNA", "timestamp": "2026-05-01T21:21:02.037Z", "lat": 49.040642, "lon": -123.86515 },
-  { "name": "551 DFNA", "timestamp": "2026-05-04T02:48:18.000Z", "lat": 49.04015, "lon": -123.866714 },
-  { "name": "554 DFNA", "timestamp": "2025-03-05T17:58:41.000Z", "lat": 48.999962, "lon": -123.828995 },
-  { "name": "556 DFNA", "timestamp": "2026-05-01T02:58:41.430Z", "lat": 49.040203, "lon": -123.866699 },
-  { "name": "558 DFNA", "timestamp": "2026-05-04T01:23:17.007Z", "lat": 49.040211, "lon": -123.866051 },
-  { "name": "559 DFNA", "timestamp": "2024-01-11T20:33:18.013Z", "lat": 49.230999, "lon": -123.192368 },
-  { "name": "560 DFNA", "timestamp": "2022-04-17T22:34:41.007Z", "lat": 49.216944, "lon": -123.119001 },
-  { "name": "561 DFNA", "timestamp": "2026-05-04T01:47:03.133Z", "lat": 49.040245, "lon": -123.865883 },
-  { "name": "562 DFNA", "timestamp": "2026-04-24T02:35:22.867Z", "lat": 49.040302, "lon": -123.865219 },
-  { "name": "563 DFNA", "timestamp": "2026-04-22T23:45:31.000Z", "lat": 49.040207, "lon": -123.865097 },
-  { "name": "564 DFNA", "timestamp": "2026-05-04T16:12:44.000Z", "lat": 49.056274, "lon": -123.877449 },
-  { "name": "566 DFNA", "timestamp": "2026-05-04T07:27:03.117Z", "lat": 49.040165, "lon": -123.866547 },
-  { "name": "57 DFNA", "timestamp": "2026-05-04T15:47:53.107Z", "lat": 49.040413, "lon": -123.86657 },
-  { "name": "573 DFNA", "timestamp": "2026-05-04T00:25:04.850Z", "lat": 49.04018, "lon": -123.866623 },
-  { "name": "574 DFNA", "timestamp": "2024-10-10T17:52:24.640Z", "lat": 49.040306, "lon": -123.866341 },
-  { "name": "575 DFNA", "timestamp": "2026-05-01T22:20:46.097Z", "lat": 49.040268, "lon": -123.865662 },
-  { "name": "577 DFNA", "timestamp": "2026-05-04T01:04:16.123Z", "lat": 49.040436, "lon": -123.866356 },
-  { "name": "58 DFNA", "timestamp": "2026-05-04T02:11:17.533Z", "lat": 49.040482, "lon": -123.865936 },
-  { "name": "582 DFNA", "timestamp": "2026-05-04T16:11:38.000Z", "lat": 49.040447, "lon": -123.866852 },
-  { "name": "583 DFNA", "timestamp": "2026-05-04T01:37:12.967Z", "lat": 49.040146, "lon": -123.866623 },
-  { "name": "586 DFNA", "timestamp": "2026-05-04T16:11:36.900Z", "lat": 49.005215, "lon": -123.833 },
-  { "name": "587 DFNA", "timestamp": "2026-05-04T01:59:22.533Z", "lat": 49.040394, "lon": -123.866829 },
-  { "name": "588 DFNA", "timestamp": "2026-05-04T16:12:47.000Z", "lat": 49.134453, "lon": -123.934555 },
-  { "name": "589 DFNA", "timestamp": "2026-05-04T16:12:51.000Z", "lat": 49.028812, "lon": -123.863747 },
-  { "name": "591 DFNA", "timestamp": "2026-05-04T16:12:38.000Z", "lat": 49.053677, "lon": -123.835365 },
-  { "name": "592 DFNA", "timestamp": "2026-05-04T02:30:16.837Z", "lat": 49.040348, "lon": -123.866409 },
-  { "name": "593 DFNA", "timestamp": "2026-05-04T16:12:05.000Z", "lat": 49.005173, "lon": -123.832985 },
-  { "name": "594 DFNA", "timestamp": "2026-05-04T16:12:51.000Z", "lat": 49.027039, "lon": -123.862373 },
-  { "name": "595 DFNA", "timestamp": "2026-05-04T16:11:31.843Z", "lat": 49.005161, "lon": -123.833153 },
-  { "name": "596 DFNA", "timestamp": "2026-05-04T01:19:09.100Z", "lat": 49.040333, "lon": -123.867058 },
-  { "name": "597 DFNA", "timestamp": "2026-05-04T16:12:44.000Z", "lat": 49.005581, "lon": -123.833138 },
-  { "name": "598 DFNA", "timestamp": "2026-05-04T16:12:44.000Z", "lat": 49.005413, "lon": -123.83313 },
-  { "name": "599 DFNA", "timestamp": "2026-04-28T21:50:30.000Z", "lat": 49.107639, "lon": -123.893288 },
-  { "name": "60 DFNA", "timestamp": "2026-05-04T03:30:16.017Z", "lat": 49.040642, "lon": -123.865143 },
-  { "name": "600 DFNA", "timestamp": "2026-05-04T02:49:13.713Z", "lat": 49.040257, "lon": -123.865997 },
-  { "name": "601 DFNA", "timestamp": "2026-05-04T01:50:45.007Z", "lat": 49.040337, "lon": -123.86647 },
-  { "name": "602 DFNA", "timestamp": "2026-05-04T03:24:22.963Z", "lat": 49.040245, "lon": -123.866241 },
-  { "name": "603 DFNA", "timestamp": "2026-05-04T03:31:22.690Z", "lat": 49.040207, "lon": -123.866432 },
-  { "name": "604 DFNA", "timestamp": "2026-04-25T20:45:11.000Z", "lat": 49.040287, "lon": -123.865265 },
-  { "name": "605 DFNA", "timestamp": "2026-05-04T01:51:49.700Z", "lat": 49.04044, "lon": -123.866165 },
-  { "name": "606 DFNA", "timestamp": "2026-05-04T03:16:13.837Z", "lat": 49.040451, "lon": -123.866089 },
-  { "name": "607 DFNA", "timestamp": "2026-05-04T16:12:51.000Z", "lat": 49.043858, "lon": -123.848854 },
-  { "name": "608 DFNA", "timestamp": "2026-05-04T16:12:45.000Z", "lat": 49.005486, "lon": -123.83313 },
-  { "name": "609 DFNA", "timestamp": "2026-05-04T02:53:09.783Z", "lat": 49.040421, "lon": -123.866455 },
-  { "name": "610 DFNA", "timestamp": "2026-05-04T16:11:22.717Z", "lat": 49.005356, "lon": -123.833038 },
-  { "name": "611 DFNA", "timestamp": "2026-05-04T16:12:48.000Z", "lat": 49.027409, "lon": -123.862755 },
-  { "name": "612 DFNA", "timestamp": "2026-05-04T16:12:45.000Z", "lat": 49.026012, "lon": -123.861565 },
-  { "name": "613 DFNA", "timestamp": "2026-05-03T21:15:01.000Z", "lat": 49.107563, "lon": -123.892815 },
-  { "name": "614 DFNA", "timestamp": "2026-05-04T16:11:46.650Z", "lat": 49.005116, "lon": -123.833023 },
-  { "name": "615 DFNA", "timestamp": "2026-05-04T16:11:44.000Z", "lat": 49.040264, "lon": -123.866882 },
-  { "name": "616 DFNA", "timestamp": "2026-05-04T16:12:15.000Z", "lat": 49.039825, "lon": -123.865616 },
-  { "name": "63 DFNA", "timestamp": "2026-05-04T09:13:45.157Z", "lat": 49.040272, "lon": -123.866814 },
-  { "name": "65 DFNA", "timestamp": "2026-05-04T14:54:53.510Z", "lat": 49.040417, "lon": -123.866508 },
-  { "name": "66 DFNA", "timestamp": "2026-05-04T07:50:46.957Z", "lat": 49.040421, "lon": -123.866226 },
-  { "name": "67 DFNA", "timestamp": "2026-05-04T04:26:58.023Z", "lat": 49.040241, "lon": -123.86573 },
-  { "name": "75 DFNA", "timestamp": "2026-05-04T14:56:37.327Z", "lat": 49.040245, "lon": -123.866982 },
-  { "name": "236 DFNA", "timestamp": "2026-05-04T15:26:42.000Z", "lat": 49.107521, "lon": -123.892944 },
-  { "name": "232 DFNA", "timestamp": "2022-02-14T23:04:30.017Z", "lat": 49.142142, "lon": -123.930312 },
-  { "name": "6133 DFNA", "timestamp": "2018-05-15T23:38:03.829Z", "lat": 49.002077, "lon": -122.733696 }
+  {
+    "id": "b479",
+    "name": "6765",
+    "gps": null
+  },
+  {
+    "id": "b455",
+    "name": "708660",
+    "gps": null
+  },
+  {
+    "id": "b68C",
+    "name": "R 74",
+    "gps": null
+  },
+  {
+    "id": "b5DB",
+    "name": "V30827",
+    "gps": null
+  },
+  {
+    "id": "b488",
+    "name": "DFN 260 - GETTING SERVICED",
+    "gps": {
+      "latitude": 49.927586,
+      "longitude": -125.193604,
+      "dateTime": "2026-05-08T22:45:16.570Z"
+    }
+  },
+  {
+    "id": "b5DD",
+    "name": "V30980",
+    "gps": null
+  },
+  {
+    "id": "b5FA",
+    "name": "V30890",
+    "gps": null
+  },
+  {
+    "id": "b864",
+    "name": "D103",
+    "gps": null
+  },
+  {
+    "id": "b456",
+    "name": "59245",
+    "gps": null
+  },
+  {
+    "id": "b2A8",
+    "name": "H3h240",
+    "gps": null
+  },
+  {
+    "id": "b8A6",
+    "name": "70520",
+    "gps": null
+  },
+  {
+    "id": "b2FF",
+    "name": "R25",
+    "gps": null
+  },
+  {
+    "id": "b2F9",
+    "name": "R48",
+    "gps": null
+  },
+  {
+    "id": "b46E",
+    "name": "Rra5380287",
+    "gps": null
+  },
+  {
+    "id": "b2F8",
+    "name": "V30724",
+    "gps": null
+  },
+  {
+    "id": "b2FE",
+    "name": "V30734",
+    "gps": null
+  },
+  {
+    "id": "b555",
+    "name": "Mj",
+    "gps": null
+  },
+  {
+    "id": "b50F",
+    "name": "\u042291",
+    "gps": null
+  },
+  {
+    "id": "b217",
+    "name": "DF 53H285 Heated Trailer",
+    "gps": {
+      "latitude": 49.160347,
+      "longitude": -122.966019,
+      "dateTime": "2023-01-23T21:29:23.000Z"
+    }
+  },
+  {
+    "id": "bE7",
+    "name": "525 DFNA",
+    "gps": {
+      "latitude": 49.671871,
+      "longitude": -125.01577,
+      "dateTime": "2026-05-09T20:53:33.500Z"
+    }
+  },
+  {
+    "id": "bDB",
+    "name": "48 @ storage",
+    "gps": {
+      "latitude": 49.1606026,
+      "longitude": -122.964531,
+      "dateTime": "2022-04-30T12:48:21.497Z"
+    }
+  },
+  {
+    "id": "b309",
+    "name": "V 30944",
+    "gps": null
+  },
+  {
+    "id": "b308",
+    "name": "V 53759",
+    "gps": null
+  },
+  {
+    "id": "b30A",
+    "name": "V53729",
+    "gps": null
+  },
+  {
+    "id": "b47A",
+    "name": "V31049",
+    "gps": null
+  },
+  {
+    "id": "b4CF",
+    "name": "593 DFNA",
+    "gps": {
+      "latitude": 49.163872,
+      "longitude": -123.996918,
+      "dateTime": "2026-05-09T20:54:31.000Z"
+    }
+  },
+  {
+    "id": "b634",
+    "name": "91T",
+    "gps": null
+  },
+  {
+    "id": "b476",
+    "name": "Rra5374407",
+    "gps": null
+  },
+  {
+    "id": "b47C",
+    "name": "17-207",
+    "gps": null
+  },
+  {
+    "id": "b451",
+    "name": "5240",
+    "gps": null
+  },
+  {
+    "id": "b475",
+    "name": "Rra5392503",
+    "gps": null
+  },
+  {
+    "id": "b893",
+    "name": "D106",
+    "gps": null
+  },
+  {
+    "id": "b3C2",
+    "name": "575",
+    "gps": {
+      "latitude": 49.340672,
+      "longitude": -123.032524,
+      "dateTime": "2023-01-31T19:49:47.127Z"
+    }
+  },
+  {
+    "id": "b480",
+    "name": "587 DFNA",
+    "gps": {
+      "latitude": 49.293613,
+      "longitude": -124.200272,
+      "dateTime": "2026-05-09T20:53:36.000Z"
+    }
+  },
+  {
+    "id": "b510",
+    "name": "613 DFNA",
+    "gps": {
+      "latitude": 49.245029,
+      "longitude": -124.79232,
+      "dateTime": "2026-05-09T20:54:34.000Z"
+    }
+  },
+  {
+    "id": "b487",
+    "name": "Rra5392502",
+    "gps": null
+  },
+  {
+    "id": "b56E",
+    "name": "MJ105",
+    "gps": null
+  },
+  {
+    "id": "b1CA",
+    "name": "WRC Trailer 539437",
+    "gps": {
+      "latitude": 49.109249,
+      "longitude": -122.675407,
+      "dateTime": "2023-05-19T19:27:21.000Z"
+    }
+  },
+  {
+    "id": "b490",
+    "name": "55654",
+    "gps": null
+  },
+  {
+    "id": "b894",
+    "name": "96941",
+    "gps": null
+  },
+  {
+    "id": "b474",
+    "name": "530 DFNA",
+    "gps": {
+      "latitude": 49.04026,
+      "longitude": -123.865166,
+      "dateTime": "2025-12-21T15:13:55.000Z"
+    }
+  },
+  {
+    "id": "b10C",
+    "name": "66 DFNA",
+    "gps": {
+      "latitude": 49.722347,
+      "longitude": -124.933479,
+      "dateTime": "2026-05-09T20:54:28.000Z"
+    }
+  },
+  {
+    "id": "b1CD",
+    "name": "WRC Trailer 539436",
+    "gps": {
+      "latitude": 49.12117,
+      "longitude": -123.09481,
+      "dateTime": "2026-05-09T18:19:35.000Z"
+    }
+  },
+  {
+    "id": "b1E8",
+    "name": "57",
+    "gps": {
+      "latitude": 49.311436,
+      "longitude": -123.031036,
+      "dateTime": "2023-10-21T20:51:02.000Z"
+    }
+  },
+  {
+    "id": "b421",
+    "name": "Mh04",
+    "gps": null
+  },
+  {
+    "id": "b1F1",
+    "name": "New vehicle (G911210C330F previously in 550)...",
+    "gps": {
+      "latitude": 49.137589,
+      "longitude": -123.114243,
+      "dateTime": "2021-04-15T02:02:55.000Z"
+    }
+  },
+  {
+    "id": "b264",
+    "name": "Cpx 53d7645",
+    "gps": null
+  },
+  {
+    "id": "b470",
+    "name": "Rra6391242",
+    "gps": null
+  },
+  {
+    "id": "b2B6",
+    "name": "230",
+    "gps": null
+  },
+  {
+    "id": "b265",
+    "name": "53d7601",
+    "gps": null
+  },
+  {
+    "id": "b266",
+    "name": "53d7605",
+    "gps": null
+  },
+  {
+    "id": "b33D",
+    "name": "53r466",
+    "gps": null
+  },
+  {
+    "id": "b48E",
+    "name": "209 DFNA",
+    "gps": {
+      "latitude": 49.309246,
+      "longitude": -124.264,
+      "dateTime": "2026-05-09T20:54:33.000Z"
+    }
+  },
+  {
+    "id": "b4AE",
+    "name": "502 DFNA",
+    "gps": {
+      "latitude": 49.989166,
+      "longitude": -125.227356,
+      "dateTime": "2026-05-09T20:53:00.337Z"
+    }
+  },
+  {
+    "id": "b505",
+    "name": "T91",
+    "gps": null
+  },
+  {
+    "id": "b57C",
+    "name": "91637",
+    "gps": null
+  },
+  {
+    "id": "b404",
+    "name": "R96",
+    "gps": null
+  },
+  {
+    "id": "b366",
+    "name": "V 30468",
+    "gps": null
+  },
+  {
+    "id": "b367",
+    "name": "V30096",
+    "gps": null
+  },
+  {
+    "id": "b365",
+    "name": "V3134",
+    "gps": null
+  },
+  {
+    "id": "b33F",
+    "name": "V3134",
+    "gps": null
+  },
+  {
+    "id": "b340",
+    "name": "V5372",
+    "gps": null
+  },
+  {
+    "id": "b24",
+    "name": "WRC 6133 DFNA",
+    "gps": {
+      "latitude": 49.002077,
+      "longitude": -122.733696,
+      "dateTime": "2018-05-15T23:38:03.829Z"
+    }
+  },
+  {
+    "id": "b66D",
+    "name": "40v",
+    "gps": null
+  },
+  {
+    "id": "b60C",
+    "name": "554 Parts Van DFNA (No Geotab)",
+    "gps": null
+  },
+  {
+    "id": "b3F4",
+    "name": "R94",
+    "gps": null
+  },
+  {
+    "id": "b51B",
+    "name": "614 DFNA",
+    "gps": {
+      "latitude": 49.271542,
+      "longitude": -124.8479,
+      "dateTime": "2026-05-09T20:54:32.760Z"
+    }
+  },
+  {
+    "id": "b402",
+    "name": "R09",
+    "gps": null
+  },
+  {
+    "id": "b3F5",
+    "name": "R96",
+    "gps": null
+  },
+  {
+    "id": "b2E1",
+    "name": "36Vg",
+    "gps": null
+  },
+  {
+    "id": "b17E",
+    "name": "555*",
+    "gps": {
+      "latitude": 49.16301,
+      "longitude": -122.972931,
+      "dateTime": "2020-07-10T17:23:29.063Z"
+    }
+  },
+  {
+    "id": "b405",
+    "name": "775",
+    "gps": null
+  },
+  {
+    "id": "b17F",
+    "name": "545 DFNA",
+    "gps": {
+      "latitude": 49.13688,
+      "longitude": -123.025448,
+      "dateTime": "2023-10-28T16:36:21.180Z"
+    }
+  },
+  {
+    "id": "b46B",
+    "name": "676561",
+    "gps": null
+  },
+  {
+    "id": "b45D",
+    "name": "Fr",
+    "gps": null
+  },
+  {
+    "id": "b41A",
+    "name": "103",
+    "gps": null
+  },
+  {
+    "id": "b2E2",
+    "name": "V30258",
+    "gps": null
+  },
+  {
+    "id": "b3D8",
+    "name": "707816",
+    "gps": null
+  },
+  {
+    "id": "b64A",
+    "name": "615 DFNA",
+    "gps": {
+      "latitude": 49.678833,
+      "longitude": -125.03273,
+      "dateTime": "2026-05-09T20:54:29.000Z"
+    }
+  },
+  {
+    "id": "b20E",
+    "name": "DF 88 Reefer Trailer",
+    "gps": {
+      "latitude": 49.029633,
+      "longitude": -122.55162,
+      "dateTime": "2026-04-29T16:20:50.000Z"
+    }
+  },
+  {
+    "id": "b90D",
+    "name": "RDA",
+    "gps": null
+  },
+  {
+    "id": "b2EA",
+    "name": "34V007",
+    "gps": null
+  },
+  {
+    "id": "b3DB",
+    "name": "971205",
+    "gps": null
+  },
+  {
+    "id": "b2E3",
+    "name": "539438",
+    "gps": null
+  },
+  {
+    "id": "b403",
+    "name": "Mh01",
+    "gps": null
+  },
+  {
+    "id": "b3E3",
+    "name": "R 99",
+    "gps": null
+  },
+  {
+    "id": "b3F8",
+    "name": "R94",
+    "gps": null
+  },
+  {
+    "id": "b910",
+    "name": "95921",
+    "gps": null
+  },
+  {
+    "id": "b51F",
+    "name": "607 DFNA",
+    "gps": {
+      "latitude": 49.245323,
+      "longitude": -124.087791,
+      "dateTime": "2026-05-09T20:53:00.000Z"
+    }
+  },
+  {
+    "id": "b14",
+    "name": "206 DFNA",
+    "gps": {
+      "latitude": 49.10741,
+      "longitude": -123.892982,
+      "dateTime": "2026-05-08T00:09:29.267Z"
+    }
+  },
+  {
+    "id": "bBB",
+    "name": "209 AMZ",
+    "gps": {
+      "latitude": 49.096268,
+      "longitude": -123.887489,
+      "dateTime": "2024-04-14T18:02:00.127Z"
+    }
+  },
+  {
+    "id": "b465",
+    "name": "583",
+    "gps": null
+  },
+  {
+    "id": "b436",
+    "name": "63 DFNA",
+    "gps": {
+      "latitude": 49.188126,
+      "longitude": -123.986366,
+      "dateTime": "2026-05-09T20:54:34.000Z"
+    }
+  },
+  {
+    "id": "b3D9",
+    "name": "707668",
+    "gps": null
+  },
+  {
+    "id": "b41D",
+    "name": "101",
+    "gps": null
+  },
+  {
+    "id": "b3D6",
+    "name": "707803",
+    "gps": null
+  },
+  {
+    "id": "b3FB",
+    "name": "606",
+    "gps": null
+  },
+  {
+    "id": "b3DC",
+    "name": "708668",
+    "gps": null
+  },
+  {
+    "id": "b125",
+    "name": "526",
+    "gps": {
+      "latitude": 49.279259,
+      "longitude": -123.010071,
+      "dateTime": "2024-06-28T18:17:24.000Z"
+    }
+  },
+  {
+    "id": "b119",
+    "name": "514 DFNA",
+    "gps": {
+      "latitude": 49.206658,
+      "longitude": -123.1391,
+      "dateTime": "2023-02-11T22:20:35.537Z"
+    }
+  },
+  {
+    "id": "b919",
+    "name": "97773",
+    "gps": null
+  },
+  {
+    "id": "b481",
+    "name": "588 DFNA",
+    "gps": {
+      "latitude": 49.169708,
+      "longitude": -123.966339,
+      "dateTime": "2026-05-09T20:54:04.087Z"
+    }
+  },
+  {
+    "id": "b6D4",
+    "name": "561",
+    "gps": null
+  },
+  {
+    "id": "b120",
+    "name": "519 DFNA",
+    "gps": {
+      "latitude": 49.25504,
+      "longitude": -122.915408,
+      "dateTime": "2021-04-21T00:56:43.497Z"
+    }
+  },
+  {
+    "id": "b6E",
+    "name": "DFN 442 (CNG Tractor)",
+    "gps": {
+      "latitude": 49.156124,
+      "longitude": -123.093079,
+      "dateTime": "2025-06-13T16:29:54.000Z"
+    }
+  },
+  {
+    "id": "b4F9",
+    "name": "603 DFNA",
+    "gps": {
+      "latitude": 49.30648,
+      "longitude": -124.360573,
+      "dateTime": "2026-05-09T20:39:43.727Z"
+    }
+  },
+  {
+    "id": "b3E4",
+    "name": "R98",
+    "gps": null
+  },
+  {
+    "id": "b3E5",
+    "name": "R99",
+    "gps": null
+  },
+  {
+    "id": "b3E6",
+    "name": "R99",
+    "gps": null
+  },
+  {
+    "id": "b3EF",
+    "name": "V30126",
+    "gps": null
+  },
+  {
+    "id": "bD8",
+    "name": "DFN 658 - Port/Parksville 5-Ton (DUANE)",
+    "gps": {
+      "latitude": 49.005531,
+      "longitude": -123.833458,
+      "dateTime": "2026-05-09T19:47:53.333Z"
+    }
+  },
+  {
+    "id": "b2BA",
+    "name": "V53763",
+    "gps": null
+  },
+  {
+    "id": "b3FD",
+    "name": "708493",
+    "gps": null
+  },
+  {
+    "id": "b873",
+    "name": "71817",
+    "gps": null
+  },
+  {
+    "id": "b38D",
+    "name": "Wr81",
+    "gps": null
+  },
+  {
+    "id": "b1F8",
+    "name": "DFN 109 - DUNCAN",
+    "gps": {
+      "latitude": 49.141991,
+      "longitude": -123.930344,
+      "dateTime": "2022-06-30T15:02:29.063Z"
+    }
+  },
+  {
+    "id": "b3F1",
+    "name": "Df88",
+    "gps": null
+  },
+  {
+    "id": "b37C",
+    "name": "R22",
+    "gps": null
+  },
+  {
+    "id": "b390",
+    "name": "R27",
+    "gps": null
+  },
+  {
+    "id": "b37D",
+    "name": "Wr77",
+    "gps": null
+  },
+  {
+    "id": "b467",
+    "name": "DFN 257 - IS (Mike)",
+    "gps": {
+      "latitude": 49.181931,
+      "longitude": -123.959465,
+      "dateTime": "2026-05-09T02:25:58.793Z"
+    }
+  },
+  {
+    "id": "b586",
+    "name": "32360",
+    "gps": null
+  },
+  {
+    "id": "b408",
+    "name": "R32",
+    "gps": null
+  },
+  {
+    "id": "b4F3",
+    "name": "611 DFNA",
+    "gps": {
+      "latitude": 49.2668,
+      "longitude": -124.815094,
+      "dateTime": "2026-05-09T20:53:34.000Z"
+    }
+  },
+  {
+    "id": "b2DF",
+    "name": "17-211",
+    "gps": null
+  },
+  {
+    "id": "b323",
+    "name": "36vg08",
+    "gps": null
+  },
+  {
+    "id": "b3F7",
+    "name": "R95",
+    "gps": null
+  },
+  {
+    "id": "b3F6",
+    "name": "R97",
+    "gps": null
+  },
+  {
+    "id": "b46C",
+    "name": "RRA5380289",
+    "gps": null
+  },
+  {
+    "id": "b874",
+    "name": "84399",
+    "gps": null
+  },
+  {
+    "id": "b218",
+    "name": "DF V30096 Trailer",
+    "gps": {
+      "latitude": 49.160473,
+      "longitude": -122.965836,
+      "dateTime": "2022-02-10T20:48:26.000Z"
+    }
+  },
+  {
+    "id": "b3E9",
+    "name": "972",
+    "gps": null
+  },
+  {
+    "id": "b413",
+    "name": "100t",
+    "gps": null
+  },
+  {
+    "id": "b3F0",
+    "name": "R35",
+    "gps": null
+  },
+  {
+    "id": "b37F",
+    "name": "V30494",
+    "gps": null
+  },
+  {
+    "id": "b381",
+    "name": "Wr",
+    "gps": null
+  },
+  {
+    "id": "b170",
+    "name": "538",
+    "gps": {
+      "latitude": 49.279667,
+      "longitude": -122.816872,
+      "dateTime": "2023-10-19T15:23:49.000Z"
+    }
+  },
+  {
+    "id": "b3BD",
+    "name": "676606",
+    "gps": null
+  },
+  {
+    "id": "b3DA",
+    "name": "708887",
+    "gps": null
+  },
+  {
+    "id": "b3FA",
+    "name": "971726",
+    "gps": null
+  },
+  {
+    "id": "b39D",
+    "name": "Df92",
+    "gps": null
+  },
+  {
+    "id": "b42F",
+    "name": "R53",
+    "gps": null
+  },
+  {
+    "id": "b3CC",
+    "name": "R57",
+    "gps": null
+  },
+  {
+    "id": "b3BF",
+    "name": "R62",
+    "gps": null
+  },
+  {
+    "id": "b897",
+    "name": "D70217",
+    "gps": null
+  },
+  {
+    "id": "b3C1",
+    "name": "V308",
+    "gps": null
+  },
+  {
+    "id": "b12C",
+    "name": "zzz 530 NJ 4730 terminated device",
+    "gps": {
+      "latitude": 49.156479,
+      "longitude": -123.177574,
+      "dateTime": "2019-04-29T17:48:03.000Z"
+    }
+  },
+  {
+    "id": "b213",
+    "name": "DF 676561 Pup trailer",
+    "gps": {
+      "latitude": 49.152554,
+      "longitude": -122.94001,
+      "dateTime": "2024-04-08T19:46:55.000Z"
+    }
+  },
+  {
+    "id": "b37E",
+    "name": "30790",
+    "gps": null
+  },
+  {
+    "id": "b40A",
+    "name": "558 DFNA",
+    "gps": {
+      "latitude": 50.012459,
+      "longitude": -125.249382,
+      "dateTime": "2026-05-09T20:44:28.790Z"
+    }
+  },
+  {
+    "id": "b6F",
+    "name": "DFN 441 (CNG Tractor)",
+    "gps": {
+      "latitude": 49.140251,
+      "longitude": -123.007332,
+      "dateTime": "2025-06-13T03:39:32.000Z"
+    }
+  },
+  {
+    "id": "bA1",
+    "name": "DFA 14 - LY 0321",
+    "gps": {
+      "latitude": 49.255424,
+      "longitude": -123.153664,
+      "dateTime": "2018-08-28T17:20:01.000Z"
+    }
+  },
+  {
+    "id": "b4FE",
+    "name": "80095",
+    "gps": null
+  },
+  {
+    "id": "b1E6",
+    "name": "New vehicle (G76C20FC3C8C previously in 68)...",
+    "gps": {
+      "latitude": 49.344997,
+      "longitude": -123.175781,
+      "dateTime": "2020-12-10T15:28:40.000Z"
+    }
+  },
+  {
+    "id": "bBE",
+    "name": "215 AMZ  + Netradyne",
+    "gps": {
+      "latitude": 49.224503,
+      "longitude": -122.919635,
+      "dateTime": "2022-12-02T00:42:20.027Z"
+    }
+  },
+  {
+    "id": "b39A",
+    "name": "86064",
+    "gps": null
+  },
+  {
+    "id": "b418",
+    "name": "DFV 581 - Van - Liam #04 ",
+    "gps": {
+      "latitude": 48.564812,
+      "longitude": -123.40873,
+      "dateTime": "2026-05-08T22:21:55.187Z"
+    }
+  },
+  {
+    "id": "b382",
+    "name": "53 R 466",
+    "gps": null
+  },
+  {
+    "id": "b399",
+    "name": "86067",
+    "gps": null
+  },
+  {
+    "id": "b39B",
+    "name": "92",
+    "gps": null
+  },
+  {
+    "id": "b39C",
+    "name": "92",
+    "gps": null
+  },
+  {
+    "id": "b398",
+    "name": "R15",
+    "gps": null
+  },
+  {
+    "id": "b3B0",
+    "name": "V30365",
+    "gps": null
+  },
+  {
+    "id": "b88F",
+    "name": "7673",
+    "gps": null
+  },
+  {
+    "id": "b3A1",
+    "name": "WR80",
+    "gps": null
+  },
+  {
+    "id": "b63",
+    "name": "213 DFNA",
+    "gps": {
+      "latitude": 49.207145,
+      "longitude": -122.574543,
+      "dateTime": "2021-12-26T00:06:43.180Z"
+    }
+  },
+  {
+    "id": "b8B5",
+    "name": "94699",
+    "gps": null
+  },
+  {
+    "id": "b3A8",
+    "name": "90",
+    "gps": null
+  },
+  {
+    "id": "b3A5",
+    "name": "93",
+    "gps": null
+  },
+  {
+    "id": "b3B8",
+    "name": "R36",
+    "gps": null
+  },
+  {
+    "id": "b3A4",
+    "name": "R58",
+    "gps": null
+  },
+  {
+    "id": "b430",
+    "name": "Trai",
+    "gps": null
+  },
+  {
+    "id": "b3B9",
+    "name": "V30404",
+    "gps": null
+  },
+  {
+    "id": "b3BE",
+    "name": "V30855",
+    "gps": null
+  },
+  {
+    "id": "b3BA",
+    "name": "V30885",
+    "gps": null
+  },
+  {
+    "id": "b3CF",
+    "name": "V5394",
+    "gps": null
+  },
+  {
+    "id": "b27",
+    "name": "In Gregs cabinet 94",
+    "gps": {
+      "latitude": 49.163315,
+      "longitude": -122.972977,
+      "dateTime": "2020-04-20T16:31:40.063Z"
+    }
+  },
+  {
+    "id": "b3D5",
+    "name": "91",
+    "gps": null
+  },
+  {
+    "id": "b3E8",
+    "name": "972627",
+    "gps": null
+  },
+  {
+    "id": "b64E",
+    "name": "447 (DFN)",
+    "gps": {
+      "latitude": 49.005535,
+      "longitude": -123.833664,
+      "dateTime": "2026-05-09T14:00:52.523Z"
+    }
+  },
+  {
+    "id": "b3B2",
+    "name": "Wr74",
+    "gps": null
+  },
+  {
+    "id": "b38B",
+    "name": "Wr78",
+    "gps": null
+  },
+  {
+    "id": "b3C8",
+    "name": "3134",
+    "gps": null
+  },
+  {
+    "id": "b3CE",
+    "name": "31347",
+    "gps": null
+  },
+  {
+    "id": "b3DE",
+    "name": "MH-03",
+    "gps": null
+  },
+  {
+    "id": "b3FE",
+    "name": "R95",
+    "gps": null
+  },
+  {
+    "id": "b892",
+    "name": "56D7673",
+    "gps": null
+  },
+  {
+    "id": "b3C6",
+    "name": "V5377",
+    "gps": null
+  },
+  {
+    "id": "b3C7",
+    "name": "V539435",
+    "gps": null
+  },
+  {
+    "id": "b3C5",
+    "name": "6766",
+    "gps": null
+  },
+  {
+    "id": "b380",
+    "name": "9P1447",
+    "gps": null
+  },
+  {
+    "id": "b6",
+    "name": "Removed device 98 Steve's desk",
+    "gps": {
+      "latitude": 49.163265,
+      "longitude": -122.97303,
+      "dateTime": "2020-03-02T18:00:26.063Z"
+    }
+  },
+  {
+    "id": "b383",
+    "name": "539436",
+    "gps": null
+  },
+  {
+    "id": "b3C0",
+    "name": "53r23",
+    "gps": null
+  },
+  {
+    "id": "b2BB",
+    "name": "R55",
+    "gps": null
+  },
+  {
+    "id": "b397",
+    "name": "R56",
+    "gps": null
+  },
+  {
+    "id": "b384",
+    "name": "R61",
+    "gps": null
+  },
+  {
+    "id": "b3A9",
+    "name": "V30855",
+    "gps": null
+  },
+  {
+    "id": "b1F3",
+    "name": "101 (Storage Van)",
+    "gps": {
+      "latitude": 49.212112,
+      "longitude": -122.684151,
+      "dateTime": "2026-05-04T16:42:20.530Z"
+    }
+  },
+  {
+    "id": "b342",
+    "name": "83",
+    "gps": null
+  },
+  {
+    "id": "b325",
+    "name": "R101",
+    "gps": null
+  },
+  {
+    "id": "b32A",
+    "name": "R105",
+    "gps": null
+  },
+  {
+    "id": "b346",
+    "name": "R12",
+    "gps": null
+  },
+  {
+    "id": "b324",
+    "name": "435",
+    "gps": null
+  },
+  {
+    "id": "b327",
+    "name": "5 3 h 2 8 5",
+    "gps": null
+  },
+  {
+    "id": "b322",
+    "name": "53d7710",
+    "gps": null
+  },
+  {
+    "id": "b326",
+    "name": "R81",
+    "gps": null
+  },
+  {
+    "id": "b328",
+    "name": "V30133",
+    "gps": null
+  },
+  {
+    "id": "b329",
+    "name": "V30484",
+    "gps": null
+  },
+  {
+    "id": "b3AB",
+    "name": "V31347",
+    "gps": null
+  },
+  {
+    "id": "b354",
+    "name": "Y30484",
+    "gps": null
+  },
+  {
+    "id": "b11",
+    "name": "DFV - 95 - Darrell -CC 95 Victoria - MN0095",
+    "gps": {
+      "latitude": 49.163212,
+      "longitude": -122.973213,
+      "dateTime": "2021-09-07T17:30:23.063Z"
+    }
+  },
+  {
+    "id": "b357",
+    "name": "R83",
+    "gps": null
+  },
+  {
+    "id": "b352",
+    "name": "R84",
+    "gps": null
+  },
+  {
+    "id": "b2D1",
+    "name": "53h293",
+    "gps": null
+  },
+  {
+    "id": "b356",
+    "name": "R85",
+    "gps": null
+  },
+  {
+    "id": "b353",
+    "name": "R92",
+    "gps": null
+  },
+  {
+    "id": "b3EA",
+    "name": "R97",
+    "gps": null
+  },
+  {
+    "id": "b2B9",
+    "name": "V5374",
+    "gps": null
+  },
+  {
+    "id": "b400",
+    "name": "DFN 001h - BRIAN K. (IO)",
+    "gps": {
+      "latitude": 50.032059,
+      "longitude": -125.266983,
+      "dateTime": "2026-05-08T03:42:42.873Z"
+    }
+  },
+  {
+    "id": "b3E7",
+    "name": "V31347",
+    "gps": {
+      "latitude": 49.283569,
+      "longitude": -122.780464,
+      "dateTime": "2024-08-24T13:40:10.000Z"
+    }
+  },
+  {
+    "id": "b185",
+    "name": "DFNA 232 - Victoria (Craig)",
+    "gps": {
+      "latitude": 49.142142,
+      "longitude": -123.930312,
+      "dateTime": "2022-02-14T23:04:30.017Z"
+    }
+  },
+  {
+    "id": "b2D2",
+    "name": "R108",
+    "gps": null
+  },
+  {
+    "id": "b2D4",
+    "name": "V30126",
+    "gps": null
+  },
+  {
+    "id": "b301",
+    "name": "53r230",
+    "gps": null
+  },
+  {
+    "id": "b100",
+    "name": "58 DFNA",
+    "gps": {
+      "latitude": 48.763821,
+      "longitude": -123.691406,
+      "dateTime": "2026-05-09T10:06:14.147Z"
+    }
+  },
+  {
+    "id": "b2D3",
+    "name": "V30965",
+    "gps": null
+  },
+  {
+    "id": "b50C",
+    "name": "606 DFNA",
+    "gps": {
+      "latitude": 49.352669,
+      "longitude": -124.383156,
+      "dateTime": "2026-05-09T20:54:29.000Z"
+    }
+  },
+  {
+    "id": "b415",
+    "name": "101T",
+    "gps": null
+  },
+  {
+    "id": "b22",
+    "name": "DFN 36 - Nanaimo 5 Ton (SCOTT)",
+    "gps": {
+      "latitude": 49.039856,
+      "longitude": -123.864151,
+      "dateTime": "2026-04-27T16:22:01.277Z"
+    }
+  },
+  {
+    "id": "b2B7",
+    "name": "B53759",
+    "gps": null
+  },
+  {
+    "id": "b47D",
+    "name": "New vehicle (G76C20FC3C8C previously in 68)...",
+    "gps": {
+      "latitude": 49.3073425,
+      "longitude": -123.023026,
+      "dateTime": "2024-05-21T22:43:24.000Z"
+    }
+  },
+  {
+    "id": "b406",
+    "name": "Mh02",
+    "gps": null
+  },
+  {
+    "id": "b2EF",
+    "name": "53D7710",
+    "gps": null
+  },
+  {
+    "id": "b2F0",
+    "name": "R 89",
+    "gps": null
+  },
+  {
+    "id": "b2EE",
+    "name": "V53759",
+    "gps": null
+  },
+  {
+    "id": "b364",
+    "name": "WR72",
+    "gps": null
+  },
+  {
+    "id": "b2B8",
+    "name": "740",
+    "gps": null
+  },
+  {
+    "id": "b362",
+    "name": "WR83",
+    "gps": null
+  },
+  {
+    "id": "b87F",
+    "name": "53D7649",
+    "gps": null
+  },
+  {
+    "id": "b337",
+    "name": "R11",
+    "gps": null
+  },
+  {
+    "id": "b36E",
+    "name": "R23",
+    "gps": null
+  },
+  {
+    "id": "b2BC",
+    "name": "34v007",
+    "gps": null
+  },
+  {
+    "id": "b343",
+    "name": "350710",
+    "gps": null
+  },
+  {
+    "id": "b345",
+    "name": "539437",
+    "gps": null
+  },
+  {
+    "id": "b333",
+    "name": "R38",
+    "gps": null
+  },
+  {
+    "id": "b2BD",
+    "name": "R39",
+    "gps": null
+  },
+  {
+    "id": "b33A",
+    "name": "R64",
+    "gps": null
+  },
+  {
+    "id": "b33C",
+    "name": "R70",
+    "gps": null
+  },
+  {
+    "id": "b33B",
+    "name": "R86",
+    "gps": null
+  },
+  {
+    "id": "b363",
+    "name": "V03573",
+    "gps": null
+  },
+  {
+    "id": "b339",
+    "name": "V3 0 965",
+    "gps": null
+  },
+  {
+    "id": "b344",
+    "name": "V3 1 347",
+    "gps": null
+  },
+  {
+    "id": "b338",
+    "name": "V3019 0",
+    "gps": null
+  },
+  {
+    "id": "b335",
+    "name": "V30404",
+    "gps": null
+  },
+  {
+    "id": "b334",
+    "name": "V30468",
+    "gps": null
+  },
+  {
+    "id": "b336",
+    "name": "V30855",
+    "gps": null
+  },
+  {
+    "id": "b376",
+    "name": "MT01",
+    "gps": null
+  },
+  {
+    "id": "b377",
+    "name": "R13",
+    "gps": null
+  },
+  {
+    "id": "b379",
+    "name": "R21",
+    "gps": null
+  },
+  {
+    "id": "b375",
+    "name": "R42",
+    "gps": null
+  },
+  {
+    "id": "b36A",
+    "name": "R46",
+    "gps": null
+  },
+  {
+    "id": "b36D",
+    "name": "R54",
+    "gps": null
+  },
+  {
+    "id": "b378",
+    "name": "539435",
+    "gps": null
+  },
+  {
+    "id": "b36B",
+    "name": "R60",
+    "gps": null
+  },
+  {
+    "id": "b369",
+    "name": "V304",
+    "gps": null
+  },
+  {
+    "id": "b37A",
+    "name": "V3040",
+    "gps": null
+  },
+  {
+    "id": "b36C",
+    "name": "V30573",
+    "gps": null
+  },
+  {
+    "id": "b368",
+    "name": "V30855",
+    "gps": null
+  },
+  {
+    "id": "b2AB",
+    "name": "53r230",
+    "gps": null
+  },
+  {
+    "id": "b260",
+    "name": "86",
+    "gps": null
+  },
+  {
+    "id": "b25F",
+    "name": "87",
+    "gps": null
+  },
+  {
+    "id": "b2AA",
+    "name": "88",
+    "gps": null
+  },
+  {
+    "id": "b262",
+    "name": "Cpx 53d7707",
+    "gps": null
+  },
+  {
+    "id": "b263",
+    "name": "V31121",
+    "gps": null
+  },
+  {
+    "id": "b278",
+    "name": "V31323",
+    "gps": null
+  },
+  {
+    "id": "b261",
+    "name": "438/61479c",
+    "gps": null
+  },
+  {
+    "id": "b246",
+    "name": "53D7688",
+    "gps": null
+  },
+  {
+    "id": "b2A4",
+    "name": "53d7665",
+    "gps": null
+  },
+  {
+    "id": "b279",
+    "name": "53d7704",
+    "gps": null
+  },
+  {
+    "id": "b276",
+    "name": "53h7722",
+    "gps": null
+  },
+  {
+    "id": "b277",
+    "name": "53r131",
+    "gps": null
+  },
+  {
+    "id": "b25E",
+    "name": "V53759",
+    "gps": null
+  },
+  {
+    "id": "b2CD",
+    "name": "V53773 df",
+    "gps": null
+  },
+  {
+    "id": "b2AD",
+    "name": "88 Danfoss",
+    "gps": null
+  },
+  {
+    "id": "b2CC",
+    "name": "88 df",
+    "gps": null
+  },
+  {
+    "id": "b2B2",
+    "name": "89",
+    "gps": null
+  },
+  {
+    "id": "b2B3",
+    "name": "53D7681",
+    "gps": null
+  },
+  {
+    "id": "b2AF",
+    "name": "53d7640",
+    "gps": null
+  },
+  {
+    "id": "b2B0",
+    "name": "53d7659",
+    "gps": null
+  },
+  {
+    "id": "b2C5",
+    "name": "89 (DF)",
+    "gps": null
+  },
+  {
+    "id": "b2AE",
+    "name": "Pr3061",
+    "gps": null
+  },
+  {
+    "id": "b2AC",
+    "name": "Pr3087",
+    "gps": null
+  },
+  {
+    "id": "b2CF",
+    "name": "R 14 Aquatrans",
+    "gps": null
+  },
+  {
+    "id": "b2B1",
+    "name": "R26",
+    "gps": null
+  },
+  {
+    "id": "b2C4",
+    "name": "R81 (Aquatrans)",
+    "gps": null
+  },
+  {
+    "id": "b2CE",
+    "name": "V30190",
+    "gps": null
+  },
+  {
+    "id": "b2C6",
+    "name": "V30493 (Weston\u2019s)",
+    "gps": null
+  },
+  {
+    "id": "b2B5",
+    "name": "V30573",
+    "gps": null
+  },
+  {
+    "id": "b2D7",
+    "name": "V39491",
+    "gps": null
+  },
+  {
+    "id": "b2B4",
+    "name": "V53715",
+    "gps": null
+  },
+  {
+    "id": "b2D0",
+    "name": "V53740",
+    "gps": null
+  },
+  {
+    "id": "bBD",
+    "name": "211 DFNA Alert Bay",
+    "gps": {
+      "latitude": 49.234818,
+      "longitude": -123.154587,
+      "dateTime": "2022-02-05T21:42:07.267Z"
+    }
+  },
+  {
+    "id": "b2EC",
+    "name": "V53773",
+    "gps": null
+  },
+  {
+    "id": "b395",
+    "name": "Vo3573",
+    "gps": null
+  },
+  {
+    "id": "b38F",
+    "name": "87 DF",
+    "gps": null
+  },
+  {
+    "id": "b2DB",
+    "name": "89df",
+    "gps": null
+  },
+  {
+    "id": "b2ED",
+    "name": "R 46",
+    "gps": null
+  },
+  {
+    "id": "b386",
+    "name": "R109",
+    "gps": null
+  },
+  {
+    "id": "b2DC",
+    "name": "36VG08",
+    "gps": null
+  },
+  {
+    "id": "b2DE",
+    "name": "36v",
+    "gps": null
+  },
+  {
+    "id": "b2D9",
+    "name": "676560",
+    "gps": null
+  },
+  {
+    "id": "b2E0",
+    "name": "R111",
+    "gps": null
+  },
+  {
+    "id": "b2DA",
+    "name": "R26",
+    "gps": null
+  },
+  {
+    "id": "b2EB",
+    "name": "R44",
+    "gps": null
+  },
+  {
+    "id": "b2DD",
+    "name": "R90",
+    "gps": null
+  },
+  {
+    "id": "b2D8",
+    "name": "V30491",
+    "gps": null
+  },
+  {
+    "id": "b35F",
+    "name": "759",
+    "gps": null
+  },
+  {
+    "id": "b358",
+    "name": "V539438",
+    "gps": null
+  },
+  {
+    "id": "b360",
+    "name": "WR70",
+    "gps": null
+  },
+  {
+    "id": "b359",
+    "name": "WR84",
+    "gps": null
+  },
+  {
+    "id": "b371",
+    "name": "Wr82",
+    "gps": null
+  },
+  {
+    "id": "b35C",
+    "name": "83",
+    "gps": null
+  },
+  {
+    "id": "b35E",
+    "name": "R106",
+    "gps": null
+  },
+  {
+    "id": "b372",
+    "name": "R20",
+    "gps": null
+  },
+  {
+    "id": "b373",
+    "name": "R37",
+    "gps": null
+  },
+  {
+    "id": "b35B",
+    "name": "539",
+    "gps": null
+  },
+  {
+    "id": "b35D",
+    "name": "53R466",
+    "gps": null
+  },
+  {
+    "id": "b31F",
+    "name": "53h327",
+    "gps": null
+  },
+  {
+    "id": "b351",
+    "name": "R52",
+    "gps": null
+  },
+  {
+    "id": "b370",
+    "name": "R80",
+    "gps": null
+  },
+  {
+    "id": "b332",
+    "name": "V 30734",
+    "gps": null
+  },
+  {
+    "id": "b36F",
+    "name": "V30404",
+    "gps": null
+  },
+  {
+    "id": "b35A",
+    "name": "V30941",
+    "gps": null
+  },
+  {
+    "id": "bCC",
+    "name": "DFA 30 - MW 4526",
+    "gps": {
+      "latitude": 49.251099,
+      "longitude": -123.095322,
+      "dateTime": "2019-01-10T20:51:39.063Z"
+    }
+  },
+  {
+    "id": "b41B",
+    "name": "100 T",
+    "gps": null
+  },
+  {
+    "id": "b272",
+    "name": "53d7712",
+    "gps": null
+  },
+  {
+    "id": "b271",
+    "name": "53h7717",
+    "gps": null
+  },
+  {
+    "id": "b273",
+    "name": "53h7724",
+    "gps": null
+  },
+  {
+    "id": "b270",
+    "name": "63h7717",
+    "gps": null
+  },
+  {
+    "id": "b28E",
+    "name": "Vo3570",
+    "gps": null
+  },
+  {
+    "id": "b290",
+    "name": "Vo3573",
+    "gps": null
+  },
+  {
+    "id": "b46D",
+    "name": "676561 Pup ",
+    "gps": {
+      "latitude": 49.160683,
+      "longitude": -122.964813,
+      "dateTime": "2026-05-09T17:01:24.000Z"
+    }
+  },
+  {
+    "id": "b29D",
+    "name": "H53557",
+    "gps": null
+  },
+  {
+    "id": "b2A1",
+    "name": "H53559",
+    "gps": null
+  },
+  {
+    "id": "b275",
+    "name": "R58 aqua",
+    "gps": null
+  },
+  {
+    "id": "b28D",
+    "name": "V03570",
+    "gps": null
+  },
+  {
+    "id": "b291",
+    "name": "V03573",
+    "gps": null
+  },
+  {
+    "id": "b293",
+    "name": "V05373",
+    "gps": null
+  },
+  {
+    "id": "b274",
+    "name": "V30367",
+    "gps": null
+  },
+  {
+    "id": "b28F",
+    "name": "4818229",
+    "gps": null
+  },
+  {
+    "id": "b292",
+    "name": "5340674",
+    "gps": null
+  },
+  {
+    "id": "b29B",
+    "name": "539437",
+    "gps": null
+  },
+  {
+    "id": "b29E",
+    "name": "53d7632",
+    "gps": null
+  },
+  {
+    "id": "b29C",
+    "name": "53d7701",
+    "gps": null
+  },
+  {
+    "id": "b29F",
+    "name": "53h285",
+    "gps": null
+  },
+  {
+    "id": "b294",
+    "name": "V31382",
+    "gps": null
+  },
+  {
+    "id": "b2A0",
+    "name": "V53750",
+    "gps": null
+  },
+  {
+    "id": "b2C2",
+    "name": "V53759 (DF)",
+    "gps": null
+  },
+  {
+    "id": "b2A2",
+    "name": "V53957",
+    "gps": null
+  },
+  {
+    "id": "b2A3",
+    "name": "G32689",
+    "gps": null
+  },
+  {
+    "id": "b2E4",
+    "name": "R 87",
+    "gps": null
+  },
+  {
+    "id": "b2D6",
+    "name": "40v018",
+    "gps": null
+  },
+  {
+    "id": "b2C9",
+    "name": "R103",
+    "gps": null
+  },
+  {
+    "id": "b2C8",
+    "name": "V30096",
+    "gps": null
+  },
+  {
+    "id": "b2CB",
+    "name": "V30133 westons",
+    "gps": null
+  },
+  {
+    "id": "b2C7",
+    "name": "V30258 (Weston\u2019s)",
+    "gps": null
+  },
+  {
+    "id": "b2C3",
+    "name": "V30365 (Weston\u2019s)",
+    "gps": null
+  },
+  {
+    "id": "b2C1",
+    "name": "V30484 (Weston\u2019s)",
+    "gps": null
+  },
+  {
+    "id": "b2C0",
+    "name": "V30724 (Weston\u2019s)",
+    "gps": null
+  },
+  {
+    "id": "b2BE",
+    "name": "V30734 (Weston\u2019s)",
+    "gps": null
+  },
+  {
+    "id": "b2CA",
+    "name": "V30790",
+    "gps": null
+  },
+  {
+    "id": "b2D5",
+    "name": "V30944",
+    "gps": null
+  },
+  {
+    "id": "b412",
+    "name": "100T DANFOSS",
+    "gps": null
+  },
+  {
+    "id": "b2E7",
+    "name": "R 110",
+    "gps": null
+  },
+  {
+    "id": "b2E6",
+    "name": "R 43",
+    "gps": null
+  },
+  {
+    "id": "b2E9",
+    "name": "R107",
+    "gps": null
+  },
+  {
+    "id": "b2E8",
+    "name": "R40",
+    "gps": null
+  },
+  {
+    "id": "b302",
+    "name": "R104",
+    "gps": null
+  },
+  {
+    "id": "b2F2",
+    "name": "R113",
+    "gps": null
+  },
+  {
+    "id": "b300",
+    "name": "R114",
+    "gps": null
+  },
+  {
+    "id": "b2F3",
+    "name": "R41",
+    "gps": null
+  },
+  {
+    "id": "b303",
+    "name": "R43",
+    "gps": null
+  },
+  {
+    "id": "b2FC",
+    "name": "R67",
+    "gps": null
+  },
+  {
+    "id": "b304",
+    "name": "R71",
+    "gps": null
+  },
+  {
+    "id": "b2FD",
+    "name": "R88",
+    "gps": null
+  },
+  {
+    "id": "b2F4",
+    "name": "R91",
+    "gps": null
+  },
+  {
+    "id": "b318",
+    "name": "Ws 4009",
+    "gps": null
+  },
+  {
+    "id": "b31A",
+    "name": "Ws4009",
+    "gps": null
+  },
+  {
+    "id": "b31D",
+    "name": "FR192",
+    "gps": null
+  },
+  {
+    "id": "b316",
+    "name": "G",
+    "gps": null
+  },
+  {
+    "id": "b307",
+    "name": "R110",
+    "gps": null
+  },
+  {
+    "id": "b32D",
+    "name": "R112",
+    "gps": null
+  },
+  {
+    "id": "b32B",
+    "name": "R24",
+    "gps": null
+  },
+  {
+    "id": "b32E",
+    "name": "R53",
+    "gps": null
+  },
+  {
+    "id": "b30E",
+    "name": "53H285",
+    "gps": null
+  },
+  {
+    "id": "b31B",
+    "name": "53h240",
+    "gps": null
+  },
+  {
+    "id": "b319",
+    "name": "53h264",
+    "gps": null
+  },
+  {
+    "id": "b31E",
+    "name": "53h293",
+    "gps": null
+  },
+  {
+    "id": "b315",
+    "name": "R84",
+    "gps": null
+  },
+  {
+    "id": "b306",
+    "name": "R87",
+    "gps": null
+  },
+  {
+    "id": "b31C",
+    "name": "V300",
+    "gps": null
+  },
+  {
+    "id": "b317",
+    "name": "V3009",
+    "gps": null
+  },
+  {
+    "id": "b30F",
+    "name": "V30096",
+    "gps": null
+  },
+  {
+    "id": "b305",
+    "name": "V31347",
+    "gps": null
+  },
+  {
+    "id": "b3D7",
+    "name": "707804",
+    "gps": null
+  },
+  {
+    "id": "b7B",
+    "name": "DFA 05 - MW 4527",
+    "gps": {
+      "latitude": 49.269581,
+      "longitude": -123.105385,
+      "dateTime": "2019-01-10T20:38:01.063Z"
+    }
+  },
+  {
+    "id": "b330",
+    "name": "R18",
+    "gps": null
+  },
+  {
+    "id": "b331",
+    "name": "R34",
+    "gps": null
+  },
+  {
+    "id": "b32F",
+    "name": "V 30365",
+    "gps": null
+  },
+  {
+    "id": "b347",
+    "name": "10",
+    "gps": null
+  },
+  {
+    "id": "b86",
+    "name": "DFA 15 - LY 0324",
+    "gps": {
+      "latitude": 49.267994,
+      "longitude": -123.117622,
+      "dateTime": "2018-08-28T17:39:55.000Z"
+    }
+  },
+  {
+    "id": "b416",
+    "name": "102T",
+    "gps": null
+  },
+  {
+    "id": "b348",
+    "name": "53h557",
+    "gps": null
+  },
+  {
+    "id": "bDD",
+    "name": "DFA 17 - MW 4517",
+    "gps": null
+  },
+  {
+    "id": "b6B",
+    "name": "DFA 28 - LY 0263",
+    "gps": {
+      "latitude": 49.246181,
+      "longitude": -122.947945,
+      "dateTime": "2018-07-06T16:41:04.000Z"
+    }
+  },
+  {
+    "id": "b73",
+    "name": "DFA 37 - LT 3537",
+    "gps": {
+      "latitude": 49.248768,
+      "longitude": -123.016678,
+      "dateTime": "2018-08-28T17:14:42.063Z"
+    }
+  },
+  {
+    "id": "b2E5",
+    "name": "17",
+    "gps": null
+  },
+  {
+    "id": "b41",
+    "name": "WRC 539438 (Dry Trailer) Reg # 10021557",
+    "gps": {
+      "latitude": 49.142399,
+      "longitude": -123.004158,
+      "dateTime": "2020-05-06T12:45:31.000Z"
+    }
+  },
+  {
+    "id": "b103",
+    "name": "62*",
+    "gps": {
+      "latitude": 49.16288,
+      "longitude": -122.972878,
+      "dateTime": "2020-07-09T00:11:54.063Z"
+    }
+  },
+  {
+    "id": "b427",
+    "name": "101 T",
+    "gps": null
+  },
+  {
+    "id": "b4A",
+    "name": "DF 40V018 (Trailer - Dry)",
+    "gps": {
+      "latitude": 49.161064,
+      "longitude": -122.964378,
+      "dateTime": "2019-05-28T10:30:14.000Z"
+    }
+  },
+  {
+    "id": "b472",
+    "name": "556 DFNA",
+    "gps": {
+      "latitude": 49.972919,
+      "longitude": -125.245316,
+      "dateTime": "2026-05-09T20:40:47.967Z"
+    }
+  },
+  {
+    "id": "b4B",
+    "name": "DF 86T (Trailer - Dry - 48ft) Reg # 00409302",
+    "gps": {
+      "latitude": 49.172302,
+      "longitude": -122.95488,
+      "dateTime": "2020-03-20T21:55:24.000Z"
+    }
+  },
+  {
+    "id": "b58",
+    "name": "DF 53V353 (Trailer - Dry)",
+    "gps": {
+      "latitude": 49.151386,
+      "longitude": -122.938187,
+      "dateTime": "2020-02-05T23:44:04.000Z"
+    }
+  },
+  {
+    "id": "b5B",
+    "name": "DF V53417 (Trailer - Dry)",
+    "gps": {
+      "latitude": 49.160603,
+      "longitude": -122.964661,
+      "dateTime": "2019-06-12T17:14:06.000Z"
+    }
+  },
+  {
+    "id": "b62F",
+    "name": "DFNA - 59",
+    "gps": {
+      "latitude": 49.302925,
+      "longitude": -124.448845,
+      "dateTime": "2026-05-09T20:54:14.000Z"
+    }
+  },
+  {
+    "id": "b91",
+    "name": "202 DFNA - SPARE",
+    "gps": {
+      "latitude": 49.220303,
+      "longitude": -122.646958,
+      "dateTime": "2022-01-27T23:44:11.027Z"
+    }
+  },
+  {
+    "id": "b256",
+    "name": "V53773",
+    "gps": null
+  },
+  {
+    "id": "b5C",
+    "name": "DF V53773 (Trailer - Dry)",
+    "gps": {
+      "latitude": 48.565479,
+      "longitude": -123.413712,
+      "dateTime": "2020-03-25T12:29:07.000Z"
+    }
+  },
+  {
+    "id": "b48C",
+    "name": "68 SOLD",
+    "gps": {
+      "latitude": 49.193241,
+      "longitude": -122.933815,
+      "dateTime": "2025-05-29T03:27:00.063Z"
+    }
+  },
+  {
+    "id": "b3EC",
+    "name": "R 49",
+    "gps": null
+  },
+  {
+    "id": "b258",
+    "name": "53v353",
+    "gps": null
+  },
+  {
+    "id": "b257",
+    "name": "676560",
+    "gps": null
+  },
+  {
+    "id": "b3ED",
+    "name": "R98",
+    "gps": null
+  },
+  {
+    "id": "b255",
+    "name": "V53417",
+    "gps": null
+  },
+  {
+    "id": "b349",
+    "name": "V53729",
+    "gps": null
+  },
+  {
+    "id": "b34C",
+    "name": "R47",
+    "gps": null
+  },
+  {
+    "id": "b34D",
+    "name": "R49",
+    "gps": null
+  },
+  {
+    "id": "bB5",
+    "name": "204h DFNA",
+    "gps": {
+      "latitude": 49.247863,
+      "longitude": -122.761215,
+      "dateTime": "2022-09-07T22:35:51.027Z"
+    }
+  },
+  {
+    "id": "b26",
+    "name": "93 sold Gtab suspended",
+    "gps": {
+      "latitude": 49.163265,
+      "longitude": -122.97316,
+      "dateTime": "2020-04-20T16:31:20.063Z"
+    }
+  },
+  {
+    "id": "b34F",
+    "name": "R66",
+    "gps": null
+  },
+  {
+    "id": "b361",
+    "name": "30096",
+    "gps": null
+  },
+  {
+    "id": "b28A",
+    "name": "4292",
+    "gps": null
+  },
+  {
+    "id": "b34E",
+    "name": "53H7718",
+    "gps": null
+  },
+  {
+    "id": "b34A",
+    "name": "53r660",
+    "gps": null
+  },
+  {
+    "id": "b34B",
+    "name": "R82",
+    "gps": null
+  },
+  {
+    "id": "b48F",
+    "name": "526 DFNA",
+    "gps": {
+      "latitude": 49.697285,
+      "longitude": -124.953316,
+      "dateTime": "2026-05-09T20:53:25.000Z"
+    }
+  },
+  {
+    "id": "b25B",
+    "name": "V215",
+    "gps": null
+  },
+  {
+    "id": "b350",
+    "name": "V30374",
+    "gps": null
+  },
+  {
+    "id": "b25A",
+    "name": "40V018",
+    "gps": null
+  },
+  {
+    "id": "b29A",
+    "name": "4173",
+    "gps": null
+  },
+  {
+    "id": "b355",
+    "name": "53D7708",
+    "gps": null
+  },
+  {
+    "id": "b1A3",
+    "name": "DFN - 35 NANAIMO 3TON terminate",
+    "gps": null
+  },
+  {
+    "id": "b1DE",
+    "name": "572 FOR SALE",
+    "gps": {
+      "latitude": 49.207114,
+      "longitude": -123.141731,
+      "dateTime": "2024-01-16T00:19:05.013Z"
+    }
+  },
+  {
+    "id": "b2A",
+    "name": "CC 90 Gtab suspended",
+    "gps": {
+      "latitude": 49.160191,
+      "longitude": -122.964867,
+      "dateTime": "2020-02-27T21:55:33.063Z"
+    }
+  },
+  {
+    "id": "b473",
+    "name": "Rra5370575",
+    "gps": null
+  },
+  {
+    "id": "b3E",
+    "name": "DFA 13 - MW 4524",
+    "gps": {
+      "latitude": 49.252659,
+      "longitude": -122.957825,
+      "dateTime": "2018-08-18T18:17:50.000Z"
+    }
+  },
+  {
+    "id": "b1A",
+    "name": "Removed device 92 Steve's Desk.",
+    "gps": {
+      "latitude": 49.163239,
+      "longitude": -122.973129,
+      "dateTime": "2020-03-02T18:37:27.000Z"
+    }
+  },
+  {
+    "id": "b67",
+    "name": "zzz  DFA 18 - MG 2878",
+    "gps": {
+      "latitude": 49.245926,
+      "longitude": -122.947609,
+      "dateTime": "2018-04-30T22:31:54.063Z"
+    }
+  },
+  {
+    "id": "b62",
+    "name": "zzz DFA 102 - MG 2877",
+    "gps": {
+      "latitude": 49.246056,
+      "longitude": -122.94751,
+      "dateTime": "2018-07-09T01:59:42.063Z"
+    }
+  },
+  {
+    "id": "bC",
+    "name": "89 sold, Gtab suspended",
+    "gps": {
+      "latitude": 49.163288,
+      "longitude": -122.972855,
+      "dateTime": "2020-04-20T16:31:54.127Z"
+    }
+  },
+  {
+    "id": "b18A",
+    "name": "Broken go 9 from 4x4 geotab sending a replacement",
+    "gps": {
+      "latitude": 49.248436,
+      "longitude": -122.924751,
+      "dateTime": "2019-12-05T22:51:50.000Z"
+    }
+  },
+  {
+    "id": "b18B",
+    "name": "Silver 4X4 PA-0913",
+    "gps": {
+      "latitude": 49.160706,
+      "longitude": -122.965866,
+      "dateTime": "2019-12-23T17:50:58.000Z"
+    }
+  },
+  {
+    "id": "b9D",
+    "name": "xx CC 221 (ICBC claim write off) unplugged",
+    "gps": {
+      "latitude": 49.236454,
+      "longitude": -124.041138,
+      "dateTime": "2019-09-09T20:03:39.000Z"
+    }
+  },
+  {
+    "id": "b37B",
+    "name": "MT02",
+    "gps": null
+  },
+  {
+    "id": "b25C",
+    "name": "539438",
+    "gps": null
+  },
+  {
+    "id": "b25D",
+    "name": "53H336",
+    "gps": null
+  },
+  {
+    "id": "b268",
+    "name": "53d7637",
+    "gps": null
+  },
+  {
+    "id": "b178",
+    "name": "229h DFNA",
+    "gps": {
+      "latitude": 49.322014,
+      "longitude": -124.337265,
+      "dateTime": "2026-05-09T20:54:33.000Z"
+    }
+  },
+  {
+    "id": "b123",
+    "name": "522",
+    "gps": {
+      "latitude": 49.2809486,
+      "longitude": -123.076988,
+      "dateTime": "2022-03-25T21:26:11.797Z"
+    }
+  },
+  {
+    "id": "bF8",
+    "name": "JP - DFA 55 - NA 9709",
+    "gps": null
+  },
+  {
+    "id": "b146",
+    "name": "69",
+    "gps": {
+      "latitude": 49.163239,
+      "longitude": -122.973488,
+      "dateTime": "2020-07-10T00:52:42.127Z"
+    }
+  },
+  {
+    "id": "b10",
+    "name": "97 SOLD UNIT go 7 on Steves desk",
+    "gps": {
+      "latitude": 49.160141,
+      "longitude": -122.965096,
+      "dateTime": "2020-03-11T22:14:05.000Z"
+    }
+  },
+  {
+    "id": "b102",
+    "name": "74  - Removed device - Van returned",
+    "gps": {
+      "latitude": 49.340824,
+      "longitude": -123.08503,
+      "dateTime": "2020-03-01T20:23:07.063Z"
+    }
+  },
+  {
+    "id": "b107",
+    "name": "DFA 90 - NC 5332",
+    "gps": {
+      "latitude": 49.160141,
+      "longitude": -122.964943,
+      "dateTime": "2019-02-18T20:15:59.127Z"
+    }
+  },
+  {
+    "id": "b1B",
+    "name": "102 DFNA",
+    "gps": {
+      "latitude": 49.219135,
+      "longitude": -123.949173,
+      "dateTime": "2026-05-09T20:50:22.867Z"
+    }
+  },
+  {
+    "id": "b11A",
+    "name": "Unknown device 48061 - NE 1240 - DF Rental",
+    "gps": {
+      "latitude": 49.275265,
+      "longitude": -123.201637,
+      "dateTime": "2019-11-24T00:42:20.137Z"
+    }
+  },
+  {
+    "id": "b417",
+    "name": "103T",
+    "gps": null
+  },
+  {
+    "id": "b9",
+    "name": "91 sold, Gtab suspended",
+    "gps": {
+      "latitude": 49.163239,
+      "longitude": -122.972855,
+      "dateTime": "2020-04-20T16:32:09.000Z"
+    }
+  },
+  {
+    "id": "b5F",
+    "name": "537 DFNA",
+    "gps": {
+      "latitude": 49.16019,
+      "longitude": -122.965815,
+      "dateTime": "2021-07-26T19:25:35.117Z"
+    }
+  },
+  {
+    "id": "b9E",
+    "name": "DFN 109 - Dave H - 1 TON ( Crtny, CR - O/O)",
+    "gps": {
+      "latitude": 49.141811,
+      "longitude": -123.930061,
+      "dateTime": "2018-04-06T14:23:33.063Z"
+    }
+  },
+  {
+    "id": "bF2",
+    "name": "AMZ- DFA 96 - NC 5358",
+    "gps": {
+      "latitude": 49.175911,
+      "longitude": -122.66729,
+      "dateTime": "2019-04-10T19:42:57.000Z"
+    }
+  },
+  {
+    "id": "bF0",
+    "name": "CVCT 65 - MY 3533",
+    "gps": {
+      "latitude": 49.245953,
+      "longitude": -122.947716,
+      "dateTime": "2019-02-14T19:51:03.063Z"
+    }
+  },
+  {
+    "id": "bF3",
+    "name": "73 - Removed device - Van returned",
+    "gps": {
+      "latitude": 49.254936,
+      "longitude": -122.915405,
+      "dateTime": "2020-03-04T01:53:46.063Z"
+    }
+  },
+  {
+    "id": "b459",
+    "name": "68",
+    "gps": {
+      "latitude": 49.322786,
+      "longitude": -123.038848,
+      "dateTime": "2024-01-31T23:14:31.320Z"
+    }
+  },
+  {
+    "id": "b489",
+    "name": "17-218",
+    "gps": null
+  },
+  {
+    "id": "b10A",
+    "name": "DFA - 81 - NA 9739",
+    "gps": {
+      "latitude": 49.223782,
+      "longitude": -123.10305,
+      "dateTime": "2019-01-18T21:21:41.127Z"
+    }
+  },
+  {
+    "id": "b68",
+    "name": "DFA 42 AMZ70 MY 3539",
+    "gps": {
+      "latitude": 49.247898,
+      "longitude": -123.111351,
+      "dateTime": "2019-01-10T20:52:47.000Z"
+    }
+  },
+  {
+    "id": "b45A",
+    "name": "CNB Transport",
+    "gps": {
+      "latitude": 49.299301,
+      "longitude": -124.285828,
+      "dateTime": "2024-02-04T01:49:51.000Z"
+    }
+  },
+  {
+    "id": "bA",
+    "name": "86 sold Gtab suspended",
+    "gps": {
+      "latitude": 49.163315,
+      "longitude": -122.973083,
+      "dateTime": "2020-04-20T16:31:26.063Z"
+    }
+  },
+  {
+    "id": "b66",
+    "name": "zzz DFA 11 - LY 0319",
+    "gps": {
+      "latitude": 49.157658,
+      "longitude": -123.028069,
+      "dateTime": "2018-06-15T23:10:27.063Z"
+    }
+  },
+  {
+    "id": "b9B",
+    "name": "DFN 114 - Oleg B - 5 TON (Ucluelet - O/O)",
+    "gps": {
+      "latitude": 49.209702,
+      "longitude": -124.039734,
+      "dateTime": "2017-10-17T13:52:17.000Z"
+    }
+  },
+  {
+    "id": "b6C",
+    "name": "zzz DFA 06 - unassigned",
+    "gps": {
+      "latitude": 49.246105,
+      "longitude": -122.948044,
+      "dateTime": "2018-03-22T14:34:37.063Z"
+    }
+  },
+  {
+    "id": "bE",
+    "name": "zzz MG 2876",
+    "gps": {
+      "latitude": 49.254837,
+      "longitude": -122.915634,
+      "dateTime": "2018-11-10T01:09:54.063Z"
+    }
+  },
+  {
+    "id": "bA2",
+    "name": "zzz DFA 33 - MR 0187",
+    "gps": {
+      "latitude": 49.259136,
+      "longitude": -122.988213,
+      "dateTime": "2019-03-08T16:44:21.063Z"
+    }
+  },
+  {
+    "id": "b3A7",
+    "name": "Wr8",
+    "gps": null
+  },
+  {
+    "id": "b7D",
+    "name": "zzz LY 0278",
+    "gps": {
+      "latitude": 49.21933,
+      "longitude": -122.975464,
+      "dateTime": "2018-07-04T22:12:00.063Z"
+    }
+  },
+  {
+    "id": "b37",
+    "name": "CC 72 (Victoria)",
+    "gps": {
+      "latitude": 48.439091,
+      "longitude": -123.370934,
+      "dateTime": "2019-05-22T22:24:57.000Z"
+    }
+  },
+  {
+    "id": "b8A",
+    "name": "DFN 38 (3 Ton)",
+    "gps": {
+      "latitude": 49.246849,
+      "longitude": -124.088318,
+      "dateTime": "2018-10-22T16:22:26.000Z"
+    }
+  },
+  {
+    "id": "b8BE",
+    "name": "Wr98",
+    "gps": null
+  },
+  {
+    "id": "b21",
+    "name": "WRC 539436 (Dry Trailer) Reg # 10019767",
+    "gps": {
+      "latitude": 49.160805,
+      "longitude": -122.965195,
+      "dateTime": "2020-03-24T04:09:58.000Z"
+    }
+  },
+  {
+    "id": "b78",
+    "name": "zzz terminated DFV 008 (Tristen - Sprinter) NEW",
+    "gps": {
+      "latitude": 48.564377,
+      "longitude": -123.407898,
+      "dateTime": "2018-07-10T22:44:31.063Z"
+    }
+  },
+  {
+    "id": "b17",
+    "name": "VIC Back up  78 - DC 7092 TC",
+    "gps": {
+      "latitude": 48.446182,
+      "longitude": -123.424484,
+      "dateTime": "2020-04-09T21:53:38.063Z"
+    }
+  },
+  {
+    "id": "b39",
+    "name": "WRC 539435 (Dry Trailer) Reg # 10019763",
+    "gps": {
+      "latitude": 48.999859,
+      "longitude": -122.734901,
+      "dateTime": "2020-02-15T05:21:03.000Z"
+    }
+  },
+  {
+    "id": "b89",
+    "name": "DFN 39 (3 Ton)",
+    "gps": {
+      "latitude": 49.141708,
+      "longitude": -123.930519,
+      "dateTime": "2018-10-18T21:39:19.000Z"
+    }
+  },
+  {
+    "id": "b5E",
+    "name": "ZZ Terminated DFV 026",
+    "gps": {
+      "latitude": 48.566887,
+      "longitude": -123.418648,
+      "dateTime": "2017-07-14T22:57:54.063Z"
+    }
+  },
+  {
+    "id": "bDF",
+    "name": "49 Write off accident",
+    "gps": {
+      "latitude": 49.254936,
+      "longitude": -122.915492,
+      "dateTime": "2020-12-01T17:43:07.057Z"
+    }
+  },
+  {
+    "id": "b13",
+    "name": "zzz CC 81 (Amazon) - MN0081",
+    "gps": {
+      "latitude": 49.160805,
+      "longitude": -122.965836,
+      "dateTime": "2018-07-05T17:17:18.063Z"
+    }
+  },
+  {
+    "id": "bA3",
+    "name": "xxx DFV 001 (Van - Todd) terminated",
+    "gps": {
+      "latitude": 48.41531,
+      "longitude": -123.357132,
+      "dateTime": "2018-06-03T10:08:50.063Z"
+    }
+  },
+  {
+    "id": "b99",
+    "name": "ZZ terminated",
+    "gps": {
+      "latitude": 49.231411,
+      "longitude": -121.897163,
+      "dateTime": "2018-03-26T00:48:56.063Z"
+    }
+  },
+  {
+    "id": "b17C",
+    "name": "551 DFNA",
+    "gps": {
+      "latitude": 49.264051,
+      "longitude": -122.994971,
+      "dateTime": "2024-03-27T19:22:26.007Z"
+    }
+  },
+  {
+    "id": "b4F7",
+    "name": "600 DFNA",
+    "gps": {
+      "latitude": 49.211418,
+      "longitude": -124.011482,
+      "dateTime": "2026-05-09T20:54:27.000Z"
+    }
+  },
+  {
+    "id": "b1DC",
+    "name": "New vehicle (G76C20FC3C8C previously in 68)...",
+    "gps": {
+      "latitude": 49.264309,
+      "longitude": -123.012352,
+      "dateTime": "2020-11-21T21:32:23.000Z"
+    }
+  },
+  {
+    "id": "b180",
+    "name": "553 Sold tab with neil",
+    "gps": {
+      "latitude": 49.1605263,
+      "longitude": -122.964432,
+      "dateTime": "2022-03-18T03:30:48.000Z"
+    }
+  },
+  {
+    "id": "bB7",
+    "name": "DFV 443 (CNG Tractor) -> Auction",
+    "gps": {
+      "latitude": 49.039768,
+      "longitude": -123.864067,
+      "dateTime": "2024-08-15T20:18:08.000Z"
+    }
+  },
+  {
+    "id": "b19A",
+    "name": "534",
+    "gps": {
+      "latitude": 49.1604233,
+      "longitude": -122.96553,
+      "dateTime": "2021-05-05T13:05:44.063Z"
+    }
+  },
+  {
+    "id": "b385",
+    "name": "R45",
+    "gps": null
+  },
+  {
+    "id": "b1EC",
+    "name": "550",
+    "gps": {
+      "latitude": 49.138741,
+      "longitude": -123.136665,
+      "dateTime": "2021-04-09T00:35:00.000Z"
+    }
+  },
+  {
+    "id": "b40D",
+    "name": "R10",
+    "gps": null
+  },
+  {
+    "id": "b51D",
+    "name": "598 DFNA",
+    "gps": {
+      "latitude": 49.244797,
+      "longitude": -124.049751,
+      "dateTime": "2026-05-09T20:54:34.000Z"
+    }
+  },
+  {
+    "id": "b3D3",
+    "name": "65 DFNA",
+    "gps": {
+      "latitude": 49.040546,
+      "longitude": -123.865295,
+      "dateTime": "2026-05-07T22:50:04.453Z"
+    }
+  },
+  {
+    "id": "b38",
+    "name": "DF 87T (Trailer - Dry - 48ft) Reg # 00441591",
+    "gps": {
+      "latitude": 49.171661,
+      "longitude": -122.954857,
+      "dateTime": "2020-05-07T06:00:58.000Z"
+    }
+  },
+  {
+    "id": "b4FC",
+    "name": "601 DFNA",
+    "gps": {
+      "latitude": 49.270512,
+      "longitude": -124.175766,
+      "dateTime": "2026-05-09T20:53:34.000Z"
+    }
+  },
+  {
+    "id": "b124",
+    "name": "523 DFNA",
+    "gps": {
+      "latitude": 49.040306,
+      "longitude": -123.865807,
+      "dateTime": "2025-05-15T03:31:39.127Z"
+    }
+  },
+  {
+    "id": "b2BF",
+    "name": "36PG",
+    "gps": null
+  },
+  {
+    "id": "b12B",
+    "name": "528",
+    "gps": {
+      "latitude": 49.163086,
+      "longitude": -122.973236,
+      "dateTime": "2021-04-23T12:23:28.063Z"
+    }
+  },
+  {
+    "id": "b517",
+    "name": "596 DFNA",
+    "gps": {
+      "latitude": 49.040089,
+      "longitude": -123.866356,
+      "dateTime": "2026-05-06T22:02:14.000Z"
+    }
+  },
+  {
+    "id": "b26B",
+    "name": "87 danfoss",
+    "gps": null
+  },
+  {
+    "id": "b1E9",
+    "name": "Harpreet Valley 594 Penske rental 350906",
+    "gps": {
+      "latitude": 49.18108,
+      "longitude": -122.931274,
+      "dateTime": "2021-09-13T23:49:15.063Z"
+    }
+  },
+  {
+    "id": "b26A",
+    "name": "V30219",
+    "gps": null
+  },
+  {
+    "id": "b374",
+    "name": "30404",
+    "gps": null
+  },
+  {
+    "id": "b269",
+    "name": "53d7709",
+    "gps": null
+  },
+  {
+    "id": "b26C",
+    "name": "53h7723",
+    "gps": null
+  },
+  {
+    "id": "b1CF",
+    "name": "WRC Trailer 539438",
+    "gps": {
+      "latitude": 49.002077,
+      "longitude": -122.733679,
+      "dateTime": "2026-04-27T22:33:11.704Z"
+    }
+  },
+  {
+    "id": "b2A7",
+    "name": "53d7714",
+    "gps": null
+  },
+  {
+    "id": "b498",
+    "name": "DFN 258 - IX (Jeffrey)",
+    "gps": {
+      "latitude": 49.121956,
+      "longitude": -123.925117,
+      "dateTime": "2026-05-08T22:49:19.563Z"
+    }
+  },
+  {
+    "id": "b320",
+    "name": "534660",
+    "gps": null
+  },
+  {
+    "id": "bA0",
+    "name": "35 1ton",
+    "gps": {
+      "latitude": 49.14222,
+      "longitude": -123.930473,
+      "dateTime": "2020-08-10T22:03:33.000Z"
+    }
+  },
+  {
+    "id": "b16D",
+    "name": "532 DFNA",
+    "gps": {
+      "latitude": 49.17898,
+      "longitude": -123.094148,
+      "dateTime": "2024-01-09T22:34:32.160Z"
+    }
+  },
+  {
+    "id": "b3",
+    "name": "87",
+    "gps": {
+      "latitude": 48.573082,
+      "longitude": -123.570045,
+      "dateTime": "2020-09-13T00:22:45.063Z"
+    }
+  },
+  {
+    "id": "b4",
+    "name": "220 DFNA",
+    "gps": {
+      "latitude": 49.040382,
+      "longitude": -123.865936,
+      "dateTime": "2024-05-01T03:02:17.063Z"
+    }
+  },
+  {
+    "id": "b48B",
+    "name": "68",
+    "gps": {
+      "latitude": 49.211647,
+      "longitude": -122.684189,
+      "dateTime": "2024-06-25T02:40:05.063Z"
+    }
+  },
+  {
+    "id": "b58E",
+    "name": "549 DFNA",
+    "gps": {
+      "latitude": 49.040405,
+      "longitude": -123.865791,
+      "dateTime": "2026-05-09T16:48:53.440Z"
+    }
+  },
+  {
+    "id": "b438",
+    "name": "68",
+    "gps": {
+      "latitude": 49.244801,
+      "longitude": -122.984245,
+      "dateTime": "2023-11-24T01:26:27.127Z"
+    }
+  },
+  {
+    "id": "b26E",
+    "name": "3993",
+    "gps": null
+  },
+  {
+    "id": "b26F",
+    "name": "676606",
+    "gps": null
+  },
+  {
+    "id": "b26D",
+    "name": "53d7667",
+    "gps": null
+  },
+  {
+    "id": "b27A",
+    "name": "53h7716",
+    "gps": null
+  },
+  {
+    "id": "b27D",
+    "name": "84",
+    "gps": null
+  },
+  {
+    "id": "bBF",
+    "name": "214 DFNA",
+    "gps": {
+      "latitude": 49.107632,
+      "longitude": -123.893311,
+      "dateTime": "2026-04-23T23:51:36.000Z"
+    }
+  },
+  {
+    "id": "b426",
+    "name": "102",
+    "gps": null
+  },
+  {
+    "id": "bFD",
+    "name": "54 DFNA",
+    "gps": {
+      "latitude": 49.317795,
+      "longitude": -124.324074,
+      "dateTime": "2026-05-09T20:51:43.900Z"
+    }
+  },
+  {
+    "id": "b27B",
+    "name": "R71",
+    "gps": null
+  },
+  {
+    "id": "b27E",
+    "name": "537667",
+    "gps": null
+  },
+  {
+    "id": "b27C",
+    "name": "53d7703",
+    "gps": null
+  },
+  {
+    "id": "b13E",
+    "name": "530 DFNA",
+    "gps": {
+      "latitude": 49.011787,
+      "longitude": -123.841408,
+      "dateTime": "2024-04-08T18:10:16.000Z"
+    }
+  },
+  {
+    "id": "bE4",
+    "name": "DFN 005 - MCK. SPARE",
+    "gps": {
+      "latitude": 49.330234,
+      "longitude": -124.344133,
+      "dateTime": "2021-03-26T16:39:21.023Z"
+    }
+  },
+  {
+    "id": "b108",
+    "name": "64 Parts Van DFNA (No Geotab)",
+    "gps": {
+      "latitude": 49.040302,
+      "longitude": -123.866776,
+      "dateTime": "2025-07-02T17:38:50.000Z"
+    }
+  },
+  {
+    "id": "b10D",
+    "name": "501 @ storage",
+    "gps": {
+      "latitude": 49.25568,
+      "longitude": -122.913421,
+      "dateTime": "2020-10-07T19:34:35.340Z"
+    }
+  },
+  {
+    "id": "b31",
+    "name": "201 DFNA",
+    "gps": {
+      "latitude": 49.858291,
+      "longitude": -125.114759,
+      "dateTime": "2021-07-14T13:48:43.800Z"
+    }
+  },
+  {
+    "id": "b27F",
+    "name": "85",
+    "gps": null
+  },
+  {
+    "id": "b1A1",
+    "name": "541 @ storage",
+    "gps": {
+      "latitude": 49.1606522,
+      "longitude": -122.964478,
+      "dateTime": "2022-03-31T20:00:59.063Z"
+    }
+  },
+  {
+    "id": "b282",
+    "name": "A53549",
+    "gps": null
+  },
+  {
+    "id": "b3AA",
+    "name": "53r466",
+    "gps": null
+  },
+  {
+    "id": "b281",
+    "name": "581462",
+    "gps": null
+  },
+  {
+    "id": "b280",
+    "name": "Ats",
+    "gps": null
+  },
+  {
+    "id": "b10F",
+    "name": "503 DFNA",
+    "gps": {
+      "latitude": 49.107536,
+      "longitude": -123.893349,
+      "dateTime": "2026-04-13T18:44:00.000Z"
+    }
+  },
+  {
+    "id": "b106",
+    "name": "67 DFNA",
+    "gps": {
+      "latitude": 49.717514,
+      "longitude": -124.996559,
+      "dateTime": "2026-05-09T20:53:38.000Z"
+    }
+  },
+  {
+    "id": "b414",
+    "name": "Mh-04",
+    "gps": null
+  },
+  {
+    "id": "b112",
+    "name": "504 DFNA",
+    "gps": {
+      "latitude": 49.205559,
+      "longitude": -123.038109,
+      "dateTime": "2024-04-13T21:31:02.653Z"
+    }
+  },
+  {
+    "id": "b71",
+    "name": "CC 200 (DFN spare )",
+    "gps": {
+      "latitude": 49.196926,
+      "longitude": -124.020943,
+      "dateTime": "2025-03-31T23:22:09.000Z"
+    }
+  },
+  {
+    "id": "b401",
+    "name": "546 DFNA",
+    "gps": {
+      "latitude": 49.040546,
+      "longitude": -123.865089,
+      "dateTime": "2026-05-07T06:23:05.000Z"
+    }
+  },
+  {
+    "id": "b5AA",
+    "name": "521 DFNA",
+    "gps": {
+      "latitude": 49.214527,
+      "longitude": -124.024704,
+      "dateTime": "2026-05-09T20:45:25.990Z"
+    }
+  },
+  {
+    "id": "b41F",
+    "name": "100",
+    "gps": null
+  },
+  {
+    "id": "b114",
+    "name": "566 DFNA",
+    "gps": {
+      "latitude": 49.303192,
+      "longitude": -124.84536,
+      "dateTime": "2026-05-09T20:54:30.000Z"
+    }
+  },
+  {
+    "id": "b433",
+    "name": "New vehicle (G76C20FC3C8C previously in 68)...",
+    "gps": {
+      "latitude": 49.28466,
+      "longitude": -123.029198,
+      "dateTime": "2023-10-04T18:22:30.000Z"
+    }
+  },
+  {
+    "id": "b1A4",
+    "name": "546",
+    "gps": {
+      "latitude": 49.3460236,
+      "longitude": -123.030449,
+      "dateTime": "2023-03-07T20:25:57.177Z"
+    }
+  },
+  {
+    "id": "b115",
+    "name": "506 DFNA",
+    "gps": {
+      "latitude": 49.25555,
+      "longitude": -122.915482,
+      "dateTime": "2021-06-28T01:53:52.110Z"
+    }
+  },
+  {
+    "id": "b420",
+    "name": "89",
+    "gps": null
+  },
+  {
+    "id": "b1DB",
+    "name": "577 DFNA",
+    "gps": {
+      "latitude": 49.107468,
+      "longitude": -123.892838,
+      "dateTime": "2026-05-09T02:39:26.247Z"
+    }
+  },
+  {
+    "id": "b48A",
+    "name": "DFV 446 (Bill)",
+    "gps": {
+      "latitude": 48.565651,
+      "longitude": -123.413681,
+      "dateTime": "2026-05-09T00:43:27.390Z"
+    }
+  },
+  {
+    "id": "b20A",
+    "name": "60 DFNA",
+    "gps": {
+      "latitude": 49.353565,
+      "longitude": -124.365295,
+      "dateTime": "2026-05-09T20:40:51.623Z"
+    }
+  },
+  {
+    "id": "bFF",
+    "name": "DFV 59 ",
+    "gps": {
+      "latitude": 48.565327,
+      "longitude": -123.413658,
+      "dateTime": "2025-05-13T20:18:37.000Z"
+    }
+  },
+  {
+    "id": "b492",
+    "name": "0404",
+    "gps": null
+  },
+  {
+    "id": "b3C9",
+    "name": "570",
+    "gps": {
+      "latitude": 49.219151,
+      "longitude": -123.092735,
+      "dateTime": "2023-06-29T20:00:25.000Z"
+    }
+  },
+  {
+    "id": "b47E",
+    "name": "New vehicle (G76C20FC3C8C previously in New veh",
+    "gps": {
+      "latitude": 49.281818,
+      "longitude": -123.006927,
+      "dateTime": "2024-06-18T19:30:51.000Z"
+    }
+  },
+  {
+    "id": "b133",
+    "name": "212 DFNA (Gold River) @ repair shop (Transmission)",
+    "gps": {
+      "latitude": 49.667816,
+      "longitude": -124.981018,
+      "dateTime": "2021-03-12T22:42:06.707Z"
+    }
+  },
+  {
+    "id": "b450",
+    "name": "91358",
+    "gps": null
+  },
+  {
+    "id": "b449",
+    "name": "91360",
+    "gps": null
+  },
+  {
+    "id": "b128",
+    "name": "529",
+    "gps": {
+      "latitude": 49.160168,
+      "longitude": -122.965424,
+      "dateTime": "2021-04-13T06:23:03.063Z"
+    }
+  },
+  {
+    "id": "b44A",
+    "name": "91417",
+    "gps": null
+  },
+  {
+    "id": "b44B",
+    "name": "91513",
+    "gps": null
+  },
+  {
+    "id": "b283",
+    "name": "924285",
+    "gps": null
+  },
+  {
+    "id": "b287",
+    "name": "973303",
+    "gps": null
+  },
+  {
+    "id": "b2F7",
+    "name": "R102",
+    "gps": null
+  },
+  {
+    "id": "b2F5",
+    "name": "R14",
+    "gps": null
+  },
+  {
+    "id": "b288",
+    "name": "R55",
+    "gps": null
+  },
+  {
+    "id": "b295",
+    "name": "V30335",
+    "gps": null
+  },
+  {
+    "id": "b285",
+    "name": "V30995",
+    "gps": null
+  },
+  {
+    "id": "b296",
+    "name": "V31347",
+    "gps": null
+  },
+  {
+    "id": "b2A6",
+    "name": "V53495",
+    "gps": null
+  },
+  {
+    "id": "b298",
+    "name": "V53740",
+    "gps": null
+  },
+  {
+    "id": "b2A9",
+    "name": "430468",
+    "gps": null
+  },
+  {
+    "id": "b28C",
+    "name": "438",
+    "gps": null
+  },
+  {
+    "id": "b28B",
+    "name": "539436",
+    "gps": null
+  },
+  {
+    "id": "b2F1",
+    "name": "53D7703",
+    "gps": null
+  },
+  {
+    "id": "b2F6",
+    "name": "53H7721",
+    "gps": null
+  },
+  {
+    "id": "b286",
+    "name": "53r159",
+    "gps": null
+  },
+  {
+    "id": "b297",
+    "name": "53r163",
+    "gps": null
+  },
+  {
+    "id": "b299",
+    "name": "53r181",
+    "gps": null
+  },
+  {
+    "id": "b2A5",
+    "name": "53wp7388",
+    "gps": null
+  },
+  {
+    "id": "b289",
+    "name": "581456",
+    "gps": null
+  },
+  {
+    "id": "b284",
+    "name": "588783",
+    "gps": null
+  },
+  {
+    "id": "b3EB",
+    "name": "575",
+    "gps": {
+      "latitude": 49.2112389,
+      "longitude": -122.687233,
+      "dateTime": "2023-12-28T03:44:02.000Z"
+    }
+  },
+  {
+    "id": "b2FA",
+    "name": "88",
+    "gps": null
+  },
+  {
+    "id": "b3AF",
+    "name": "90",
+    "gps": null
+  },
+  {
+    "id": "b3AD",
+    "name": "93",
+    "gps": null
+  },
+  {
+    "id": "b310",
+    "name": "53h328",
+    "gps": null
+  },
+  {
+    "id": "b312",
+    "name": "53r259",
+    "gps": null
+  },
+  {
+    "id": "b321",
+    "name": "Fr 192",
+    "gps": null
+  },
+  {
+    "id": "b314",
+    "name": "H53554",
+    "gps": null
+  },
+  {
+    "id": "b30B",
+    "name": "R16",
+    "gps": null
+  },
+  {
+    "id": "b30D",
+    "name": "V 30126",
+    "gps": null
+  },
+  {
+    "id": "b30C",
+    "name": "V 53729",
+    "gps": null
+  },
+  {
+    "id": "b313",
+    "name": "V30561",
+    "gps": null
+  },
+  {
+    "id": "b311",
+    "name": "V30991",
+    "gps": null
+  },
+  {
+    "id": "bE2",
+    "name": "DFN 584 - DREW (IM)",
+    "gps": {
+      "latitude": 49.978416,
+      "longitude": -125.224739,
+      "dateTime": "2026-05-08T20:58:40.210Z"
+    }
+  },
+  {
+    "id": "b219",
+    "name": "DF 91 Trailer",
+    "gps": {
+      "latitude": 49.160709,
+      "longitude": -122.964966,
+      "dateTime": "2026-05-09T20:38:22.000Z"
+    }
+  },
+  {
+    "id": "b409",
+    "name": "New vehicle (G96321039DDC previously in 558)...",
+    "gps": {
+      "latitude": 49.271244,
+      "longitude": -123.062889,
+      "dateTime": "2023-05-14T18:34:23.187Z"
+    }
+  },
+  {
+    "id": "b267",
+    "name": "539435",
+    "gps": null
+  },
+  {
+    "id": "b136",
+    "name": "539 DFNA",
+    "gps": {
+      "latitude": 49.668964,
+      "longitude": -125.004211,
+      "dateTime": "2026-05-09T20:53:24.147Z"
+    }
+  },
+  {
+    "id": "b469",
+    "name": "RO9",
+    "gps": null
+  },
+  {
+    "id": "b157",
+    "name": "50 DFNA",
+    "gps": {
+      "latitude": 49.095848,
+      "longitude": -123.888969,
+      "dateTime": "2026-05-09T03:32:02.217Z"
+    }
+  },
+  {
+    "id": "b32C",
+    "name": "53H240",
+    "gps": null
+  },
+  {
+    "id": "b188",
+    "name": "558",
+    "gps": {
+      "latitude": 49.2731133,
+      "longitude": -123.008026,
+      "dateTime": "2023-05-10T19:09:14.187Z"
+    }
+  },
+  {
+    "id": "b11D",
+    "name": "516 DFNA",
+    "gps": {
+      "latitude": 49.142913,
+      "longitude": -123.030186,
+      "dateTime": "2022-03-24T19:36:25.023Z"
+    }
+  },
+  {
+    "id": "b437",
+    "name": "New vehicle (G76C20FC3C8C previously in New veh",
+    "gps": {
+      "latitude": 49.287628,
+      "longitude": -123.057152,
+      "dateTime": "2023-10-05T22:53:39.000Z"
+    }
+  },
+  {
+    "id": "b259",
+    "name": "53H462",
+    "gps": null
+  },
+  {
+    "id": "b2FB",
+    "name": "53v574",
+    "gps": null
+  },
+  {
+    "id": "b88",
+    "name": "511 DFNA",
+    "gps": {
+      "latitude": 49.48875,
+      "longitude": -124.809258,
+      "dateTime": "2026-05-09T20:54:31.000Z"
+    }
+  },
+  {
+    "id": "b176",
+    "name": "DFV 409 - Faron #50 (5 TON)",
+    "gps": {
+      "latitude": 48.56554,
+      "longitude": -123.413582,
+      "dateTime": "2026-05-08T23:56:17.803Z"
+    }
+  },
+  {
+    "id": "bF1",
+    "name": "513 DFNA",
+    "gps": {
+      "latitude": 49.673962,
+      "longitude": -124.94693,
+      "dateTime": "2026-05-09T20:53:48.423Z"
+    }
+  },
+  {
+    "id": "b183",
+    "name": "556",
+    "gps": {
+      "latitude": 49.257755,
+      "longitude": -123.000137,
+      "dateTime": "2024-04-21T17:20:24.000Z"
+    }
+  },
+  {
+    "id": "b212",
+    "name": "DF 53R230 Reefer Trailer",
+    "gps": {
+      "latitude": 49.160728,
+      "longitude": -122.965324,
+      "dateTime": "2023-01-14T16:57:40.000Z"
+    }
+  },
+  {
+    "id": "b1A6",
+    "name": "233 DFNA",
+    "gps": {
+      "latitude": 49.230069,
+      "longitude": -122.817015,
+      "dateTime": "2022-06-01T12:02:07.007Z"
+    }
+  },
+  {
+    "id": "b448",
+    "name": "MH03",
+    "gps": null
+  },
+  {
+    "id": "b215",
+    "name": "DF 53R466 Reefer Trailer",
+    "gps": {
+      "latitude": 49.160755,
+      "longitude": -122.965096,
+      "dateTime": "2023-01-14T16:16:03.000Z"
+    }
+  },
+  {
+    "id": "b18F",
+    "name": "559 DFNA",
+    "gps": {
+      "latitude": 49.230999,
+      "longitude": -123.192368,
+      "dateTime": "2024-01-11T20:33:18.013Z"
+    }
+  },
+  {
+    "id": "bF7",
+    "name": "52 DFNA",
+    "gps": {
+      "latitude": 49.289666,
+      "longitude": -123.141108,
+      "dateTime": "2021-04-17T18:58:55.637Z"
+    }
+  },
+  {
+    "id": "b482",
+    "name": "589 DFNA",
+    "gps": {
+      "latitude": 49.228661,
+      "longitude": -124.791382,
+      "dateTime": "2026-05-09T20:54:33.000Z"
+    }
+  },
+  {
+    "id": "b8B",
+    "name": "DFN 031 - 5-Ton (Manual) - OFFLOT",
+    "gps": {
+      "latitude": 49.040306,
+      "longitude": -123.865417,
+      "dateTime": "2025-12-09T21:10:37.063Z"
+    }
+  },
+  {
+    "id": "b182",
+    "name": "557 For Sale",
+    "gps": {
+      "latitude": 49.193298,
+      "longitude": -122.933914,
+      "dateTime": "2025-06-21T20:22:33.000Z"
+    }
+  },
+  {
+    "id": "b214",
+    "name": "DF 40V018 Pup Trailer",
+    "gps": {
+      "latitude": 49.151649,
+      "longitude": -122.938385,
+      "dateTime": "2026-03-03T10:47:10.000Z"
+    }
+  },
+  {
+    "id": "b1F2",
+    "name": "550 DFNA ",
+    "gps": {
+      "latitude": 49.04055,
+      "longitude": -123.865189,
+      "dateTime": "2026-05-08T23:09:09.693Z"
+    }
+  },
+  {
+    "id": "b20F",
+    "name": "DF 89 Reefer Trailer",
+    "gps": {
+      "latitude": 49.02972,
+      "longitude": -122.551308,
+      "dateTime": "2026-04-29T14:20:30.000Z"
+    }
+  },
+  {
+    "id": "bC3",
+    "name": "217 DFNA",
+    "gps": {
+      "latitude": 48.943771,
+      "longitude": -125.552589,
+      "dateTime": "2021-03-18T18:22:06.027Z"
+    }
+  },
+  {
+    "id": "b1BB",
+    "name": "CC 236 DFNA",
+    "gps": {
+      "latitude": 49.107567,
+      "longitude": -123.893005,
+      "dateTime": "2026-05-08T22:11:56.667Z"
+    }
+  },
+  {
+    "id": "b2D",
+    "name": "TIRES Truck 43",
+    "gps": {
+      "latitude": 49.243469,
+      "longitude": -124.807755,
+      "dateTime": "2022-08-29T01:14:53.063Z"
+    }
+  },
+  {
+    "id": "b1DF",
+    "name": "573 DFNA",
+    "gps": {
+      "latitude": 49.713863,
+      "longitude": -124.973671,
+      "dateTime": "2026-05-09T20:53:56.223Z"
+    }
+  },
+  {
+    "id": "b199",
+    "name": "550",
+    "gps": {
+      "latitude": 49.160831,
+      "longitude": -122.964325,
+      "dateTime": "2021-04-16T18:39:31.000Z"
+    }
+  },
+  {
+    "id": "b453",
+    "name": "R93",
+    "gps": null
+  },
+  {
+    "id": "b1E0",
+    "name": "569 (Selling)",
+    "gps": {
+      "latitude": 49.164902,
+      "longitude": -123.114523,
+      "dateTime": "2024-01-15T21:15:42.860Z"
+    }
+  },
+  {
+    "id": "b17A",
+    "name": "549",
+    "gps": {
+      "latitude": 49.240959,
+      "longitude": -122.761398,
+      "dateTime": "2023-11-21T03:02:53.000Z"
+    }
+  },
+  {
+    "id": "b8D4",
+    "name": "New vehicle (GA6N535KYJ60 previously in 551 DFN",
+    "gps": null
+  },
+  {
+    "id": "b1D9",
+    "name": "568 FOR SALE",
+    "gps": {
+      "latitude": 49.157249,
+      "longitude": -122.776245,
+      "dateTime": "2025-05-26T22:40:04.063Z"
+    }
+  },
+  {
+    "id": "b43B",
+    "name": "583",
+    "gps": {
+      "latitude": 49.160625,
+      "longitude": -122.965736,
+      "dateTime": "2023-12-16T00:54:20.063Z"
+    }
+  },
+  {
+    "id": "b46",
+    "name": "5 Ton O|O (Oleg)",
+    "gps": {
+      "latitude": 49.063938,
+      "longitude": -123.877052,
+      "dateTime": "2026-05-09T00:49:26.000Z"
+    }
+  },
+  {
+    "id": "b1F",
+    "name": "DFN 957 - SOLD",
+    "gps": {
+      "latitude": 49.200603,
+      "longitude": -122.879013,
+      "dateTime": "2026-04-06T20:56:38.000Z"
+    }
+  },
+  {
+    "id": "b4F4",
+    "name": "612 DFNA",
+    "gps": {
+      "latitude": 49.367455,
+      "longitude": -124.488106,
+      "dateTime": "2026-05-09T20:53:49.000Z"
+    }
+  },
+  {
+    "id": "b44E",
+    "name": "59240",
+    "gps": null
+  },
+  {
+    "id": "b206",
+    "name": "542 DFNA",
+    "gps": {
+      "latitude": 49.68634,
+      "longitude": -124.943581,
+      "dateTime": "2025-08-22T19:44:11.790Z"
+    }
+  },
+  {
+    "id": "b3F9",
+    "name": "68",
+    "gps": {
+      "latitude": 49.341698,
+      "longitude": -122.924004,
+      "dateTime": "2023-09-28T23:40:27.000Z"
+    }
+  },
+  {
+    "id": "b21C",
+    "name": "DF Trailer 90",
+    "gps": {
+      "latitude": 49.17189,
+      "longitude": -122.954987,
+      "dateTime": "2026-05-09T13:52:35.000Z"
+    }
+  },
+  {
+    "id": "b44C",
+    "name": "706494",
+    "gps": null
+  },
+  {
+    "id": "b11E",
+    "name": "517 for sale",
+    "gps": {
+      "latitude": 49.1606255,
+      "longitude": -122.964455,
+      "dateTime": "2022-04-28T03:30:59.000Z"
+    }
+  },
+  {
+    "id": "b3DD",
+    "name": "708886",
+    "gps": null
+  },
+  {
+    "id": "b1CC",
+    "name": "WRC Trailer 539435",
+    "gps": {
+      "latitude": 49.002077,
+      "longitude": -122.733954,
+      "dateTime": "2024-07-08T19:34:45.452Z"
+    }
+  },
+  {
+    "id": "b228",
+    "name": "DF Trailer 93",
+    "gps": {
+      "latitude": 49.171688,
+      "longitude": -122.954834,
+      "dateTime": "2026-05-09T13:30:04.000Z"
+    }
+  },
+  {
+    "id": "b17D",
+    "name": "552 storage",
+    "gps": {
+      "latitude": 49.1607056,
+      "longitude": -122.964378,
+      "dateTime": "2022-03-31T20:35:24.000Z"
+    }
+  },
+  {
+    "id": "b131",
+    "name": "535 @ storage",
+    "gps": {
+      "latitude": 49.1606255,
+      "longitude": -122.964378,
+      "dateTime": "2022-03-31T19:07:03.757Z"
+    }
+  },
+  {
+    "id": "b3B1",
+    "name": "91",
+    "gps": null
+  },
+  {
+    "id": "b38A",
+    "name": "560 DFNA",
+    "gps": {
+      "latitude": 49.216944,
+      "longitude": -123.119001,
+      "dateTime": "2022-04-17T22:34:41.007Z"
+    }
+  },
+  {
+    "id": "b33E",
+    "name": "R89",
+    "gps": null
+  },
+  {
+    "id": "b117",
+    "name": "509 DFNA",
+    "gps": {
+      "latitude": 49.137263,
+      "longitude": -123.018926,
+      "dateTime": "2021-09-28T14:27:12.300Z"
+    }
+  },
+  {
+    "id": "b38C",
+    "name": "522 DFNA",
+    "gps": {
+      "latitude": 49.652214,
+      "longitude": -124.980919,
+      "dateTime": "2026-05-09T20:54:20.967Z"
+    }
+  },
+  {
+    "id": "b442",
+    "name": "57 DFNA",
+    "gps": {
+      "latitude": 49.194904,
+      "longitude": -122.907158,
+      "dateTime": "2024-01-09T14:45:39.063Z"
+    }
+  },
+  {
+    "id": "b454",
+    "name": "FR195",
+    "gps": null
+  },
+  {
+    "id": "b3CB",
+    "name": "V30734",
+    "gps": null
+  },
+  {
+    "id": "b118",
+    "name": "510 DFNA",
+    "gps": {
+      "latitude": 49.210251,
+      "longitude": -124.003456,
+      "dateTime": "2026-05-09T20:51:43.797Z"
+    }
+  },
+  {
+    "id": "b3BB",
+    "name": "512 DFNA",
+    "gps": {
+      "latitude": 49.973,
+      "longitude": -125.245903,
+      "dateTime": "2026-05-09T20:38:54.987Z"
+    }
+  },
+  {
+    "id": "b493",
+    "name": "3040",
+    "gps": null
+  },
+  {
+    "id": "b5B3",
+    "name": "599 DFNA",
+    "gps": {
+      "latitude": 49.189888,
+      "longitude": -123.962341,
+      "dateTime": "2026-05-09T20:54:33.000Z"
+    }
+  },
+  {
+    "id": "b4D8",
+    "name": "592 DFNA",
+    "gps": {
+      "latitude": 49.235088,
+      "longitude": -124.027672,
+      "dateTime": "2026-05-09T20:51:51.410Z"
+    }
+  },
+  {
+    "id": "b11F",
+    "name": "518 DFNA ",
+    "gps": {
+      "latitude": 49.136873,
+      "longitude": -123.020187,
+      "dateTime": "2024-05-25T16:48:36.013Z"
+    }
+  },
+  {
+    "id": "bFB",
+    "name": "508 DFNA",
+    "gps": {
+      "latitude": 49.958595,
+      "longitude": -125.22747,
+      "dateTime": "2026-05-09T20:54:18.000Z"
+    }
+  },
+  {
+    "id": "b419",
+    "name": "533 DFNA",
+    "gps": {
+      "latitude": 49.705101,
+      "longitude": -124.996445,
+      "dateTime": "2026-05-09T20:54:33.000Z"
+    }
+  },
+  {
+    "id": "b41C",
+    "name": "580 + Netradyne",
+    "gps": {
+      "latitude": 49.212002,
+      "longitude": -122.68412,
+      "dateTime": "2026-05-09T18:49:38.650Z"
+    }
+  },
+  {
+    "id": "b45E",
+    "name": "575 DFNA - Spare",
+    "gps": {
+      "latitude": 50.039917,
+      "longitude": -125.284119,
+      "dateTime": "2026-05-09T20:53:20.000Z"
+    }
+  },
+  {
+    "id": "b452",
+    "name": "68",
+    "gps": {
+      "latitude": 49.30798,
+      "longitude": -122.983658,
+      "dateTime": "2023-12-13T02:23:26.000Z"
+    }
+  },
+  {
+    "id": "b3AE",
+    "name": "501 DFNA",
+    "gps": {
+      "latitude": 49.697506,
+      "longitude": -124.976997,
+      "dateTime": "2026-05-09T20:54:18.000Z"
+    }
+  },
+  {
+    "id": "b116",
+    "name": "507 DFNA",
+    "gps": {
+      "latitude": 49.206757,
+      "longitude": -123.978294,
+      "dateTime": "2025-12-08T02:25:26.000Z"
+    }
+  },
+  {
+    "id": "bB4",
+    "name": "CC 001 (Nanaimo Spare) 174636 T350",
+    "gps": {
+      "latitude": 49.14217,
+      "longitude": -123.93029,
+      "dateTime": "2023-02-20T22:22:29.063Z"
+    }
+  },
+  {
+    "id": "bBA",
+    "name": "210h DFNA",
+    "gps": {
+      "latitude": 49.251457,
+      "longitude": -122.861649,
+      "dateTime": "2022-08-08T12:17:34.340Z"
+    }
+  },
+  {
+    "id": "b10B",
+    "name": "DFV - 65 - Abby",
+    "gps": {
+      "latitude": 49.142296,
+      "longitude": -123.930519,
+      "dateTime": "2022-12-11T20:57:36.063Z"
+    }
+  },
+  {
+    "id": "b389",
+    "name": "548 DFNA",
+    "gps": {
+      "latitude": 49.693691,
+      "longitude": -124.963173,
+      "dateTime": "2026-05-09T20:38:28.073Z"
+    }
+  },
+  {
+    "id": "b1ED",
+    "name": "DFN 120",
+    "gps": {
+      "latitude": 49.141991,
+      "longitude": -123.930344,
+      "dateTime": "2022-08-26T14:19:18.063Z"
+    }
+  },
+  {
+    "id": "b42D",
+    "name": "DFN 239 - IT (Brian M.) ",
+    "gps": {
+      "latitude": 49.176891,
+      "longitude": -123.949699,
+      "dateTime": "2026-05-08T23:57:20.250Z"
+    }
+  },
+  {
+    "id": "b194",
+    "name": "562 DFNA",
+    "gps": {
+      "latitude": 49.040657,
+      "longitude": -123.865379,
+      "dateTime": "2026-05-09T04:12:52.307Z"
+    }
+  },
+  {
+    "id": "b10E",
+    "name": "502 DFNA",
+    "gps": {
+      "latitude": 49.005646,
+      "longitude": -123.833443,
+      "dateTime": "2024-08-19T21:46:40.000Z"
+    }
+  },
+  {
+    "id": "b45F",
+    "name": "57 DFNA",
+    "gps": {
+      "latitude": 49.846127,
+      "longitude": -125.147018,
+      "dateTime": "2026-05-09T20:54:20.000Z"
+    }
+  },
+  {
+    "id": "b19F",
+    "name": "520 (with arif)",
+    "gps": {
+      "latitude": 49.1937523,
+      "longitude": -122.945076,
+      "dateTime": "2021-04-22T09:31:17.063Z"
+    }
+  },
+  {
+    "id": "b40B",
+    "name": "579 + Netradyne",
+    "gps": {
+      "latitude": 49.212112,
+      "longitude": -122.684227,
+      "dateTime": "2026-05-06T22:06:40.000Z"
+    }
+  },
+  {
+    "id": "b3C3",
+    "name": "DFN 444 - Tractor (Kulwinder)",
+    "gps": {
+      "latitude": 49.005035,
+      "longitude": -123.832375,
+      "dateTime": "2026-04-07T18:13:48.627Z"
+    }
+  },
+  {
+    "id": "bE1",
+    "name": "505 DFNA",
+    "gps": {
+      "latitude": 49.210625,
+      "longitude": -123.118538,
+      "dateTime": "2024-01-16T20:26:47.017Z"
+    }
+  },
+  {
+    "id": "b4D0",
+    "name": "591 DFNA",
+    "gps": {
+      "latitude": 49.107456,
+      "longitude": -123.892365,
+      "dateTime": "2026-05-05T18:16:58.223Z"
+    }
+  },
+  {
+    "id": "b516",
+    "name": "608 DFNA",
+    "gps": {
+      "latitude": 49.130432,
+      "longitude": -123.913361,
+      "dateTime": "2026-05-09T20:53:06.000Z"
+    }
+  },
+  {
+    "id": "b196",
+    "name": "563 DFNA",
+    "gps": {
+      "latitude": 49.040207,
+      "longitude": -123.865097,
+      "dateTime": "2026-04-22T23:45:31.000Z"
+    }
+  },
+  {
+    "id": "b1DA",
+    "name": "576 (selling) GT on Arifs desk",
+    "gps": {
+      "latitude": 49.160271,
+      "longitude": -122.965736,
+      "dateTime": "2024-07-31T15:17:05.063Z"
+    }
+  },
+  {
+    "id": "b466",
+    "name": "583 DFNA",
+    "gps": {
+      "latitude": 49.984222,
+      "longitude": -125.240784,
+      "dateTime": "2026-05-09T20:54:33.000Z"
+    }
+  },
+  {
+    "id": "b4F8",
+    "name": "602 DFNA",
+    "gps": {
+      "latitude": 49.288265,
+      "longitude": -124.440483,
+      "dateTime": "2026-05-09T20:53:33.000Z"
+    }
+  },
+  {
+    "id": "b7A",
+    "name": "47 DFNA",
+    "gps": {
+      "latitude": 49.262131,
+      "longitude": -123.258087,
+      "dateTime": "2020-09-30T22:41:41.633Z"
+    }
+  },
+  {
+    "id": "b121",
+    "name": "524 DFNA",
+    "gps": {
+      "latitude": 49.167259,
+      "longitude": -122.976366,
+      "dateTime": "2021-04-15T22:57:42.210Z"
+    }
+  },
+  {
+    "id": "b47B",
+    "name": "DFN 223 - DAVID (IV)",
+    "gps": {
+      "latitude": 49.858509,
+      "longitude": -125.114754,
+      "dateTime": "2026-05-09T16:35:05.617Z"
+    }
+  },
+  {
+    "id": "b515",
+    "name": "609 DFNA",
+    "gps": {
+      "latitude": 49.168499,
+      "longitude": -123.943619,
+      "dateTime": "2026-05-09T20:44:07.383Z"
+    }
+  },
+  {
+    "id": "b204",
+    "name": "547",
+    "gps": {
+      "latitude": 49.276646,
+      "longitude": -123.034035,
+      "dateTime": "2022-07-23T18:35:41.000Z"
+    }
+  },
+  {
+    "id": "b4F5",
+    "name": "610 DFNA",
+    "gps": {
+      "latitude": 49.365467,
+      "longitude": -124.504898,
+      "dateTime": "2026-05-09T20:54:28.000Z"
+    }
+  },
+  {
+    "id": "b1D4",
+    "name": "CC 237 (DFN IS-Tofino)",
+    "gps": {
+      "latitude": 49.064221,
+      "longitude": -125.469591,
+      "dateTime": "2022-03-10T21:52:08.020Z"
+    }
+  },
+  {
+    "id": "b3AC",
+    "name": "547 DFNA",
+    "gps": {
+      "latitude": 49.10746,
+      "longitude": -123.892914,
+      "dateTime": "2025-12-24T19:31:56.000Z"
+    }
+  },
+  {
+    "id": "b47F",
+    "name": "586 DFNA",
+    "gps": {
+      "latitude": 49.236893,
+      "longitude": -124.009842,
+      "dateTime": "2026-05-09T20:54:34.000Z"
+    }
+  },
+  {
+    "id": "b485",
+    "name": "5 Ton O|O (Paul Butherus)",
+    "gps": {
+      "latitude": 49.671291,
+      "longitude": -125.037758,
+      "dateTime": "2026-05-08T23:24:14.157Z"
+    }
+  },
+  {
+    "id": "b1E7",
+    "name": "New vehicle (G7E320F1D1E1 previously in 57)...",
+    "gps": {
+      "latitude": 49.24654,
+      "longitude": -122.948227,
+      "dateTime": "2021-01-02T15:37:43.000Z"
+    }
+  },
+  {
+    "id": "b101",
+    "name": "75 DFNA",
+    "gps": {
+      "latitude": 49.212212,
+      "longitude": -122.684113,
+      "dateTime": "2024-01-15T17:27:20.190Z"
+    }
+  },
+  {
+    "id": "bF4",
+    "name": "515 DFNA",
+    "gps": {
+      "latitude": 49.645882,
+      "longitude": -124.945641,
+      "dateTime": "2026-05-09T20:54:34.000Z"
+    }
+  },
+  {
+    "id": "b491",
+    "name": "DFN 261 - IN (JEEVAN)",
+    "gps": {
+      "latitude": 50.004036,
+      "longitude": -125.238182,
+      "dateTime": "2026-05-09T00:21:57.837Z"
+    }
+  },
+  {
+    "id": "b1EF",
+    "name": "New vehicle (G911210C330F previously in 550)...",
+    "gps": {
+      "latitude": 49.056488,
+      "longitude": -122.702003,
+      "dateTime": "2021-04-09T21:13:37.127Z"
+    }
+  },
+  {
+    "id": "b4D4",
+    "name": "594 DFNA",
+    "gps": {
+      "latitude": 49.245262,
+      "longitude": -124.80394,
+      "dateTime": "2026-05-09T20:54:02.000Z"
+    }
+  },
+  {
+    "id": "b50D",
+    "name": "604 DFNA",
+    "gps": {
+      "latitude": 48.997894,
+      "longitude": -123.823479,
+      "dateTime": "2026-05-06T22:21:30.000Z"
+    }
+  },
+  {
+    "id": "b1EB",
+    "name": "New vehicle (G911210C330F previously in 550)...",
+    "gps": {
+      "latitude": 49.160706,
+      "longitude": -122.964554,
+      "dateTime": "2021-03-24T17:32:57.000Z"
+    }
+  },
+  {
+    "id": "b425",
+    "name": "DFN 238 - IR (Paul A.)",
+    "gps": {
+      "latitude": 49.829937,
+      "longitude": -125.190147,
+      "dateTime": "2026-05-09T20:54:34.000Z"
+    }
+  },
+  {
+    "id": "b43D",
+    "name": "538",
+    "gps": {
+      "latitude": 49.26976,
+      "longitude": -123.065704,
+      "dateTime": "2024-01-28T20:35:18.000Z"
+    }
+  },
+  {
+    "id": "b51A",
+    "name": "597 DFNA",
+    "gps": {
+      "latitude": 49.040642,
+      "longitude": -123.865143,
+      "dateTime": "2026-05-07T10:14:28.080Z"
+    }
+  },
+  {
+    "id": "b494",
+    "name": "540 DFNA",
+    "gps": {
+      "latitude": 49.348282,
+      "longitude": -124.440163,
+      "dateTime": "2026-05-09T20:54:15.393Z"
+    }
+  },
+  {
+    "id": "b104",
+    "name": "DFV - 63 - Craig",
+    "gps": {
+      "latitude": 48.564762,
+      "longitude": -123.408791,
+      "dateTime": "2023-10-03T15:52:43.000Z"
+    }
+  },
+  {
+    "id": "b1D7",
+    "name": "574 DFNA",
+    "gps": {
+      "latitude": 49.040306,
+      "longitude": -123.866341,
+      "dateTime": "2024-10-10T17:52:24.640Z"
+    }
+  },
+  {
+    "id": "b523",
+    "name": "605 DFNA",
+    "gps": {
+      "latitude": 49.107758,
+      "longitude": -123.861862,
+      "dateTime": "2026-05-09T20:53:28.000Z"
+    }
+  },
+  {
+    "id": "b545",
+    "name": "219 DFNA",
+    "gps": {
+      "latitude": 49.177269,
+      "longitude": -124.056526,
+      "dateTime": "2026-05-09T20:51:24.000Z"
+    }
+  },
+  {
+    "id": "b560",
+    "name": "531 DFNA",
+    "gps": {
+      "latitude": 49.243813,
+      "longitude": -124.045464,
+      "dateTime": "2026-05-09T20:53:37.000Z"
+    }
+  },
+  {
+    "id": "b3FC",
+    "name": "55",
+    "gps": {
+      "latitude": 49.266331,
+      "longitude": -123.003189,
+      "dateTime": "2024-05-27T21:43:24.000Z"
+    }
+  },
+  {
+    "id": "b216",
+    "name": "DF Trailer 92",
+    "gps": {
+      "latitude": 49.171757,
+      "longitude": -122.954819,
+      "dateTime": "2026-05-09T16:28:11.000Z"
+    }
+  },
+  {
+    "id": "b48D",
+    "name": "DFN 259 - IP (Carly)",
+    "gps": {
+      "latitude": 49.158924,
+      "longitude": -123.929947,
+      "dateTime": "2026-05-08T21:28:55.903Z"
+    }
+  },
+  {
+    "id": "bE5",
+    "name": "DFN 004 - McK. Spare (NEEDS SERVICING)",
+    "gps": {
+      "latitude": 49.142094,
+      "longitude": -123.93029,
+      "dateTime": "2021-11-09T23:59:25.097Z"
+    }
+  },
+  {
+    "id": "b458",
+    "name": "New vehicle (G76C20FC3C8C previously in 68)...",
+    "gps": {
+      "latitude": 49.212517,
+      "longitude": -122.684341,
+      "dateTime": "2023-12-15T17:27:17.000Z"
+    }
+  },
+  {
+    "id": "b181",
+    "name": "554 DFNA (Parts Van)",
+    "gps": {
+      "latitude": 48.999962,
+      "longitude": -123.828995,
+      "dateTime": "2025-03-05T17:58:41.000Z"
+    }
+  },
+  {
+    "id": "b5A",
+    "name": "DFN 445 - Tractor",
+    "gps": {
+      "latitude": 49.005619,
+      "longitude": -123.833649,
+      "dateTime": "2026-05-09T00:27:55.063Z"
+    }
+  },
+  {
+    "id": "b222",
+    "name": "560",
+    "gps": {
+      "latitude": 49.210701,
+      "longitude": -123.08905,
+      "dateTime": "2022-03-14T19:21:51.127Z"
+    }
+  },
+  {
+    "id": "b137",
+    "name": "540",
+    "gps": {
+      "latitude": 49.281584,
+      "longitude": -123.046936,
+      "dateTime": "2024-01-12T21:27:13.057Z"
+    }
+  },
+  {
+    "id": "b1A2",
+    "name": "561 DFNA",
+    "gps": {
+      "latitude": 49.324932,
+      "longitude": -124.323395,
+      "dateTime": "2026-05-09T20:53:51.500Z"
+    }
+  },
+  {
+    "id": "b483",
+    "name": "55 DFNA",
+    "gps": {
+      "latitude": 49.231495,
+      "longitude": -123.984589,
+      "dateTime": "2026-04-09T00:53:15.000Z"
+    }
+  },
+  {
+    "id": "b631",
+    "name": "523 DFN",
+    "gps": {
+      "latitude": 49.139626,
+      "longitude": -123.935783,
+      "dateTime": "2026-05-09T20:54:05.000Z"
+    }
+  },
+  {
+    "id": "b177",
+    "name": "DFV 410  - Brian W. #19",
+    "gps": {
+      "latitude": 48.565502,
+      "longitude": -123.413582,
+      "dateTime": "2026-05-08T23:52:47.010Z"
+    }
+  },
+  {
+    "id": "b105",
+    "name": "68",
+    "gps": {
+      "latitude": 49.2476654,
+      "longitude": -122.761551,
+      "dateTime": "2023-02-16T15:10:45.063Z"
+    }
+  },
+  {
+    "id": "b1EA",
+    "name": "New vehicle (G911210C330F previously in 550)...",
+    "gps": {
+      "latitude": 49.160706,
+      "longitude": -122.964531,
+      "dateTime": "2021-03-21T23:26:54.000Z"
+    }
+  },
+  {
+    "id": "b148",
+    "name": "533",
+    "gps": {
+      "latitude": 49.1123199,
+      "longitude": -123.051132,
+      "dateTime": "2023-07-02T17:08:24.063Z"
+    }
+  },
+  {
+    "id": "b1D6",
+    "name": "575",
+    "gps": {
+      "latitude": 49.2857094,
+      "longitude": -123.050423,
+      "dateTime": "2022-10-12T00:32:17.167Z"
+    }
+  },
+  {
+    "id": "b853",
+    "name": "564 DFNA",
+    "gps": {
+      "latitude": 49.795013,
+      "longitude": -125.009842,
+      "dateTime": "2026-05-09T20:53:29.000Z"
+    }
+  },
+  {
+    "id": "b173",
+    "name": "544 DFNA",
+    "gps": {
+      "latitude": 49.206506,
+      "longitude": -123.043012,
+      "dateTime": "2024-04-26T21:01:08.640Z"
+    }
+  },
+  {
+    "id": "b17B",
+    "name": "547",
+    "gps": {
+      "latitude": 49.2477455,
+      "longitude": -122.76165,
+      "dateTime": "2021-06-18T17:01:48.063Z"
+    }
+  },
+  {
+    "id": "b471",
+    "name": "DFN 412 - Duncan 5 Ton (JASON)",
+    "gps": {
+      "latitude": 49.005642,
+      "longitude": -123.833572,
+      "dateTime": "2026-05-09T00:28:52.903Z"
+    }
+  },
+  {
+    "id": "b654",
+    "name": "616 DFNA",
+    "gps": {
+      "latitude": 49.804386,
+      "longitude": -125.120476,
+      "dateTime": "2026-05-09T20:54:29.000Z"
+    }
+  },
+  {
+    "id": "b1D8",
+    "name": "Tribute",
+    "gps": {
+      "latitude": 49.16021,
+      "longitude": -122.965942,
+      "dateTime": "2025-05-08T19:40:40.000Z"
+    }
+  },
+  {
+    "id": "b129",
+    "name": "55",
+    "gps": {
+      "latitude": 49.3138428,
+      "longitude": -122.952423,
+      "dateTime": "2023-02-27T22:19:29.597Z"
+    }
+  },
+  {
+    "id": "b6B1",
+    "name": "536 DFNA",
+    "gps": {
+      "latitude": 49.040543,
+      "longitude": -123.86528,
+      "dateTime": "2026-05-09T20:44:12.867Z"
+    }
+  },
+  {
+    "id": "b8D1",
+    "name": "DFN 448",
+    "gps": {
+      "latitude": 49.00565,
+      "longitude": -123.833717,
+      "dateTime": "2026-05-08T16:33:45.303Z"
+    }
+  },
+  {
+    "id": "b434",
+    "name": "582 DFNA",
+    "gps": {
+      "latitude": 49.683331,
+      "longitude": -124.98761,
+      "dateTime": "2026-05-09T20:54:28.000Z"
+    }
+  },
+  {
+    "id": "b506",
+    "name": "595 DFNA",
+    "gps": {
+      "latitude": 49.208332,
+      "longitude": -124.000412,
+      "dateTime": "2026-05-09T20:36:55.610Z"
+    }
+  }
 ]
