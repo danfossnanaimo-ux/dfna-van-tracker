@@ -47,24 +47,41 @@ if ("serviceWorker" in navigator) {
     margin-bottom: 12px;
   }
 
-  /* Default label style */
-  .van-label {
-    font-size: 14px;
-    font-weight: bold;
-    color: #222;
-    background: transparent;
-    border: none;
-    text-shadow: 0 0 3px white;
+  /* Marker container (scaled 200%) */
+  .van-icon {
+    position: relative;
+    width: 64px;
+    height: 64px;
   }
 
-  /* Selected van label (bold red) */
-  .van-label-selected {
+  /* Pin graphic (scaled 200%) */
+  .van-pin {
+    width: 64px;
+    height: 64px;
+    background-image: url("https://maps.gstatic.com/mapfiles/ms2/micons/blue.png");
+    background-size: contain;
+  }
+
+  /* Number overlay */
+  .van-number {
+    position: absolute;
+    top: 14px;
+    left: 0;
+    width: 64px;
+    text-align: center;
+    font-size: 14px; /* unchanged */
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 3px black;
+    pointer-events: none;
+  }
+
+  /* Selected van number */
+  .van-number.selected {
+    color: red;
     font-size: 16px;
     font-weight: 900;
-    color: red;
-    background: transparent;
-    border: none;
-    text-shadow: 0 0 3px white;
+    text-shadow: 0 0 4px white;
   }
 </style>
 </head>
