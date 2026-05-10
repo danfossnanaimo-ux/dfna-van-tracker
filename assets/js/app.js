@@ -73,6 +73,23 @@ async function loadLocations() {
 }
 
 // -----------------------------------------------------
+// BUILD MARKER ICON
+// -----------------------------------------------------
+function buildIcon(name, vanNumber, isSelected) {
+  return L.divIcon({
+    className: "van-icon",
+    html: `
+      <div class="van-pin"></div>
+      <div class="van-number ${isSelected ? "selected" : ""}" id="num-${name}">
+        ${vanNumber}
+      </div>
+    `,
+    iconSize: [64, 64],
+    iconAnchor: [32, 64]
+  });
+}
+
+// -----------------------------------------------------
 // UPDATE MAP WITH BACKEND DATA
 // -----------------------------------------------------
 function updateMap(locations) {
@@ -97,19 +114,9 @@ function updateMap(locations) {
     const lon = v.gps.longitude;
     const pos = [lat, lon];
 
-    // Extract numeric portion
     const vanNumber = v.name.match(/\d+(?!.*\d)/)?.[0] || "";
 
-    // Custom marker with number overlay
-    const icon = L.divIcon({
-      className: "van-icon",
-      html: `
-        <div class="van-pin"></div>
-        <div class="van-number" id="num-${v.name}">${vanNumber}</div>
-      `,
-      iconSize: [64, 64],
-      iconAnchor: [32, 64]
-    });
+    const icon = buildIcon(v.name, vanNumber, false);
 
     if (!markerLookup[v.name]) {
       const marker = L.marker(pos, { icon, opacity: 1 });
@@ -117,6 +124,7 @@ function updateMap(locations) {
       markerLookup[v.name] = marker;
     } else {
       markerLookup[v.name].setLatLng(pos);
+      markerLookup[v.name].setIcon(icon);
     }
   });
 }
@@ -164,7 +172,6 @@ document.getElementById("vehicleDropdown").addEventListener("change", e => {
     return;
   }
 
-  // Hide dropdown, show reset button
   dropdown.style.display = "none";
   resetButton.style.display = "block";
 
@@ -176,11 +183,12 @@ document.getElementById("vehicleDropdown").addEventListener("change", e => {
   Object.keys(markerLookup).forEach(vName => {
     const marker = markerLookup[vName];
     const pos = marker.getLatLng();
-    const numEl = document.getElementById(`num-${vName}`);
+
+    const vanNumber = vName.match(/\d+(?!.*\d)/)?.[0] || "";
 
     if (vName === name) {
       marker.setOpacity(1);
-      numEl.classList.add("selected");
+      marker.setIcon(buildIcon(vName, vanNumber, true));
       zoomToUserAndVehicle(pos);
 
     } else {
@@ -188,7 +196,7 @@ document.getElementById("vehicleDropdown").addEventListener("change", e => {
 
       if (dist <= 10) {
         marker.setOpacity(0.3);
-        numEl.classList.remove("selected");
+        marker.setIcon(buildIcon(vName, vanNumber, false));
       } else {
         map.removeLayer(marker);
       }
@@ -216,10 +224,10 @@ document.getElementById("resetButton").addEventListener("click", () => {
 function showAllVehicles() {
   Object.keys(markerLookup).forEach(vName => {
     const marker = markerLookup[vName];
-    const numEl = document.getElementById(`num-${vName}`);
+    const vanNumber = vName.match(/\d+(?!.*\d)/)?.[0] || "";
 
     marker.setOpacity(1);
-    numEl.classList.remove("selected");
+    marker.setIcon(buildIcon(vName, vanNumber, false));
 
     map.addLayer(marker);
   });
