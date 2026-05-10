@@ -26,18 +26,20 @@ if ("serviceWorker" in navigator) {
     height: 100%;
   }
 
+  /* Clean floating controls (no white box) */
   #controls {
     position: absolute;
     top: 10px;
     left: 10px;
     z-index: 9999;
-    background: rgba(255, 255, 255, 0.95);
-    padding: 12px;
-    border-radius: 6px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     width: 320px;
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
   }
 
+  /* Dropdown + Reset button styling with drop shadow */
   #vehicleDropdown,
   #resetButton {
     width: 100%;
@@ -45,6 +47,13 @@ if ("serviceWorker" in navigator) {
     font-size: 28px;
     box-sizing: border-box;
     margin-bottom: 12px;
+
+    background: white;
+    border-radius: 6px;
+    border: none;
+
+    /* Recommended subtle drop shadow */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
   }
 
   /* Modern circular marker (scaled 200%) */
@@ -62,7 +71,7 @@ if ("serviceWorker" in navigator) {
     box-shadow: 0 0 6px rgba(0,0,0,0.4);
   }
 
-  /* Number overlay */
+  /* Number overlay (always white) */
   .van-number {
     position: absolute;
     top: 18px;
@@ -74,14 +83,6 @@ if ("serviceWorker" in navigator) {
     color: white;
     text-shadow: 0 0 3px black;
     pointer-events: none;
-  }
-
-  /* Selected van number */
-  .van-number.selected {
-    color: red;
-    font-size: 20px;
-    font-weight: 900;
-    text-shadow: 0 0 4px white;
   }
 </style>
 </head>
