@@ -214,6 +214,8 @@ document.getElementById("resetButton").addEventListener("click", () => {
   dropdown.style.display = "block";
   resetButton.style.display = "none";
 
+  dropdown.value = "__show_all__";  // FIXED
+
   selectedVehicleName = null;
   showAllVehicles();
 });
