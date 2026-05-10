@@ -38,7 +38,8 @@ if ("serviceWorker" in navigator) {
     width: 320px;
   }
 
-  #vehicleDropdown {
+  #vehicleDropdown,
+  #resetButton {
     width: 100%;
     padding: 12px;
     font-size: 28px;
@@ -72,6 +73,7 @@ if ("serviceWorker" in navigator) {
 
 <div id="controls">
   <select id="vehicleDropdown"></select>
+  <button id="resetButton" style="display:none;">Reset</button>
 </div>
 
 <div id="map"></div>
