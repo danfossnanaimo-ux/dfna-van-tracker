@@ -35,16 +35,29 @@ if ("serviceWorker" in navigator) {
     padding: 12px;
     border-radius: 6px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    width: 320px; /* 2x wider */
+    width: 320px;
   }
 
   #vehicleSearch,
   #vehicleDropdown {
     width: 100%;
-    padding: 12px;       /* bigger touch target */
-    font-size: 28px;     /* 200% larger text */
+    padding: 12px;
+    font-size: 28px;
     box-sizing: border-box;
     margin-bottom: 12px;
+  }
+
+  #distanceBox {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    z-index: 9999;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 22px;
+    display: none;
   }
 </style>
 </head>
@@ -56,9 +69,10 @@ if ("serviceWorker" in navigator) {
   <select id="vehicleDropdown"></select>
 </div>
 
+<div id="distanceBox"></div>
+
 <div id="map"></div>
 
-<!-- IMPORTANT: Leaflet BEFORE app.js -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="assets/js/app.js" defer></script>
 
