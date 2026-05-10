@@ -16,26 +16,28 @@ OUTPUT_JSON = "data/locations.json"
 # -----------------------------
 # GENERIC GEOTAB API CALL
 # -----------------------------
-def geotab_call(method, params=None, server=None):
-    if params is None:
-        params = {}
-
+def geotab_call(method, params):
     payload = {
         "method": method,
         "params": params,
-        "id": 1,
-        "jsonrpc": "2.0"
+        "id": 1
     }
 
-    response = requests.post(server, json=payload)
-    response.raise_for_status()
+    # 🔥 DEBUGGING ADDED HERE — EXACT SPOT 🔥
+    import json
+    print("\n================ DEBUG REQUEST ================")
+    print("URL:", GEOTAB_SERVER)
+    print("Payload:")
+    print(json.dumps(payload, indent=2))
+    print("===============================================\n")
+
+    response = requests.post(GEOTAB_SERVER, json=payload)
+
+    # 🔥 DEBUG RESPONSE
+    print("DEBUG RAW RESPONSE:", response.text)
+
     data = response.json()
-
-    if "result" not in data:
-        raise Exception(f"Unexpected Geotab response: {data}")
-
-    return data["result"]
-
+    return data
 
 # -----------------------------
 # LOGIN (AUTHENTICATE)
