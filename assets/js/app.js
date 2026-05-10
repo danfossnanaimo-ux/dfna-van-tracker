@@ -1,8 +1,8 @@
 // -----------------------------------------------------
 // CONFIG
 // -----------------------------------------------------
-const DATA_URL = 
-  "https://raw.githubusercontent.com/danfossnanaimo-ux/dfna-van-tracker/refs/heads/main/data/locations.json?v=4";
+const DATA_URL =
+  "https://raw.githubusercontent.com/danfossnanaimo-ux/dfna-van-tracker/refs/heads/main/data/locations.json?v=5";
 
 let map;
 let markerLookup = {};
@@ -20,38 +20,10 @@ function initMap() {
     maxZoom: 19,
     attribution: "© OpenStreetMap contributors"
   }).addTo(map);
-
-  // Yard boundary
-  L.polygon(
-    [
-      [49.0410017, -123.8680194],
-      [49.0410226, -123.8680323],
-      [49.0410378, -123.868029],
-      [49.0410517, -123.8680267],
-      [49.0410698, -123.8680157],
-      [49.0410917, -123.8680034],
-      [49.0411048, -123.8679701],
-      [49.0411114, -123.867929],
-      [49.0411135, -123.8678859],
-      [49.0411087, -123.8652783],
-      [49.041106, -123.8651884],
-      [49.0410897, -123.8650957],
-      [49.0410587, -123.8650422],
-      [49.0409912, -123.8650092],
-      [49.040289, -123.8650175],
-      [49.0401243, -123.8670526],
-      [49.0410017, -123.8680194]
-    ],
-    {
-      color: "#ff0000",
-      weight: 3,
-      fillOpacity: 0.15
-    }
-  ).addTo(map);
 }
 
 // -----------------------------------------------------
-// FETCH GOOGLE DRIVE DATA
+// FETCH BACKEND JSON
 // -----------------------------------------------------
 async function loadLocations() {
   try {
@@ -65,30 +37,36 @@ async function loadLocations() {
 }
 
 // -----------------------------------------------------
-// UPDATE MAP WITH NEW DATA
+// UPDATE MAP WITH BACKEND DATA
 // -----------------------------------------------------
 function updateMap(locations) {
-  // Deduplicate by newest timestamp
   const unique = {};
+
   locations.forEach(v => {
-    if (!unique[v.name] || new Date(v.timestamp) > new Date(unique[v.name].timestamp)) {
-      unique[v.name] = v;
+    if (!v.gps) return;
+    if (!v.gps.latitude || !v.gps.longitude || !v.gps.dateTime) return;
+
+    const key = v.name;
+    const ts = new Date(v.gps.dateTime);
+
+    if (!unique[key] || ts > new Date(unique[key].gps.dateTime)) {
+      unique[key] = v;
     }
   });
 
   const cleanList = Object.values(unique);
 
-  // Update or create markers
   cleanList.forEach(v => {
-    if (!v.lat || !v.lon) return;
+    const lat = v.gps.latitude;
+    const lon = v.gps.longitude;
+    const ts = v.gps.dateTime;
+    const pos = [lat, lon];
 
-    const pos = [v.lat, v.lon];
-
-    // Main marker
+    // Marker
     if (!markerLookup[v.name]) {
       const marker = L.marker(pos);
       marker.bindPopup(
-        `<b>${v.name}</b><br>Last update: ${v.timestamp}<br>Lat: ${v.lat}<br>Lon: ${v.lon}`
+        `<b>${v.name}</b><br>Last update: ${ts}<br>Lat: ${lat}<br>Lon: ${lon}`
       );
       marker.addTo(map);
       markerLookup[v.name] = marker;
@@ -127,6 +105,7 @@ function updateDropdown(locations) {
   dropdown.appendChild(showAllOpt);
 
   locations.forEach(v => {
+    if (!v.name) return;
     const opt = document.createElement("option");
     opt.value = v.name;
     opt.textContent = v.name;
@@ -154,12 +133,12 @@ document.getElementById("vehicleSearch").addEventListener("input", e => {
   const text = e.target.value.toLowerCase();
   const dropdown = document.getElementById("vehicleDropdown");
 
+  dropdown.innerHTML = "";
+
   if (text.trim() === "") {
     loadLocations();
     return;
   }
-
-  dropdown.innerHTML = "";
 
   Object.keys(markerLookup)
     .filter(name => name.toLowerCase().includes(text))
