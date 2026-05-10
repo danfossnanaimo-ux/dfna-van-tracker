@@ -94,22 +94,6 @@ function updateMap(locations) {
     } else {
       markerLookup[v.name].setLatLng(pos);
     }
-
-    // Label
-    if (!labelLookup[v.name]) {
-      const label = L.marker(pos, {
-        icon: L.divIcon({
-          className: "vehicle-label",
-          html: v.name,
-          iconSize: [60, 20],
-          iconAnchor: [30, -10]
-        })
-      });
-      label.addTo(map);
-      labelLookup[v.name] = label;
-    } else {
-      labelLookup[v.name].setLatLng(pos);
-    }
   });
 }
 
