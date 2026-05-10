@@ -30,10 +30,10 @@ jobs:
           GEOTAB_PASSWORD: ${{ secrets.GEOTAB_PASSWORD }}
         run: python dfna-van-tracker.py
 
-      - name: Commit updated locations.json
+      - name: Commit updated data/locations.json
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git add locations.json
-          git commit -m "Update locations.json" || echo "No changes to commit"
+          git add data/locations.json
+          git commit -m "Update data/locations.json" || echo "No changes to commit"
           git push
