@@ -1,7 +1,7 @@
 import os
 import json
 import requests
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 # ---------------------------------------------------------
 # CONFIGURATION
@@ -93,7 +93,6 @@ def get_fueltax_details(session_id, device_id):
     if not records:
         return None
 
-    # Sort newest last (use exitTime if available, else entryTime)
     records.sort(key=lambda x: x.get("exitTime") or x.get("entryTime") or "")
 
     latest = records[-1]
@@ -112,7 +111,7 @@ def get_fueltax_details(session_id, device_id):
 # ---------------------------------------------------------
 
 def get_latest_logrecord(session_id, device_id):
-    from_date = (datetime.utcnow() - timedelta(days=30)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    from_date = (datetime.now(tz=timezone.utc) - timedelta(days=30)).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     params = {
         "typeName": "LogRecord",
@@ -173,7 +172,7 @@ def get_statusinfo(session_id, device_id):
     }
 
 # ---------------------------------------------------------
-# MAIN WORKFLOW (PRODUCTION + DIAGNOSTICS + FILTERS)
+# MAIN WORKFLOW
 # ---------------------------------------------------------
 
 def main():
@@ -188,7 +187,7 @@ def main():
     print("===== BEGIN DIAGNOSTICS =====\n")
 
     fleet_output = []
-    THIRTY_DAYS_AGO = datetime.utcnow() - timedelta(days=30)
+    THIRTY_DAYS_AGO = datetime.now(tz=timezone.utc) - timedelta(days=30)
 
     for d in devices:
         device_id = d["id"]
@@ -268,7 +267,6 @@ def main():
 
     print("===== END DIAGNOSTICS =====\n")
 
-    # Write JSON output for your PWA
     os.makedirs("data", exist_ok=True)
 
     with open("data/locations.json", "w") as f:
