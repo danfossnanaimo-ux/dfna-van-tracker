@@ -73,7 +73,7 @@ async function loadLocations() {
 }
 
 // -----------------------------------------------------
-// BUILD MARKER ICON (NO SELECTED CLASS ANYMORE)
+// BUILD MARKER ICON (NO SELECTED CLASS ANYWHERE)
 // -----------------------------------------------------
 function buildIcon(name, vanNumber) {
   return L.divIcon({
@@ -204,7 +204,7 @@ document.getElementById("vehicleDropdown").addEventListener("change", e => {
 });
 
 // -----------------------------------------------------
-// RESET BUTTON — CLEAN, FINAL FIX
+// RESET BUTTON — CLEAN FINAL VERSION
 // -----------------------------------------------------
 document.getElementById("resetButton").addEventListener("click", () => {
   const dropdown = document.getElementById("vehicleDropdown");
@@ -216,7 +216,6 @@ document.getElementById("resetButton").addEventListener("click", () => {
   dropdown.value = "__show_all__";
   selectedVehicleName = null;
 
-  // FULL rebuild of all icons (no selected styling exists anymore)
   Object.keys(markerLookup).forEach(vName => {
     const marker = markerLookup[vName];
     const vanNumber = vName.match(/\d+(?!.*\d)/)?.[0] || "";
