@@ -21,32 +21,35 @@ function initMap() {
     maxZoom: 19,
     attribution: "© OpenStreetMap contributors"
   }).addTo(map);
-  
-  // Yard fence
+
+  // -----------------------------------------------------
+  // NEW YARD FENCE (converted from your LineString)
+  // -----------------------------------------------------
   L.polygon(
-  [
-    [49.0410015, -123.8680866],
-    [49.0410489, -123.8680984],
-    [49.0410934, -123.8680656],
-    [49.0411231, -123.8680275],
-    [49.041138,  -123.8679841],
-    [49.0411436, -123.867922],
-    [49.0411349, -123.8657126],
-    [49.0411174, -123.8653499],
-    [49.0410783, -123.8651181],
-    [49.0410241, -123.8650267],
-    [49.0409744, -123.8649999],
-    [49.0403033, -123.865034],
-    [49.0401176, -123.8670691],
-    [49.0410045, -123.8680868],
-    [49.0410015, -123.8680866] 
-  ],
-  {
-    color: "#ff0000",
-    weight: 3,
-    fillOpacity: 0.15
-  }
+    [
+      [49.0410015, -123.8680866],
+      [49.0410489, -123.8680984],
+      [49.0410934, -123.8680656],
+      [49.0411231, -123.8680275],
+      [49.041138,  -123.8679841],
+      [49.0411436, -123.867922],
+      [49.0411349, -123.8657126],
+      [49.0411174, -123.8653499],
+      [49.0410783, -123.8651181],
+      [49.0410241, -123.8650267],
+      [49.0409744, -123.8649999],
+      [49.0403033, -123.865034],
+      [49.0401176, -123.8670691],
+      [49.0410045, -123.8680868],
+      [49.0410015, -123.8680866] // CLOSE POLYGON
+    ],
+    {
+      color: "#ff0000",
+      weight: 3,
+      fillOpacity: 0.15
+    }
   ).addTo(map);
+}
 
 // -----------------------------------------------------
 // FETCH BACKEND JSON
@@ -188,7 +191,6 @@ document.getElementById("vehicleSearch").addEventListener("input", e => {
     }
   });
 
-  // Auto-zoom when exactly one match
   if (filtered.length === 1) {
     const vanName = filtered[0].name;
     const vanMarker = markerLookup[vanName];
@@ -261,7 +263,6 @@ function updateUserToVanLine() {
   const userPos = userMarker.getLatLng();
   const vanPos = vanMarker.getLatLng();
 
-  // Draw line
   if (userToVanLine) {
     userToVanLine.setLatLngs([userPos, vanPos]);
   } else {
@@ -272,7 +273,6 @@ function updateUserToVanLine() {
     }).addTo(map);
   }
 
-  // Distance readout
   const distMeters = userPos.distanceTo(vanPos);
   const distKm = (distMeters / 1000).toFixed(2);
 
@@ -280,7 +280,6 @@ function updateUserToVanLine() {
   box.style.display = "block";
   box.textContent = `You are ${distKm} km away`;
 
-  // Smooth zoom to include both
   const bounds = L.latLngBounds([userPos, vanPos]);
   map.flyToBounds(bounds, { padding: [80, 80] });
 }
