@@ -1,7 +1,7 @@
 import os
 import json
 import requests
-from datetime import datetime, timedelta
+from datetime import datetime
 
 # ---------------------------------------------------------
 # CONFIGURATION
@@ -27,8 +27,7 @@ def geotab_call(method, params):
         "id": 1
     }
     response = requests.post(GEOTAB_SERVER, json=payload)
-    data = response.json()
-    return data
+    return response.json()
 
 # ---------------------------------------------------------
 # LOGIN
@@ -74,17 +73,14 @@ def get_devices(session_id):
     return result["result"]
 
 # ---------------------------------------------------------
-# GET LATEST GPS FOR A DEVICE
+# GET MOST RECENT FuelTaxDetail FOR A DEVICE
 # ---------------------------------------------------------
 
-def get_latest_gps(session_id, device_id):
-    from_date = (datetime.utcnow() - timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%SZ")
-
+def get_latest_fueltax(session_id, device_id):
     params = {
-        "typeName": "LogRecord",
+        "typeName": "FuelTaxDetail",
         "search": {
-            "deviceSearch": {"id": device_id},
-            "fromDate": from_date
+            "deviceSearch": {"id": device_id}
         },
         "credentials": {
             "database": DATABASE,
@@ -98,16 +94,19 @@ def get_latest_gps(session_id, device_id):
     if "error" in result:
         return None
 
-    logs = result["result"]
-    if not logs:
+    records = result["result"]
+    if not records:
         return None
 
-    latest = logs[-1]
+    # Sort by exitTime (most recent last)
+    records.sort(key=lambda x: x.get("exitTime", ""))
+
+    latest = records[-1]
 
     return {
-        "latitude": latest.get("latitude"),
-        "longitude": latest.get("longitude"),
-        "dateTime": latest.get("dateTime")
+        "latitude": latest.get("exitLatitude"),
+        "longitude": latest.get("exitLongitude"),
+        "dateTime": latest.get("exitTime")
     }
 
 # ---------------------------------------------------------
@@ -129,7 +128,7 @@ def main():
         device_id = d["id"]
         name = d.get("name", "Unknown")
 
-        gps = get_latest_gps(session_id, device_id)
+        gps = get_latest_fueltax(session_id, device_id)
 
         fleet_output.append({
             "id": device_id,
