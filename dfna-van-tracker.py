@@ -1,7 +1,7 @@
 import os
 import json
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # ---------------------------------------------------------
 # CONFIGURATION
@@ -66,17 +66,13 @@ def get_devices(session_id):
     }
 
     result = geotab_call("Get", params)
-
-    if "error" in result:
-        raise Exception(f"Device fetch failed: {result}")
-
     return result["result"]
 
 # ---------------------------------------------------------
-# GET MOST RECENT FuelTaxDetail FOR A DEVICE
+# FuelTaxDetail (entry + exit)
 # ---------------------------------------------------------
 
-def get_latest_fueltax(session_id, device_id):
+def get_fueltax_details(session_id, device_id):
     params = {
         "typeName": "FuelTaxDetail",
         "search": {
@@ -90,57 +86,121 @@ def get_latest_fueltax(session_id, device_id):
     }
 
     result = geotab_call("Get", params)
+    records = result.get("result", [])
 
-    if "error" in result:
-        return None
-
-    records = result["result"]
     if not records:
         return None
 
-    # Sort by exitTime (most recent last)
-    records.sort(key=lambda x: x.get("exitTime", ""))
+    # Sort newest last
+    records.sort(key=lambda x: x.get("exitTime", "") or x.get("entryTime", ""))
 
     latest = records[-1]
 
     return {
-        "latitude": latest.get("exitLatitude"),
-        "longitude": latest.get("exitLongitude"),
-        "dateTime": latest.get("exitTime")
+        "entryTime": latest.get("entryTime"),
+        "exitTime": latest.get("exitTime"),
+        "entryLat": latest.get("entryLatitude"),
+        "entryLon": latest.get("entryLongitude"),
+        "exitLat": latest.get("exitLatitude"),
+        "exitLon": latest.get("exitLongitude")
     }
 
 # ---------------------------------------------------------
-# MAIN WORKFLOW
+# LogRecord (raw GPS pings)
+# ---------------------------------------------------------
+
+def get_latest_logrecord(session_id, device_id):
+    from_date = (datetime.utcnow() - timedelta(days=7)).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    params = {
+        "typeName": "LogRecord",
+        "search": {
+            "deviceSearch": {"id": device_id},
+            "fromDate": from_date
+        },
+        "credentials": {
+            "database": DATABASE,
+            "sessionId": session_id,
+            "userName": USERNAME
+        }
+    }
+
+    result = geotab_call("Get", params)
+    logs = result.get("result", [])
+
+    if not logs:
+        return None
+
+    latest = logs[-1]
+
+    return {
+        "dateTime": latest.get("dateTime"),
+        "lat": latest.get("latitude"),
+        "lon": latest.get("longitude")
+    }
+
+# ---------------------------------------------------------
+# DeviceStatusInfo (last known position)
+# ---------------------------------------------------------
+
+def get_statusinfo(session_id, device_id):
+    params = {
+        "typeName": "DeviceStatusInfo",
+        "search": {
+            "deviceSearch": {"id": device_id}
+        },
+        "credentials": {
+            "database": DATABASE,
+            "sessionId": session_id,
+            "userName": USERNAME
+        }
+    }
+
+    result = geotab_call("Get", params)
+    info = result.get("result", [])
+
+    if not info:
+        return None
+
+    latest = info[0]
+
+    return {
+        "dateTime": latest.get("dateTime"),
+        "lat": latest.get("latitude"),
+        "lon": latest.get("longitude")
+    }
+
+# ---------------------------------------------------------
+# MAIN DIAGNOSTIC WORKFLOW
 # ---------------------------------------------------------
 
 def main():
     print("Authenticating...")
     session_id, server = geotab_login()
-    print("Authenticated.")
+    print("Authenticated.\n")
 
     print("Fetching devices...")
     devices = get_devices(session_id)
-    print(f"Found {len(devices)} devices.")
+    print(f"Found {len(devices)} devices.\n")
 
-    fleet_output = []
+    print("===== BEGIN DIAGNOSTICS =====\n")
 
     for d in devices:
         device_id = d["id"]
         name = d.get("name", "Unknown")
 
-        gps = get_latest_fueltax(session_id, device_id)
+        print(f"--- {name} ({device_id}) ---")
 
-        fleet_output.append({
-            "id": device_id,
-            "name": name,
-            "gps": gps
-        })
+        fueltax = get_fueltax_details(session_id, device_id)
+        logrec = get_latest_logrecord(session_id, device_id)
+        status = get_statusinfo(session_id, device_id)
 
-    # Write JSON output for your PWA
-    with open("locations.json", "w") as f:
-        json.dump(fleet_output, f, indent=2)
+        print("FuelTaxDetail:", fueltax)
+        print("LogRecord:", logrec)
+        print("DeviceStatusInfo:", status)
+        print()
 
-    print("locations.json updated successfully.")
+    print("===== END DIAGNOSTICS =====")
 
 if __name__ == "__main__":
     main()
