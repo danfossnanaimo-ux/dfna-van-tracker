@@ -9,12 +9,13 @@ let markerLookup = {};
 let userMarker = null;
 let selectedVehicleName = null;
 let lastLocations = [];
+let userToVanLine = null;
 
 // -----------------------------------------------------
 // INITIALIZE MAP
 // -----------------------------------------------------
 function initMap() {
-  map = L.map("map").setView([49.040359, -123.866226], 18);
+  map = L.map("map", { zoomAnimation: true }).setView([49.040359, -123.866226], 18);
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
@@ -93,6 +94,8 @@ function updateMap(locations) {
       markerLookup[v.name].setLatLng(pos);
     }
   });
+
+  updateUserToVanLine();
 }
 
 // -----------------------------------------------------
@@ -129,6 +132,7 @@ document.getElementById("vehicleDropdown").addEventListener("change", e => {
   if (name === "__show_all__") {
     selectedVehicleName = null;
     showAllVehicles();
+    clearUserToVanLine();
     return;
   }
 
@@ -144,6 +148,8 @@ document.getElementById("vehicleDropdown").addEventListener("change", e => {
       map.removeLayer(marker);
     }
   });
+
+  updateUserToVanLine();
 });
 
 // -----------------------------------------------------
@@ -155,6 +161,7 @@ document.getElementById("vehicleSearch").addEventListener("input", e => {
   if (text === "") {
     updateDropdown(lastLocations);
     showAllVehicles();
+    clearUserToVanLine();
     return;
   }
 
@@ -174,6 +181,22 @@ document.getElementById("vehicleSearch").addEventListener("input", e => {
       map.removeLayer(marker);
     }
   });
+
+  // Auto-zoom when exactly one match
+  if (filtered.length === 1) {
+    const vanName = filtered[0].name;
+    const vanMarker = markerLookup[vanName];
+
+    if (vanMarker) {
+      if (userMarker) {
+        zoomToUserAndVehicle(vanMarker.getLatLng());
+      } else {
+        zoomToVehicle(vanMarker.getLatLng());
+      }
+    }
+  }
+
+  updateUserToVanLine();
 });
 
 // -----------------------------------------------------
@@ -206,10 +229,7 @@ function updateUserLocation(lat, lon) {
     userMarker = L.marker(pos, { icon: userIcon }).addTo(map);
   }
 
-  if (selectedVehicleName) {
-    const vehicleMarker = markerLookup[selectedVehicleName];
-    if (vehicleMarker) zoomToUserAndVehicle(vehicleMarker.getLatLng());
-  }
+  updateUserToVanLine();
 }
 
 if (navigator.geolocation) {
@@ -221,10 +241,57 @@ if (navigator.geolocation) {
 }
 
 // -----------------------------------------------------
+// DISTANCE + LINE
+// -----------------------------------------------------
+function updateUserToVanLine() {
+  if (!selectedVehicleName || !userMarker) {
+    clearUserToVanLine();
+    return;
+  }
+
+  const vanMarker = markerLookup[selectedVehicleName];
+  if (!vanMarker) return;
+
+  const userPos = userMarker.getLatLng();
+  const vanPos = vanMarker.getLatLng();
+
+  // Draw line
+  if (userToVanLine) {
+    userToVanLine.setLatLngs([userPos, vanPos]);
+  } else {
+    userToVanLine = L.polyline([userPos, vanPos], {
+      color: "blue",
+      weight: 4,
+      opacity: 0.7
+    }).addTo(map);
+  }
+
+  // Distance readout
+  const distMeters = userPos.distanceTo(vanPos);
+  const distKm = (distMeters / 1000).toFixed(2);
+
+  const box = document.getElementById("distanceBox");
+  box.style.display = "block";
+  box.textContent = `You are ${distKm} km away`;
+
+  // Smooth zoom to include both
+  const bounds = L.latLngBounds([userPos, vanPos]);
+  map.flyToBounds(bounds, { padding: [80, 80] });
+}
+
+function clearUserToVanLine() {
+  if (userToVanLine) {
+    map.removeLayer(userToVanLine);
+    userToVanLine = null;
+  }
+  document.getElementById("distanceBox").style.display = "none";
+}
+
+// -----------------------------------------------------
 // ZOOM HELPERS
 // -----------------------------------------------------
 function zoomToVehicle(latlng) {
-  map.setView(latlng, 18);
+  map.flyTo(latlng, 18);
 }
 
 function zoomToUserAndVehicle(vehicleLatLng) {
@@ -232,7 +299,7 @@ function zoomToUserAndVehicle(vehicleLatLng) {
 
   const userLatLng = userMarker.getLatLng();
   const bounds = L.latLngBounds([userLatLng, vehicleLatLng]);
-  map.fitBounds(bounds, { padding: [50, 50] });
+  map.flyToBounds(bounds, { padding: [80, 80] });
 }
 
 // -----------------------------------------------------
