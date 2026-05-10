@@ -1,7 +1,7 @@
 import os
 import json
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # ---------------------------------------------------------
 # CONFIGURATION
@@ -16,8 +16,6 @@ DATABASE = "dan_foss"
 if not PASSWORD:
     raise Exception("GEOTAB_PASSWORD environment variable is missing.")
 
-print("Logging into Geotab...")
-
 # ---------------------------------------------------------
 # GEOTAB JSON-RPC CALL
 # ---------------------------------------------------------
@@ -28,7 +26,6 @@ def geotab_call(method, params):
         "params": params,
         "id": 1
     }
-
     response = requests.post(GEOTAB_SERVER, json=payload)
     data = response.json()
     return data
@@ -56,34 +53,95 @@ def geotab_login():
     return session_id, server
 
 # ---------------------------------------------------------
+# GET ALL DEVICES
+# ---------------------------------------------------------
+
+def get_devices(session_id):
+    params = {
+        "typeName": "Device",
+        "credentials": {
+            "database": DATABASE,
+            "sessionId": session_id,
+            "userName": USERNAME
+        }
+    }
+
+    result = geotab_call("Get", params)
+
+    if "error" in result:
+        raise Exception(f"Device fetch failed: {result}")
+
+    return result["result"]
+
+# ---------------------------------------------------------
+# GET LATEST GPS FOR A DEVICE
+# ---------------------------------------------------------
+
+def get_latest_gps(session_id, device_id):
+    from_date = (datetime.utcnow() - timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    params = {
+        "typeName": "LogRecord",
+        "search": {
+            "deviceSearch": {"id": device_id},
+            "fromDate": from_date
+        },
+        "credentials": {
+            "database": DATABASE,
+            "sessionId": session_id,
+            "userName": USERNAME
+        }
+    }
+
+    result = geotab_call("Get", params)
+
+    if "error" in result:
+        return None
+
+    logs = result["result"]
+    if not logs:
+        return None
+
+    latest = logs[-1]
+
+    return {
+        "latitude": latest.get("latitude"),
+        "longitude": latest.get("longitude"),
+        "dateTime": latest.get("dateTime")
+    }
+
+# ---------------------------------------------------------
 # MAIN WORKFLOW
 # ---------------------------------------------------------
 
 def main():
+    print("Authenticating...")
     session_id, server = geotab_login()
+    print("Authenticated.")
 
-    print("Authenticated successfully.")
-    print("Session ID:", session_id)
-    print("Server:", server)
+    print("Fetching devices...")
+    devices = get_devices(session_id)
+    print(f"Found {len(devices)} devices.")
 
-    # -----------------------------------------------------
-    # PLACEHOLDER FOR YOUR ACTUAL VAN TRACKER LOGIC
-    # -----------------------------------------------------
-    # Example:
-    #
-    # vehicles = geotab_call("Get", {
-    #     "typeName": "Device",
-    #     "credentials": {
-    #         "database": DATABASE,
-    #         "sessionId": session_id,
-    #         "userName": USERNAME
-    #     }
-    # })
-    #
-    # print("Vehicles:", vehicles)
-    #
-    # Add your GPS extraction, JSON writing, CSV export, etc.
-    # -----------------------------------------------------
+    fleet_output = []
+
+    for d in devices:
+        device_id = d["id"]
+        name = d.get("name", "Unknown")
+
+        gps = get_latest_gps(session_id, device_id)
+
+        fleet_output.append({
+            "id": device_id,
+            "name": name,
+            "gps": gps
+        })
+
+    # Write JSON output for your PWA
+    with open("locations.json", "w") as f:
+        json.dump(fleet_output, f, indent=2)
+
+    print("locations.json updated successfully.")
 
 if __name__ == "__main__":
     main()
