@@ -3,9 +3,13 @@ import json
 import requests
 from datetime import datetime
 
+# ---------------------------------------------------------
+# CONFIGURATION
+# ---------------------------------------------------------
+
 GEOTAB_SERVER = "https://my.geotab.com/apiv1"
 
-USERNAME = os.getenv("GEOTAB_USERNAME", "kdwgray@gmail.com")
+USERNAME = os.getenv("GEOTAB_USERNAME", "kellyg@danfosscouriers.ca")
 PASSWORD = os.getenv("GEOTAB_PASSWORD")
 DATABASE = "dan_foss"
 
@@ -13,16 +17,11 @@ if not PASSWORD:
     raise Exception("GEOTAB_PASSWORD environment variable is missing.")
 
 print("Logging into Geotab...")
-print(f"DEBUG: Password length = {len(PASSWORD)}")
-print(f"DEBUG: First 3 chars = {PASSWORD[:3]}")
-print(f"DEBUG: Last 2 chars = {PASSWORD[-2:]}")
-print(f"DEBUG: Username = {USERNAME}")
-print(f"DEBUG: Database = {DATABASE}")
-print(f"DEBUG: repr password = '{PASSWORD[:1]}**'")
 
 # ---------------------------------------------------------
-# GEOTAB CALL WITH FULL DEBUGGING
+# GEOTAB JSON-RPC CALL
 # ---------------------------------------------------------
+
 def geotab_call(method, params):
     payload = {
         "method": method,
@@ -30,24 +29,14 @@ def geotab_call(method, params):
         "id": 1
     }
 
-    # 🔥 FULL DEBUGGING — EXACT SPOT 🔥
-    print("\n================ DEBUG REQUEST ================")
-    print("URL:", GEOTAB_SERVER)
-    print("Payload:")
-    print(json.dumps(payload, indent=2))
-    print("===============================================\n")
-
     response = requests.post(GEOTAB_SERVER, json=payload)
-
-    # 🔥 RAW RESPONSE
-    print("DEBUG RAW RESPONSE:", response.text)
-
     data = response.json()
     return data
 
 # ---------------------------------------------------------
 # LOGIN
 # ---------------------------------------------------------
+
 def geotab_login():
     params = {
         "userName": USERNAME,
@@ -58,7 +47,7 @@ def geotab_login():
     result = geotab_call("Authenticate", params)
 
     if "error" in result:
-        raise Exception(f"Unexpected Geotab response: {result}")
+        raise Exception(f"Geotab authentication failed: {result}")
 
     creds = result["result"]["credentials"]
     session_id = creds["sessionId"]
@@ -67,8 +56,9 @@ def geotab_login():
     return session_id, server
 
 # ---------------------------------------------------------
-# MAIN
+# MAIN WORKFLOW
 # ---------------------------------------------------------
+
 def main():
     session_id, server = geotab_login()
 
@@ -76,8 +66,24 @@ def main():
     print("Session ID:", session_id)
     print("Server:", server)
 
-    # You can add more logic here later.
-    # For now, we only need authentication debugging.
+    # -----------------------------------------------------
+    # PLACEHOLDER FOR YOUR ACTUAL VAN TRACKER LOGIC
+    # -----------------------------------------------------
+    # Example:
+    #
+    # vehicles = geotab_call("Get", {
+    #     "typeName": "Device",
+    #     "credentials": {
+    #         "database": DATABASE,
+    #         "sessionId": session_id,
+    #         "userName": USERNAME
+    #     }
+    # })
+    #
+    # print("Vehicles:", vehicles)
+    #
+    # Add your GPS extraction, JSON writing, CSV export, etc.
+    # -----------------------------------------------------
 
 if __name__ == "__main__":
     main()
