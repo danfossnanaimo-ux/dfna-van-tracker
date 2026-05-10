@@ -46,11 +46,21 @@ if ("serviceWorker" in navigator) {
     margin-bottom: 12px;
   }
 
-  /* Subtle numeric labels */
+  /* Default label style */
   .van-label {
     font-size: 14px;
     font-weight: bold;
     color: #222;
+    background: transparent;
+    border: none;
+    text-shadow: 0 0 3px white;
+  }
+
+  /* Selected van label (bold red) */
+  .van-label-selected {
+    font-size: 16px;
+    font-weight: 900;
+    color: red;
     background: transparent;
     border: none;
     text-shadow: 0 0 3px white;
