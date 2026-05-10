@@ -114,14 +114,14 @@ function updateMap(locations) {
       markerLookup[v.name].setLatLng(pos);
     }
 
-    // Label
+    // Label (tightened anchor)
     if (!labelLookup[v.name]) {
       const label = L.marker(pos, {
         icon: L.divIcon({
           className: "van-label",
           html: vanNumber,
           iconSize: [20, 20],
-          iconAnchor: [10, -10]
+          iconAnchor: [10, -2]   // TIGHTER LABEL POSITION
         })
       });
       label.addTo(map);
@@ -158,7 +158,6 @@ function updateDropdown(locations) {
 
   const uniqueNames = [...new Set(locations.map(v => v.name))];
 
-  // Sort by numeric portion
   uniqueNames.sort((a, b) => {
     const numA = parseInt(a.match(/\d+(?!.*\d)/)?.[0] || "0");
     const numB = parseInt(b.match(/\d+(?!.*\d)/)?.[0] || "0");
@@ -177,6 +176,9 @@ function updateDropdown(locations) {
 // DROPDOWN FILTERING + 10m PROXIMITY LOGIC
 // -----------------------------------------------------
 document.getElementById("vehicleDropdown").addEventListener("change", e => {
+  const dropdown = document.getElementById("vehicleDropdown");
+  const resetButton = document.getElementById("resetButton");
+
   const name = e.target.value;
 
   if (name === "__show_all__") {
@@ -184,6 +186,10 @@ document.getElementById("vehicleDropdown").addEventListener("change", e => {
     showAllVehicles();
     return;
   }
+
+  // Hide dropdown, show reset button
+  dropdown.style.display = "none";
+  resetButton.style.display = "block";
 
   selectedVehicleName = name;
 
@@ -199,7 +205,6 @@ document.getElementById("vehicleDropdown").addEventListener("change", e => {
       marker.setOpacity(1);
       syncLabelOpacity(vName);
 
-      // Selected van label becomes bold red
       label.getElement().className = "van-label-selected";
 
       map.addLayer(marker);
@@ -209,24 +214,35 @@ document.getElementById("vehicleDropdown").addEventListener("change", e => {
     } else {
       const dist = selectedPos.distanceTo(pos);
 
-      // Nearby vans (<=10m)
       if (dist <= 10) {
         marker.setOpacity(0.3);
         syncLabelOpacity(vName);
 
-        // Nearby vans use normal label style
         label.getElement().className = "van-label";
 
         map.addLayer(marker);
         map.addLayer(label);
 
       } else {
-        // Hide everything else
         map.removeLayer(marker);
         map.removeLayer(label);
       }
     }
   });
+});
+
+// -----------------------------------------------------
+// RESET BUTTON
+// -----------------------------------------------------
+document.getElementById("resetButton").addEventListener("click", () => {
+  const dropdown = document.getElementById("vehicleDropdown");
+  const resetButton = document.getElementById("resetButton");
+
+  dropdown.style.display = "block";
+  resetButton.style.display = "none";
+
+  selectedVehicleName = null;
+  showAllVehicles();
 });
 
 // -----------------------------------------------------
@@ -237,7 +253,6 @@ function showAllVehicles() {
     markerLookup[vName].setOpacity(1);
     syncLabelOpacity(vName);
 
-    // Reset label style
     labelLookup[vName].getElement().className = "van-label";
 
     map.addLayer(markerLookup[vName]);
