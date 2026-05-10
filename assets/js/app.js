@@ -133,7 +133,7 @@ function updateMap(locations) {
 }
 
 // -----------------------------------------------------
-// DROPDOWN
+// SORTED DROPDOWN
 // -----------------------------------------------------
 function updateDropdown(locations) {
   const dropdown = document.getElementById("vehicleDropdown");
@@ -144,21 +144,25 @@ function updateDropdown(locations) {
   showAllOpt.textContent = "Show All";
   dropdown.appendChild(showAllOpt);
 
-  const names = new Set();
-  locations.forEach(v => {
-    if (!v.name) return;
-    if (names.has(v.name)) return;
-    names.add(v.name);
+  const uniqueNames = [...new Set(locations.map(v => v.name))];
 
+  // Sort by numeric portion
+  uniqueNames.sort((a, b) => {
+    const numA = parseInt(a.match(/\d+(?!.*\d)/)?.[0] || "0");
+    const numB = parseInt(b.match(/\d+(?!.*\d)/)?.[0] || "0");
+    return numA - numB;
+  });
+
+  uniqueNames.forEach(name => {
     const opt = document.createElement("option");
-    opt.value = v.name;
-    opt.textContent = v.name;
+    opt.value = name;
+    opt.textContent = name;
     dropdown.appendChild(opt);
   });
 }
 
 // -----------------------------------------------------
-// DROPDOWN FILTERING + OPACITY
+// DROPDOWN FILTERING + 10m PROXIMITY LOGIC
 // -----------------------------------------------------
 document.getElementById("vehicleDropdown").addEventListener("change", e => {
   const name = e.target.value;
@@ -171,68 +175,35 @@ document.getElementById("vehicleDropdown").addEventListener("change", e => {
 
   selectedVehicleName = name;
 
+  const selectedMarker = markerLookup[name];
+  const selectedPos = selectedMarker.getLatLng();
+
   Object.keys(markerLookup).forEach(vName => {
     const marker = markerLookup[vName];
     const label = labelLookup[vName];
+    const pos = marker.getLatLng();
 
     if (vName === name) {
       marker.setOpacity(1);
       map.addLayer(marker);
       map.addLayer(label);
-      marker.openPopup();
-      zoomToVehicle(marker.getLatLng());
+      zoomToUserAndVehicle(pos);
     } else {
-      marker.setOpacity(0.3);
-      map.addLayer(marker);
-      map.addLayer(label);
+      const dist = selectedPos.distanceTo(pos);
+      if (dist <= 10) {
+        marker.setOpacity(0.3);
+        map.addLayer(marker);
+        map.addLayer(label);
+      } else {
+        map.removeLayer(marker);
+        map.removeLayer(label);
+      }
     }
   });
 });
 
 // -----------------------------------------------------
-// SEARCH FILTERING + OPACITY
-// -----------------------------------------------------
-document.getElementById("vehicleSearch").addEventListener("input", e => {
-  const text = e.target.value.toLowerCase().trim();
-
-  if (text === "") {
-    updateDropdown(lastLocations);
-    showAllVehicles();
-    return;
-  }
-
-  const filtered = lastLocations.filter(
-    v => v.name && v.name.toLowerCase().includes(text)
-  );
-
-  updateDropdown(filtered);
-
-  const allowedNames = new Set(filtered.map(v => v.name));
-
-  Object.keys(markerLookup).forEach(name => {
-    const marker = markerLookup[name];
-    const label = labelLookup[name];
-
-    if (allowedNames.has(name)) {
-      marker.setOpacity(1);
-      map.addLayer(marker);
-      map.addLayer(label);
-    } else {
-      marker.setOpacity(0.3);
-      map.addLayer(marker);
-      map.addLayer(label);
-    }
-  });
-
-  if (filtered.length === 1) {
-    const vanName = filtered[0].name;
-    const vanMarker = markerLookup[vanName];
-    if (vanMarker) zoomToVehicle(vanMarker.getLatLng());
-  }
-});
-
-// -----------------------------------------------------
-// SHOW ALL VEHICLES (reset opacity)
+// SHOW ALL VEHICLES
 // -----------------------------------------------------
 function showAllVehicles() {
   Object.keys(markerLookup).forEach(vName => {
@@ -273,10 +244,18 @@ if (navigator.geolocation) {
 }
 
 // -----------------------------------------------------
-// ZOOM HELPERS
+// FIXED ZOOM LOGIC
 // -----------------------------------------------------
-function zoomToVehicle(latlng) {
-  map.flyTo(latlng, 18);
+function zoomToUserAndVehicle(vehicleLatLng) {
+  if (!userMarker) {
+    map.flyTo(vehicleLatLng, 18);
+    return;
+  }
+
+  const userLatLng = userMarker.getLatLng();
+  const bounds = L.latLngBounds([userLatLng, vehicleLatLng]);
+
+  map.flyToBounds(bounds, { padding: [80, 80] });
 }
 
 // -----------------------------------------------------
