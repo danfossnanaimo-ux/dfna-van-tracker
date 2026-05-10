@@ -39,7 +39,7 @@ if ("serviceWorker" in navigator) {
     box-shadow: none;
   }
 
-  /* Dropdown + Reset button styling with drop shadow */
+  /* Dropdown + Reset button with frosted blur */
   #vehicleDropdown,
   #resetButton {
     width: 100%;
@@ -48,12 +48,21 @@ if ("serviceWorker" in navigator) {
     box-sizing: border-box;
     margin-bottom: 12px;
 
-    background: white;
-    border-radius: 6px;
-    border: none;
+    /* Frosted glass effect */
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 
-    /* Recommended subtle drop shadow */
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.4);
+
+    /* Drop shadow */
     box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+
+    /* Remove native browser styling */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
   }
 
   /* Modern circular marker (scaled 200%) */
