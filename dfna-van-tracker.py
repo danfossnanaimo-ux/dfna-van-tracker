@@ -6,7 +6,7 @@ import os
 # CONFIGURATION
 # -----------------------------
 GEOTAB_SERVER = "https://my.geotab.com/apiv1"
-GEOTAB_USERNAME = "kellyg@danfosscouriers.ca"
+GEOTAB_USERNAME = "kdwgray@gmail.com"
 GEOTAB_PASSWORD = os.getenv("GEOTAB_PASSWORD")
 GEOTAB_DATABASE = "dan_foss"
 
