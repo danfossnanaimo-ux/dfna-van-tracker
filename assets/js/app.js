@@ -183,7 +183,6 @@ document.getElementById("vehicleDropdown").addEventListener("change", e => {
   Object.keys(markerLookup).forEach(vName => {
     const marker = markerLookup[vName];
     const pos = marker.getLatLng();
-
     const vanNumber = vName.match(/\d+(?!.*\d)/)?.[0] || "";
 
     if (vName === name) {
@@ -216,20 +215,9 @@ document.getElementById("resetButton").addEventListener("click", () => {
 
   dropdown.value = "__show_all__";
 
-  // Remove selected styling from ALL markers
-  Object.keys(markerLookup).forEach(vName => {
-    const numEl = document.getElementById(`num-${vName}`);
-    if (numEl) numEl.classList.remove("selected");
-  });
-
   selectedVehicleName = null;
-  showAllVehicles();
-});
 
-// -----------------------------------------------------
-// SHOW ALL VEHICLES
-// -----------------------------------------------------
-function showAllVehicles() {
+  // FULLY rebuild all marker icons to remove selected styling
   Object.keys(markerLookup).forEach(vName => {
     const marker = markerLookup[vName];
     const vanNumber = vName.match(/\d+(?!.*\d)/)?.[0] || "";
@@ -237,11 +225,14 @@ function showAllVehicles() {
     marker.setOpacity(1);
     marker.setIcon(buildIcon(vName, vanNumber, false));
 
+    const numEl = document.getElementById(`num-${vName}`);
+    if (numEl) numEl.classList.remove("selected");
+
     map.addLayer(marker);
   });
 
   map.setView([49.040359, -123.866226], 18);
-}
+});
 
 // -----------------------------------------------------
 // USER LOCATION
