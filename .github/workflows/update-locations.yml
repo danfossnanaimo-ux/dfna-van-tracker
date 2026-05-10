@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      GEOTAB_PASSWORD: ${{ secrets.GEOTAB_PASSWORD_RAW }}
+      GEOTAB_PASSWORD: ${{ secrets.GEOTAB_PASSWORD }}
 
     steps:
       - name: Checkout repo
