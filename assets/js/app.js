@@ -6,9 +6,9 @@ const DATA_URL =
 
 let map;
 let markerLookup = {};
-let labelLookup = {};
 let userMarker = null;
 let selectedVehicleName = null;
+let lastLocations = [];
 
 // -----------------------------------------------------
 // INITIALIZE MAP
@@ -21,9 +21,7 @@ function initMap() {
     attribution: "© OpenStreetMap contributors"
   }).addTo(map);
 
-  // -----------------------------------------------------
-  // YARD FENCE (correct location + correct placement)
-  // -----------------------------------------------------
+  // Yard fence
   L.polygon(
     [
       [49.04099970424841, -123.86796072616107],
@@ -50,6 +48,7 @@ async function loadLocations() {
   try {
     const response = await fetch(DATA_URL);
     const data = await response.json();
+    lastLocations = data;
     updateMap(data);
     updateDropdown(data);
   } catch (err) {
@@ -83,7 +82,6 @@ function updateMap(locations) {
     const ts = v.gps.dateTime;
     const pos = [lat, lon];
 
-    // Marker
     if (!markerLookup[v.name]) {
       const marker = L.marker(pos);
       marker.bindPopup(
@@ -109,8 +107,12 @@ function updateDropdown(locations) {
   showAllOpt.textContent = "Show All";
   dropdown.appendChild(showAllOpt);
 
+  const names = new Set();
   locations.forEach(v => {
     if (!v.name) return;
+    if (names.has(v.name)) return;
+    names.add(v.name);
+
     const opt = document.createElement("option");
     opt.value = v.name;
     opt.textContent = v.name;
@@ -132,27 +134,34 @@ document.getElementById("vehicleDropdown").addEventListener("change", e => {
 });
 
 // -----------------------------------------------------
-// SEARCH
+// SEARCH (filters dropdown + map)
 // -----------------------------------------------------
 document.getElementById("vehicleSearch").addEventListener("input", e => {
-  const text = e.target.value.toLowerCase();
+  const text = e.target.value.toLowerCase().trim();
   const dropdown = document.getElementById("vehicleDropdown");
 
-  dropdown.innerHTML = "";
-
-  if (text.trim() === "") {
-    loadLocations();
+  if (text === "") {
+    updateDropdown(lastLocations);
+    showAllVehicles();
     return;
   }
 
-  Object.keys(markerLookup)
-    .filter(name => name.toLowerCase().includes(text))
-    .forEach(name => {
-      const opt = document.createElement("option");
-      opt.value = name;
-      opt.textContent = name;
-      dropdown.appendChild(opt);
-    });
+  const filtered = lastLocations.filter(
+    v => v.name && v.name.toLowerCase().includes(text)
+  );
+
+  updateDropdown(filtered);
+
+  const allowedNames = new Set(filtered.map(v => v.name));
+
+  Object.keys(markerLookup).forEach(name => {
+    const marker = markerLookup[name];
+    if (allowedNames.has(name)) {
+      map.addLayer(marker);
+    } else {
+      map.removeLayer(marker);
+    }
+  });
 });
 
 // -----------------------------------------------------
@@ -161,16 +170,13 @@ document.getElementById("vehicleSearch").addEventListener("input", e => {
 function showOnlyVehicle(name) {
   Object.keys(markerLookup).forEach(vName => {
     const marker = markerLookup[vName];
-    const label = labelLookup[vName];
 
     if (vName === name) {
       map.addLayer(marker);
-      map.addLayer(label);
       marker.openPopup();
       zoomToVehicle(marker.getLatLng());
     } else {
       map.removeLayer(marker);
-      map.removeLayer(label);
     }
   });
 }
@@ -181,7 +187,6 @@ function showOnlyVehicle(name) {
 function showAllVehicles() {
   Object.keys(markerLookup).forEach(vName => {
     map.addLayer(markerLookup[vName]);
-    map.addLayer(labelLookup[vName]);
   });
 
   map.setView([49.040359, -123.866226], 18);
