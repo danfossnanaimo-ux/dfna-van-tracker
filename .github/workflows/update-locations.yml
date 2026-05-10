@@ -1,14 +1,16 @@
-name: Run Van Tracker
+name: Update Locations
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "0 * * * *"   # every hour
+
+permissions:
+  contents: write
 
 jobs:
-  run:
+  update:
     runs-on: ubuntu-latest
-
-    env:
-      GEOTAB_PASSWORD: ${{ secrets.GEOTAB_PASSWORD }}
 
     steps:
       - name: Checkout repo
@@ -17,10 +19,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install dependencies
         run: pip install requests
 
-      - name: Run script
+      - name: Run tracker script
+        env:
+          GEOTAB_USERNAME: ${{ secrets.GEOTAB_USERNAME }}
+          GEOTAB_PASSWORD: ${{ secrets.GEOTAB_PASSWORD }}
         run: python dfna-van-tracker.py
+
+      - name: Commit updated locations.json
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add locations.json
+          git commit -m "Update locations.json" || echo "No changes to commit"
+          git push
