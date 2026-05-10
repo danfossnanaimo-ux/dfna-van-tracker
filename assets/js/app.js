@@ -21,10 +21,9 @@ function initMap() {
     maxZoom: 19,
     attribution: "© OpenStreetMap contributors"
   }).addTo(map);
-
+  
   // Yard fence
-  L.polygon(
-    [
+  L.polygon([
       [-123.8680866,49.0410015],
       [-123.8680984,49.0410489],
       [-123.8680656,49.0410934],
@@ -39,14 +38,11 @@ function initMap() {
       [-123.865034,49.0403033],
       [-123.8670691,49.0401176],
       [-123.8680868,49.0410045]
-    ],
-    {
+    ],{
       color: "#ff0000",
       weight: 3,
       fillOpacity: 0.15
-    }
-  ).addTo(map);
-}
+    }).addTo(map);
 
 // -----------------------------------------------------
 // FETCH BACKEND JSON
