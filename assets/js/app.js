@@ -204,7 +204,7 @@ document.getElementById("vehicleDropdown").addEventListener("change", e => {
 });
 
 // -----------------------------------------------------
-// RESET BUTTON
+// RESET BUTTON — FINAL FIX APPLIED HERE
 // -----------------------------------------------------
 document.getElementById("resetButton").addEventListener("click", () => {
   const dropdown = document.getElementById("vehicleDropdown");
@@ -214,7 +214,6 @@ document.getElementById("resetButton").addEventListener("click", () => {
   resetButton.style.display = "none";
 
   dropdown.value = "__show_all__";
-
   selectedVehicleName = null;
 
   // FULLY rebuild all marker icons to remove selected styling
@@ -222,11 +221,15 @@ document.getElementById("resetButton").addEventListener("click", () => {
     const marker = markerLookup[vName];
     const vanNumber = vName.match(/\d+(?!.*\d)/)?.[0] || "";
 
-    marker.setOpacity(1);
+    // Force rebuild with non-selected icon
     marker.setIcon(buildIcon(vName, vanNumber, false));
+    marker.setOpacity(1);
 
-    const numEl = document.getElementById(`num-${vName}`);
-    if (numEl) numEl.classList.remove("selected");
+    // Wait for DOM to attach, then remove selected class
+    setTimeout(() => {
+      const numEl = document.getElementById(`num-${vName}`);
+      if (numEl) numEl.classList.remove("selected");
+    }, 10);
 
     map.addLayer(marker);
   });
