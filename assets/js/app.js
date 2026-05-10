@@ -6,7 +6,6 @@ const DATA_URL =
 
 let map;
 let markerLookup = {};
-let labelLookup = {};
 let userMarker = null;
 let selectedVehicleName = null;
 let lastLocations = [];
@@ -22,7 +21,7 @@ function initMap() {
     attribution: "© OpenStreetMap contributors"
   }).addTo(map);
 
-  // NEW YARD FENCE
+  // YARD FENCE
   L.polygon(
     [
       [49.0410015, -123.8680866],
@@ -96,52 +95,30 @@ function updateMap(locations) {
   cleanList.forEach(v => {
     const lat = v.gps.latitude;
     const lon = v.gps.longitude;
-    const ts = v.gps.dateTime;
     const pos = [lat, lon];
 
-    // Extract numeric portion (Option B)
+    // Extract numeric portion
     const vanNumber = v.name.match(/\d+(?!.*\d)/)?.[0] || "";
 
-    // Marker
+    // Custom marker with number overlay
+    const icon = L.divIcon({
+      className: "van-icon",
+      html: `
+        <div class="van-pin"></div>
+        <div class="van-number" id="num-${v.name}">${vanNumber}</div>
+      `,
+      iconSize: [64, 64],
+      iconAnchor: [32, 64]
+    });
+
     if (!markerLookup[v.name]) {
-      const marker = L.marker(pos, { opacity: 1 });
-      marker.bindPopup(
-        `<b>${v.name}</b><br>Last update: ${ts}<br>Lat: ${lat}<br>Lon: ${lon}`
-      );
+      const marker = L.marker(pos, { icon, opacity: 1 });
       marker.addTo(map);
       markerLookup[v.name] = marker;
     } else {
       markerLookup[v.name].setLatLng(pos);
     }
-
-    // Label (tightened anchor)
-    if (!labelLookup[v.name]) {
-      const label = L.marker(pos, {
-        icon: L.divIcon({
-          className: "van-label",
-          html: vanNumber,
-          iconSize: [20, 20],
-          iconAnchor: [10, -2]   // TIGHTER LABEL POSITION
-        })
-      });
-      label.addTo(map);
-      labelLookup[v.name] = label;
-    } else {
-      labelLookup[v.name].setLatLng(pos);
-    }
   });
-}
-
-// -----------------------------------------------------
-// SYNC LABEL OPACITY
-// -----------------------------------------------------
-function syncLabelOpacity(name) {
-  const marker = markerLookup[name];
-  const label = labelLookup[name];
-  if (!marker || !label) return;
-
-  const el = label.getElement();
-  if (el) el.style.opacity = marker.options.opacity;
 }
 
 // -----------------------------------------------------
@@ -198,17 +175,12 @@ document.getElementById("vehicleDropdown").addEventListener("change", e => {
 
   Object.keys(markerLookup).forEach(vName => {
     const marker = markerLookup[vName];
-    const label = labelLookup[vName];
     const pos = marker.getLatLng();
+    const numEl = document.getElementById(`num-${vName}`);
 
     if (vName === name) {
       marker.setOpacity(1);
-      syncLabelOpacity(vName);
-
-      label.getElement().className = "van-label-selected";
-
-      map.addLayer(marker);
-      map.addLayer(label);
+      numEl.classList.add("selected");
       zoomToUserAndVehicle(pos);
 
     } else {
@@ -216,16 +188,9 @@ document.getElementById("vehicleDropdown").addEventListener("change", e => {
 
       if (dist <= 10) {
         marker.setOpacity(0.3);
-        syncLabelOpacity(vName);
-
-        label.getElement().className = "van-label";
-
-        map.addLayer(marker);
-        map.addLayer(label);
-
+        numEl.classList.remove("selected");
       } else {
         map.removeLayer(marker);
-        map.removeLayer(label);
       }
     }
   });
@@ -250,13 +215,13 @@ document.getElementById("resetButton").addEventListener("click", () => {
 // -----------------------------------------------------
 function showAllVehicles() {
   Object.keys(markerLookup).forEach(vName => {
-    markerLookup[vName].setOpacity(1);
-    syncLabelOpacity(vName);
+    const marker = markerLookup[vName];
+    const numEl = document.getElementById(`num-${vName}`);
 
-    labelLookup[vName].getElement().className = "van-label";
+    marker.setOpacity(1);
+    numEl.classList.remove("selected");
 
-    map.addLayer(markerLookup[vName]);
-    map.addLayer(labelLookup[vName]);
+    map.addLayer(marker);
   });
 
   map.setView([49.040359, -123.866226], 18);
