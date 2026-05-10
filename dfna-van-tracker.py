@@ -1,21 +1,28 @@
-import requests
-import json
 import os
+import json
+import requests
+from datetime import datetime
 
-# -----------------------------
-# CONFIGURATION
-# -----------------------------
 GEOTAB_SERVER = "https://my.geotab.com/apiv1"
-GEOTAB_USERNAME = "kdwgray@gmail.com"
-GEOTAB_PASSWORD = os.getenv("GEOTAB_PASSWORD")
-GEOTAB_DATABASE = "dan_foss"
 
-OUTPUT_JSON = "data/locations.json"
+USERNAME = os.getenv("GEOTAB_USERNAME", "kdwgray@gmail.com")
+PASSWORD = os.getenv("GEOTAB_PASSWORD")
+DATABASE = "dan_foss"
 
+if not PASSWORD:
+    raise Exception("GEOTAB_PASSWORD environment variable is missing.")
 
-# -----------------------------
-# GENERIC GEOTAB API CALL
-# -----------------------------
+print("Logging into Geotab...")
+print(f"DEBUG: Password length = {len(PASSWORD)}")
+print(f"DEBUG: First 3 chars = {PASSWORD[:3]}")
+print(f"DEBUG: Last 2 chars = {PASSWORD[-2:]}")
+print(f"DEBUG: Username = {USERNAME}")
+print(f"DEBUG: Database = {DATABASE}")
+print(f"DEBUG: repr password = '{PASSWORD[:1]}**'")
+
+# ---------------------------------------------------------
+# GEOTAB CALL WITH FULL DEBUGGING
+# ---------------------------------------------------------
 def geotab_call(method, params):
     payload = {
         "method": method,
@@ -23,8 +30,7 @@ def geotab_call(method, params):
         "id": 1
     }
 
-    # 🔥 DEBUGGING ADDED HERE — EXACT SPOT 🔥
-    import json
+    # 🔥 FULL DEBUGGING — EXACT SPOT 🔥
     print("\n================ DEBUG REQUEST ================")
     print("URL:", GEOTAB_SERVER)
     print("Payload:")
@@ -33,134 +39,45 @@ def geotab_call(method, params):
 
     response = requests.post(GEOTAB_SERVER, json=payload)
 
-    # 🔥 DEBUG RESPONSE
+    # 🔥 RAW RESPONSE
     print("DEBUG RAW RESPONSE:", response.text)
 
     data = response.json()
     return data
 
-# -----------------------------
-# LOGIN (AUTHENTICATE)
-# -----------------------------
+# ---------------------------------------------------------
+# LOGIN
+# ---------------------------------------------------------
 def geotab_login():
-    
-    print("Logging into Geotab...")
-    print("DEBUG: Password length =", len(GEOTAB_PASSWORD))
-    print("DEBUG: First 3 chars =", GEOTAB_PASSWORD[:3])
-    print("DEBUG: Last 2 chars =", GEOTAB_PASSWORD[-2:])
-    print("DEBUG: Username =", GEOTAB_USERNAME)
-    print("DEBUG: Database =", GEOTAB_DATABASE)
-    print("DEBUG: repr password =", repr(GEOTAB_PASSWORD))
-
-    result = geotab_call(
-        "Authenticate",
-        {
-            "credentials": {
-                "database": GEOTAB_DATABASE,
-                "userName": GEOTAB_USERNAME,
-                "password": GEOTAB_PASSWORD
-            }
-        },
-        GEOTAB_SERVER
-    )
-
-    session = result["credentials"]
-    session_id = session["sessionId"]
-    server = result["path"]  # ALWAYS a full URL like https://myXX.geotab.com/apiv1
-
-    print(f"Login successful. Using server: {server}")
-    return session_id, server
-
-# -----------------------------
-# GET ALL DFNA VEHICLES
-# -----------------------------
-def get_all_vehicles(session_id, server):
-    print("Fetching vehicles...")
-
-    result = geotab_call(
-        "Get",
-        {
-            "typeName": "Device",
-            "credentials": {
-                "sessionId": session_id,
-                "database": GEOTAB_DATABASE
-            }
-        },
-        server
-    )
-
-    vehicles = [v for v in result if "DFNA" in v.get("name", "")]
-    print(f"Found {len(vehicles)} DFNA vehicles.")
-    return vehicles
-
-
-# -----------------------------
-# GET LAST KNOWN LOCATION
-# -----------------------------
-def get_last_location(device_id, session_id, server):
-    result = geotab_call(
-        "Get",
-        {
-            "typeName": "StatusData",
-            "search": {
-                "deviceSearch": {"id": device_id},
-                "diagnosticSearch": {"id": "DiagnosticLocation"}
-            },
-            "credentials": {
-                "sessionId": session_id,
-                "database": GEOTAB_DATABASE
-            }
-        },
-        server
-    )
-
-    if not result:
-        return None
-
-    latest = result[-1]
-    return {
-        "lat": latest["data"]["latitude"],
-        "lng": latest["data"]["longitude"],
-        "timestamp": latest["dateTime"]
+    params = {
+        "userName": USERNAME,
+        "password": PASSWORD,
+        "database": DATABASE
     }
 
+    result = geotab_call("Authenticate", params)
 
-# -----------------------------
-# MAIN PROCESS
-# -----------------------------
+    if "error" in result:
+        raise Exception(f"Unexpected Geotab response: {result}")
+
+    creds = result["result"]["credentials"]
+    session_id = creds["sessionId"]
+    server = result.get("path", GEOTAB_SERVER)
+
+    return session_id, server
+
+# ---------------------------------------------------------
+# MAIN
+# ---------------------------------------------------------
 def main():
     session_id, server = geotab_login()
-    vehicles = get_all_vehicles(session_id, server)
 
-    output = []
+    print("Authenticated successfully.")
+    print("Session ID:", session_id)
+    print("Server:", server)
 
-    for v in vehicles:
-        name = v.get("name", "Unknown")
-        print(f"Processing {name}...")
+    # You can add more logic here later.
+    # For now, we only need authentication debugging.
 
-        loc = get_last_location(v["id"], session_id, server)
-
-        if loc:
-            output.append({
-                "name": name,
-                "lat": loc["lat"],
-                "lng": loc["lng"],
-                "timestamp": loc["timestamp"]
-            })
-
-    os.makedirs("data", exist_ok=True)
-
-    with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
-        json.dump(output, f, indent=2)
-
-    print(f"Updated {len(output)} vehicle locations.")
-    print("Done.")
-
-
-# -----------------------------
-# RUN
-# -----------------------------
 if __name__ == "__main__":
-    if not GEOTAB_PASSWORD:
-        raise Exception("GEOTAB_PASSWORD environment variable is missing.")
     main()
