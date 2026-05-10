@@ -21,7 +21,7 @@ if ("serviceWorker" in navigator) {
 }
 </script>
 
-<!-- App JS (loads Google Drive data + map logic) -->
+<!-- App JS -->
 <script src="assets/js/app.js" defer></script>
 
 <style>
@@ -106,6 +106,39 @@ if ("serviceWorker" in navigator) {
 
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+// -----------------------------------------------------
+// INITIALIZE MAP
+// -----------------------------------------------------
+const map = L.map("map").setView([49.040359, -123.866226], 18);
+
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  maxZoom: 19,
+  attribution: "© OpenStreetMap contributors"
+}).addTo(map);
+
+// -----------------------------------------------------
+// CORRECT YARD FENCE (your real coordinates)
+// -----------------------------------------------------
+const yardFence = L.polygon(
+  [
+    [49.04099970424841, -123.86796072616107],
+    [49.04104856987419, -123.8678059019293],
+    [49.041067364333145, -123.865328714224],
+    [49.04103729319556, -123.86520256114628],
+    [49.04099594535228, -123.86513948460765],
+    [49.04029302675602, -123.86516242153071],
+    [49.04014266854696, -123.86700310961727],
+    [49.04099970424841, -123.86796072616107]
+  ],
+  {
+    color: "#ff0000",
+    weight: 3,
+    fillOpacity: 0.15
+  }
+).addTo(map);
+</script>
 
 </body>
 </html>
