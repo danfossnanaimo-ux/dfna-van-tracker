@@ -120,6 +120,9 @@ function updateDropdown(locations) {
   });
 }
 
+// -----------------------------------------------------
+// DROPDOWN FILTERING
+// -----------------------------------------------------
 document.getElementById("vehicleDropdown").addEventListener("change", e => {
   const name = e.target.value;
 
@@ -130,15 +133,24 @@ document.getElementById("vehicleDropdown").addEventListener("change", e => {
   }
 
   selectedVehicleName = name;
-  showOnlyVehicle(name);
+
+  Object.keys(markerLookup).forEach(vName => {
+    const marker = markerLookup[vName];
+    if (vName === name) {
+      map.addLayer(marker);
+      marker.openPopup();
+      zoomToVehicle(marker.getLatLng());
+    } else {
+      map.removeLayer(marker);
+    }
+  });
 });
 
 // -----------------------------------------------------
-// SEARCH (filters dropdown + map)
+// SEARCH FILTERING
 // -----------------------------------------------------
 document.getElementById("vehicleSearch").addEventListener("input", e => {
   const text = e.target.value.toLowerCase().trim();
-  const dropdown = document.getElementById("vehicleDropdown");
 
   if (text === "") {
     updateDropdown(lastLocations);
@@ -163,23 +175,6 @@ document.getElementById("vehicleSearch").addEventListener("input", e => {
     }
   });
 });
-
-// -----------------------------------------------------
-// SHOW ONLY ONE VEHICLE
-// -----------------------------------------------------
-function showOnlyVehicle(name) {
-  Object.keys(markerLookup).forEach(vName => {
-    const marker = markerLookup[vName];
-
-    if (vName === name) {
-      map.addLayer(marker);
-      marker.openPopup();
-      zoomToVehicle(marker.getLatLng());
-    } else {
-      map.removeLayer(marker);
-    }
-  });
-}
 
 // -----------------------------------------------------
 // SHOW ALL VEHICLES
