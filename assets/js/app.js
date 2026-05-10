@@ -133,6 +133,18 @@ function updateMap(locations) {
 }
 
 // -----------------------------------------------------
+// SYNC LABEL OPACITY
+// -----------------------------------------------------
+function syncLabelOpacity(name) {
+  const marker = markerLookup[name];
+  const label = labelLookup[name];
+  if (!marker || !label) return;
+
+  const el = label.getElement();
+  if (el) el.style.opacity = marker.options.opacity;
+}
+
+// -----------------------------------------------------
 // SORTED DROPDOWN
 // -----------------------------------------------------
 function updateDropdown(locations) {
@@ -185,16 +197,31 @@ document.getElementById("vehicleDropdown").addEventListener("change", e => {
 
     if (vName === name) {
       marker.setOpacity(1);
+      syncLabelOpacity(vName);
+
+      // Selected van label becomes bold red
+      label.getElement().className = "van-label-selected";
+
       map.addLayer(marker);
       map.addLayer(label);
       zoomToUserAndVehicle(pos);
+
     } else {
       const dist = selectedPos.distanceTo(pos);
+
+      // Nearby vans (<=10m)
       if (dist <= 10) {
         marker.setOpacity(0.3);
+        syncLabelOpacity(vName);
+
+        // Nearby vans use normal label style
+        label.getElement().className = "van-label";
+
         map.addLayer(marker);
         map.addLayer(label);
+
       } else {
+        // Hide everything else
         map.removeLayer(marker);
         map.removeLayer(label);
       }
@@ -208,6 +235,11 @@ document.getElementById("vehicleDropdown").addEventListener("change", e => {
 function showAllVehicles() {
   Object.keys(markerLookup).forEach(vName => {
     markerLookup[vName].setOpacity(1);
+    syncLabelOpacity(vName);
+
+    // Reset label style
+    labelLookup[vName].getElement().className = "van-label";
+
     map.addLayer(markerLookup[vName]);
     map.addLayer(labelLookup[vName]);
   });
