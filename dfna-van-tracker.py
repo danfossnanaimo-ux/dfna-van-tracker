@@ -112,7 +112,7 @@ def get_fueltax_details(session_id, device_id):
 # ---------------------------------------------------------
 
 def get_latest_logrecord(session_id, device_id):
-    from_date = (datetime.utcnow() - timedelta(days=7)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    from_date = (datetime.utcnow() - timedelta(days=30)).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     params = {
         "typeName": "LogRecord",
@@ -173,7 +173,7 @@ def get_statusinfo(session_id, device_id):
     }
 
 # ---------------------------------------------------------
-# MAIN WORKFLOW (PRODUCTION + DIAGNOSTICS)
+# MAIN WORKFLOW (PRODUCTION + DIAGNOSTICS + FILTERS)
 # ---------------------------------------------------------
 
 def main():
@@ -188,10 +188,15 @@ def main():
     print("===== BEGIN DIAGNOSTICS =====\n")
 
     fleet_output = []
+    THIRTY_DAYS_AGO = datetime.utcnow() - timedelta(days=30)
 
     for d in devices:
         device_id = d["id"]
         name = d.get("name", "Unknown")
+
+        # FILTER 1: Only DFNA vehicles
+        if "DFNA" not in name.upper():
+            continue
 
         fueltax = get_fueltax_details(session_id, device_id)
         logrec = get_latest_logrecord(session_id, device_id)
@@ -203,7 +208,36 @@ def main():
         print("DeviceStatusInfo:", status)
         print()
 
-        # Choose best available GPS source
+        # Determine freshest timestamp
+        timestamps = []
+
+        if fueltax and fueltax.get("exitTime"):
+            timestamps.append(fueltax["exitTime"])
+        if logrec and logrec.get("dateTime"):
+            timestamps.append(logrec["dateTime"])
+        if status and status.get("dateTime"):
+            timestamps.append(status["dateTime"])
+
+        if not timestamps:
+            continue
+
+        parsed_times = []
+        for t in timestamps:
+            try:
+                parsed_times.append(datetime.fromisoformat(t.replace("Z", "+00:00")))
+            except:
+                pass
+
+        if not parsed_times:
+            continue
+
+        newest = max(parsed_times)
+
+        # FILTER 2: Only vehicles active in last 30 days
+        if newest < THIRTY_DAYS_AGO:
+            continue
+
+        # Choose best GPS source
         gps = None
 
         if fueltax and fueltax.get("exitLat") and fueltax.get("exitLon"):
@@ -225,11 +259,12 @@ def main():
                 "dateTime": status["dateTime"]
             }
 
-        fleet_output.append({
-            "id": device_id,
-            "name": name,
-            "gps": gps
-        })
+        if gps:
+            fleet_output.append({
+                "id": device_id,
+                "name": name,
+                "gps": gps
+            })
 
     print("===== END DIAGNOSTICS =====\n")
 
