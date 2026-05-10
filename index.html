@@ -6,7 +6,6 @@
 <title>DFNA Vehicle Map</title>
 
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="assets/css/styles.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
 <script>
@@ -27,40 +26,12 @@ if ("serviceWorker" in navigator) {
     height: 100%;
   }
 
-  .user-pulse {
-    position: relative;
-  }
-
-  .user-pulse::after {
-    content: "";
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 150, 255, 0.4);
-    border-radius: 50%;
-    animation: pulse 1.8s ease-out infinite;
-  }
-
-  @keyframes pulse {
-    0% {
-      transform: translate(-50%, -50%) scale(0.3);
-      opacity: 0.8;
-    }
-    100% {
-      transform: translate(-50%, -50%) scale(1.8);
-      opacity: 0;
-    }
-  }
-
   #controls {
     position: absolute;
     top: 10px;
     left: 10px;
     z-index: 9999;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     padding: 12px;
     border-radius: 6px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
@@ -71,7 +42,7 @@ if ("serviceWorker" in navigator) {
   #vehicleDropdown {
     width: 100%;
     padding: 12px;       /* bigger touch target */
-    font-size: 28px;     /* ~200% larger text */
+    font-size: 28px;     /* 200% larger text */
     box-sizing: border-box;
     margin-bottom: 12px;
   }
