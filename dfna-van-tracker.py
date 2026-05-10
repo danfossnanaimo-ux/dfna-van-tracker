@@ -9,10 +9,12 @@ from datetime import datetime, timedelta
 
 GEOTAB_SERVER = "https://my.geotab.com/apiv1"
 
-USERNAME = os.getenv("GEOTAB_USERNAME", "kellyg@danfosscouriers.ca")
+USERNAME = os.getenv("GEOTAB_USERNAME")
 PASSWORD = os.getenv("GEOTAB_PASSWORD")
 DATABASE = "dan_foss"
 
+if not USERNAME:
+    raise Exception("GEOTAB_USERNAME environment variable is missing.")
 if not PASSWORD:
     raise Exception("GEOTAB_PASSWORD environment variable is missing.")
 
@@ -91,8 +93,8 @@ def get_fueltax_details(session_id, device_id):
     if not records:
         return None
 
-    # Sort newest last
-    records.sort(key=lambda x: x.get("exitTime", "") or x.get("entryTime", ""))
+    # Sort newest last (use exitTime if available, else entryTime)
+    records.sort(key=lambda x: x.get("exitTime") or x.get("entryTime") or "")
 
     latest = records[-1]
 
@@ -171,7 +173,7 @@ def get_statusinfo(session_id, device_id):
     }
 
 # ---------------------------------------------------------
-# MAIN DIAGNOSTIC WORKFLOW
+# MAIN WORKFLOW (PRODUCTION + DIAGNOSTICS)
 # ---------------------------------------------------------
 
 def main():
@@ -185,22 +187,59 @@ def main():
 
     print("===== BEGIN DIAGNOSTICS =====\n")
 
+    fleet_output = []
+
     for d in devices:
         device_id = d["id"]
         name = d.get("name", "Unknown")
-
-        print(f"--- {name} ({device_id}) ---")
 
         fueltax = get_fueltax_details(session_id, device_id)
         logrec = get_latest_logrecord(session_id, device_id)
         status = get_statusinfo(session_id, device_id)
 
+        print(f"--- {name} ({device_id}) ---")
         print("FuelTaxDetail:", fueltax)
         print("LogRecord:", logrec)
         print("DeviceStatusInfo:", status)
         print()
 
-    print("===== END DIAGNOSTICS =====")
+        # Choose best available GPS source
+        gps = None
+
+        if fueltax and fueltax.get("exitLat") and fueltax.get("exitLon"):
+            gps = {
+                "latitude": fueltax["exitLat"],
+                "longitude": fueltax["exitLon"],
+                "dateTime": fueltax["exitTime"]
+            }
+        elif logrec:
+            gps = {
+                "latitude": logrec["lat"],
+                "longitude": logrec["lon"],
+                "dateTime": logrec["dateTime"]
+            }
+        elif status:
+            gps = {
+                "latitude": status["lat"],
+                "longitude": status["lon"],
+                "dateTime": status["dateTime"]
+            }
+
+        fleet_output.append({
+            "id": device_id,
+            "name": name,
+            "gps": gps
+        })
+
+    print("===== END DIAGNOSTICS =====\n")
+
+    # Write JSON output for your PWA
+    os.makedirs("data", exist_ok=True)
+
+    with open("data/locations.json", "w") as f:
+        json.dump(fleet_output, f, indent=2)
+
+    print("data/locations.json updated successfully.")
 
 if __name__ == "__main__":
     main()
