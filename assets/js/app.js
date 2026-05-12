@@ -10,6 +10,9 @@ let userMarker = null;
 let selectedVehicleName = null;
 let lastLocations = [];
 
+let lastUserLatLng = null;
+let trackingSelectedVehicle = false;
+
 // -----------------------------------------------------
 // INITIALIZE MAP
 // -----------------------------------------------------
@@ -73,7 +76,7 @@ async function loadLocations() {
 }
 
 // -----------------------------------------------------
-// BUILD MARKER ICON (NO SELECTED CLASS ANYWHERE)
+// BUILD MARKER ICON (VANS)
 // -----------------------------------------------------
 function buildIcon(name, vanNumber) {
   return L.divIcon({
@@ -163,19 +166,24 @@ function updateDropdown(locations) {
 document.getElementById("vehicleDropdown").addEventListener("change", e => {
   const dropdown = document.getElementById("vehicleDropdown");
   const resetButton = document.getElementById("resetButton");
+  const navButton = document.getElementById("navButton");
 
   const name = e.target.value;
 
   if (name === "__show_all__") {
     selectedVehicleName = null;
+    trackingSelectedVehicle = false;
+    navButton.style.display = "none";
     showAllVehicles();
     return;
   }
 
   dropdown.style.display = "none";
   resetButton.style.display = "block";
+  navButton.style.display = "block";
 
   selectedVehicleName = name;
+  trackingSelectedVehicle = true;
 
   const selectedMarker = markerLookup[name];
   const selectedPos = selectedMarker.getLatLng();
@@ -188,8 +196,6 @@ document.getElementById("vehicleDropdown").addEventListener("change", e => {
     if (vName === name) {
       marker.setOpacity(1);
       marker.setIcon(buildIcon(vName, vanNumber));
-      zoomToUserAndVehicle(pos);
-
     } else {
       const dist = selectedPos.distanceTo(pos);
 
@@ -201,20 +207,26 @@ document.getElementById("vehicleDropdown").addEventListener("change", e => {
       }
     }
   });
+
+  // Initial zoom to user + selected vehicle
+  zoomToUserAndVehicle(selectedPos);
 });
 
 // -----------------------------------------------------
-// RESET BUTTON — CLEAN FINAL VERSION
+// RESET BUTTON
 // -----------------------------------------------------
 document.getElementById("resetButton").addEventListener("click", () => {
   const dropdown = document.getElementById("vehicleDropdown");
   const resetButton = document.getElementById("resetButton");
+  const navButton = document.getElementById("navButton");
 
   dropdown.style.display = "block";
   resetButton.style.display = "none";
+  navButton.style.display = "none";
 
   dropdown.value = "__show_all__";
   selectedVehicleName = null;
+  trackingSelectedVehicle = false;
 
   Object.keys(markerLookup).forEach(vName => {
     const marker = markerLookup[vName];
@@ -230,23 +242,60 @@ document.getElementById("resetButton").addEventListener("click", () => {
 });
 
 // -----------------------------------------------------
-// USER LOCATION
+// SHOW ALL VEHICLES
+// -----------------------------------------------------
+function showAllVehicles() {
+  Object.keys(markerLookup).forEach(vName => {
+    const marker = markerLookup[vName];
+    const vanNumber = vName.match(/\d+(?!.*\d)/)?.[0] || "";
+
+    marker.setOpacity(1);
+    marker.setIcon(buildIcon(vName, vanNumber));
+
+    map.addLayer(marker);
+  });
+
+  map.setView([49.040359, -123.866226], 18);
+}
+
+// -----------------------------------------------------
+// USER LOCATION (PULSING GREEN DOT)
 // -----------------------------------------------------
 const userIcon = L.divIcon({
-  className: "user-pulse",
-  html: `<img src="https://maps.gstatic.com/mapfiles/ms2/micons/man.png" style="width:32px;height:32px;">`,
-  iconSize: [32, 32],
-  iconAnchor: [16, 32]
+  className: "user-icon",
+  html: `
+    <div class="user-pulse-ring"></div>
+    <div class="user-dot"></div>
+  `,
+  iconSize: [64, 64],
+  iconAnchor: [32, 32]
 });
 
 function updateUserLocation(lat, lon) {
   const pos = [lat, lon];
+  const newLatLng = L.latLng(lat, lon);
 
   if (userMarker) {
     userMarker.setLatLng(pos);
   } else {
     userMarker = L.marker(pos, { icon: userIcon }).addTo(map);
   }
+
+  // Auto-zoom tracking when user moves > 5m and a vehicle is selected
+  if (trackingSelectedVehicle && selectedVehicleName && markerLookup[selectedVehicleName]) {
+    if (lastUserLatLng) {
+      const moved = newLatLng.distanceTo(lastUserLatLng);
+      if (moved > 5) {
+        const vehicleLatLng = markerLookup[selectedVehicleName].getLatLng();
+        zoomToUserAndVehicle(vehicleLatLng);
+      }
+    } else {
+      const vehicleLatLng = markerLookup[selectedVehicleName].getLatLng();
+      zoomToUserAndVehicle(vehicleLatLng);
+    }
+  }
+
+  lastUserLatLng = newLatLng;
 }
 
 if (navigator.geolocation) {
@@ -258,7 +307,7 @@ if (navigator.geolocation) {
 }
 
 // -----------------------------------------------------
-// FIXED ZOOM LOGIC
+// FIXED ZOOM LOGIC (USER + VEHICLE)
 // -----------------------------------------------------
 function zoomToUserAndVehicle(vehicleLatLng) {
   if (!userMarker) {
@@ -271,6 +320,28 @@ function zoomToUserAndVehicle(vehicleLatLng) {
 
   map.flyToBounds(bounds, { padding: [80, 80] });
 }
+
+// -----------------------------------------------------
+// GOOGLE MAPS NAVIGATION BUTTON
+// -----------------------------------------------------
+document.getElementById("navButton").addEventListener("click", () => {
+  if (!userMarker || !selectedVehicleName || !markerLookup[selectedVehicleName]) {
+    return;
+  }
+
+  const userLatLng = userMarker.getLatLng();
+  const vehicleLatLng = markerLookup[selectedVehicleName].getLatLng();
+
+  const origin = `${userLatLng.lat},${userLatLng.lng}`;
+  const destination = `${vehicleLatLng.lat},${vehicleLatLng.lng}`;
+
+  const url =
+    `https://www.google.com/maps/dir/?api=1` +
+    `&origin=${encodeURIComponent(origin)}` +
+    `&destination=${encodeURIComponent(destination)}`;
+
+  window.open(url, "_blank");
+});
 
 // -----------------------------------------------------
 // STARTUP
