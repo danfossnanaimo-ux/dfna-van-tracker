@@ -19,6 +19,9 @@ let trackingSelectedVehicle = false;
 function initMap() {
   map = L.map("map", { zoomAnimation: true }).setView([49.040359, -123.866226], 18);
 
+  // Move zoom control to bottom-right
+  map.zoomControl.setPosition('bottomright');
+  
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
     attribution: "© OpenStreetMap contributors"
