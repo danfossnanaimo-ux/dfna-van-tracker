@@ -39,10 +39,16 @@ if ("serviceWorker" in navigator) {
     box-shadow: none;
   }
 
+  /* Force zoom control to be fully visible on mobile */
+  .leaflet-bottom.leaflet-right {
+    right: env(safe-area-inset-right, 20px) !important;
+    bottom: env(safe-area-inset-bottom, 20px) !important;
+  }
+
+  /* Additional padding for the zoom buttons themselves */
   .leaflet-control-zoom {
-  margin-bottom: 20px !important;
-  margin-right: 20px !important;
-}
+    margin: 12px !important;
+  }
 
   /* Top-right navigation button container */
   #navControls {
