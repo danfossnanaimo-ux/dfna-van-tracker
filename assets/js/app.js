@@ -259,7 +259,7 @@ function showAllVehicles() {
 }
 
 // -----------------------------------------------------
-// USER LOCATION (PULSING GREEN DOT)
+// USER LOCATION (PULSING GREEN DOT — 200% SIZE)
 // -----------------------------------------------------
 const userIcon = L.divIcon({
   className: "user-icon",
@@ -267,8 +267,8 @@ const userIcon = L.divIcon({
     <div class="user-pulse-ring"></div>
     <div class="user-dot"></div>
   `,
-  iconSize: [64, 64],
-  iconAnchor: [32, 32]
+  iconSize: [128, 128],
+  iconAnchor: [64, 64]
 });
 
 function updateUserLocation(lat, lon) {
