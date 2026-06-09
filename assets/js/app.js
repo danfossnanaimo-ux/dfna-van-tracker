@@ -1,156 +1,334 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>DFNA Van Tracker</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+let map;
+let markerLookup = {};
+let selectedVehicleName = null;
+let trackingSelectedVehicle = false;
+let userMarker = null;
+let userAccuracyCircle = null;
+let lastKnownUserPos = null;
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+// Initialize the application once the DOM is ready
+document.addEventListener("DOMContentLoaded", () => {
+    initMap();
+    initLocationTracking();
+    fetchData();
+    // Poll for fresh coordinates every 30 seconds
+    setInterval(fetchData, 30000);
+});
 
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        overflow: hidden;
-        font-family: system-ui, sans-serif;
+// -----------------------------------------------------
+// MAP INITIALIZATION
+// -----------------------------------------------------
+function initMap() {
+    // Center initially on Nanaimo area, zoomed out
+    map = L.map('map', {
+        zoomControl: false
+    }).setView([49.1659, -123.9401], 11);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    L.control.zoom({ position: 'bottomright' }).addTo(map);
+}
+
+// -----------------------------------------------------
+// USER LOCATION TRACKING (GPS)
+// -----------------------------------------------------
+function initLocationTracking() {
+    if (!navigator.geolocation) {
+        console.warn("Geolocation not supported by this browser.");
+        return;
     }
 
-    #map {
-        width: 100%;
-        height: 100%;
-    }
+    navigator.geolocation.watchPosition(
+        (position) => {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            const accuracy = position.coords.accuracy;
+            lastKnownUserPos = L.latLng(lat, lng);
 
-    #topBar {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        background: rgba(0,0,0,0.85);
-        color: white;
-        padding: 10px 15px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 16px;
-        z-index: 9999;
-        box-sizing: border-box;
-    }
+            // Custom Blue Pulse Marker for User
+            const blueDotIcon = L.divIcon({
+                className: 'user-location-marker',
+                html: '<div class="pulse-dot"></div>',
+                iconSize: [20, 20],
+                iconAnchor: [10, 10]
+            });
 
-    #leftControls {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
+            if (!userMarker) {
+                userMarker = L.marker(lastKnownUserPos, { icon: blueDotIcon }).addTo(map);
+                userAccuracyCircle = L.circle(lastKnownUserPos, {
+                    radius: accuracy,
+                    color: '#1e88e5',
+                    fillColor: '#1e88e5',
+                    fillOpacity: 0.15,
+                    weight: 1
+                }).addTo(map);
+            } else {
+                userMarker.setLatLng(lastKnownUserPos);
+                userAccuracyCircle.setLatLng(lastKnownUserPos);
+                userAccuracyCircle.setRadius(accuracy);
+            }
 
-    #vanInfo {
-        font-weight: 600;
-    }
+            // Continuous camera tracking loop if a specific van is isolated
+            if (trackingSelectedVehicle && selectedVehicleName) {
+                const vehicleMarker = markerLookup[selectedVehicleName];
+                if (vehicleMarker) {
+                    zoomToUserAndVehicle(vehicleMarker.getLatLng());
+                }
+            }
+        },
+        (error) => {
+            console.warn("Error tracking user location:", error.message);
+        },
+        {
+            enableHighAccuracy: true,
+            maximumAge: 10000,
+            timeout: 27000
+        }
+    );
+}
 
-    #vehicleDropdown {
-        background: #333;
-        color: white;
-        border: 1px solid #555;
-        padding: 6px 10px;
-        border-radius: 4px;
-        font-size: 14px;
-        cursor: pointer;
-    }
+// -----------------------------------------------------
+// DATA FETCHING & MARKER UPDATE
+// -----------------------------------------------------
+function fetchData() {
+    fetch('data/locations.json', { cache: 'no-store' })
+        .then(response => {
+            if (!response.ok) throw new Error("HTTP error " + response.status);
+            return response.json();
+        })
+        .then(data => {
+            updateMarkers(data);
+            populateDropdown(data);
+        })
+        .catch(err => console.error("Error loading vehicle data:", err));
+}
 
-    #userInfo {
-        opacity: 0.8;
-        font-size: 14px;
-    }
+function updateMarkers(vehicles) {
+    const currentNames = vehicles.map(v => v.name);
 
-    #actions {
-        display: flex;
-        gap: 8px;
-    }
+    // Remove any markers from the map that are no longer in the feed
+    Object.keys(markerLookup).forEach(name => {
+        if (!currentNames.includes(name)) {
+            map.removeLayer(markerLookup[name]);
+            delete markerLookup[name];
+        }
+    });
 
-    #actions button {
-        padding: 6px 12px;
-        background: #1e88e5;
-        border: none;
-        border-radius: 6px;
-        color: white;
-        cursor: pointer;
-        font-size: 14px;
-        font-weight: 500;
-    }
+    vehicles.forEach(vehicle => {
+        const lat = parseFloat(vehicle.latitude);
+        const lng = parseFloat(vehicle.longitude);
+        if (isNaN(lat) || isNaN(lng)) return;
 
-    #actions button:hover {
-        background: #1565c0;
-    }
+        const pos = [lat, lng];
+        const vanNumber = vehicle.name.match(/\d+(?!.*\d)/)?.[0] || "";
 
-    /* Target specific action button styles managed by app.js */
-    #resetButton {
-        background: #e53935 !important;
-    }
-    #resetButton:hover {
-        background: #c62828 !important;
-    }
-    #navButton {
-        background: #43a047 !important;
-    }
-    #navButton:hover {
-        background: #2e7d32 !important;
-    }
-</style>
-</head>
+        // If filtering is enabled, regulate opacities/visibilities natively
+        let opacity = 1;
+        let isVisible = true;
 
-<body>
+        if (selectedVehicleName) {
+            if (vehicle.name === selectedVehicleName) {
+                opacity = 1;
+            } else {
+                const selMarker = markerLookup[selectedVehicleName];
+                if (selMarker) {
+                    const dist = selMarker.getLatLng().distanceTo(L.latLng(pos));
+                    if (dist <= 10) {
+                        opacity = 0.3; // ghost adjacent vehicles within 10 meters
+                    } else {
+                        isVisible = false; // eliminate external noise completely
+                    }
+                }
+            }
+        }
 
-<div id="topBar">
-    <div id="leftControls">
-        <div id="vanInfo">Tracking Van —</div>
-        <select id="vehicleDropdown">
-            <option value="__show_all__">Loading Vans...</option>
-        </select>
-    </div>
+        if (!markerLookup[vehicle.name]) {
+            // New Vehicle Marker Entry
+            const marker = L.marker(pos, {
+                icon: buildIcon(vehicle.name, vanNumber),
+                opacity: opacity
+            });
+            
+            if (isVisible) marker.addTo(map);
+
+            marker.bindPopup(`
+                <div style="font-family:system-ui, sans-serif; font-size:13px;">
+                    <strong style="font-size:14px; color:#1e88e5;">${vehicle.name}</strong><br/>
+                    <span style="color:#666;">Driver:</span> ${vehicle.driver || 'Unassigned'}<br/>
+                    <span style="color:#666;">Last Updated:</span> ${vehicle.time || 'Just now'}
+                </div>
+            `);
+            
+            markerLookup[vehicle.name] = marker;
+        } else {
+            // Existing Vehicle Update Route
+            const marker = markerLookup[vehicle.name];
+            marker.setLatLng(pos);
+            marker.setOpacity(opacity);
+            marker.setIcon(buildIcon(vehicle.name, vanNumber));
+
+            if (isVisible && !map.hasLayer(marker)) {
+                marker.addTo(map);
+            } else if (!isVisible && map.hasLayer(marker)) {
+                map.removeLayer(marker);
+            }
+        }
+    });
+
+    // Auto-adjust zoom bounding box if active selection context exists
+    if (trackingSelectedVehicle && selectedVehicleName && markerLookup[selectedVehicleName]) {
+        zoomToUserAndVehicle(markerLookup[selectedVehicleName].getLatLng());
+    } else if (!selectedVehicleName && Object.keys(markerLookup).length > 0 && !lastKnownUserPos) {
+        // Fallback default frame bound for initial payload load
+        const group = L.featureGroup(Object.values(markerLookup));
+        map.fitBounds(group.getBounds().pad(0.1));
+    }
+}
+
+// Custom DivIcon UI Pipeline to render explicit Van numbering badges above assets
+function buildIcon(name, vanNumber) {
+    const isSelected = (name === selectedVehicleName);
+    return L.divIcon({
+        className: 'custom-van-marker',
+        html: `
+            <div style="position: relative; display: flex; flex-direction: column; align-items: center;">
+                <div style="
+                    background: ${isSelected ? '#e53936' : '#1e88e5'};
+                    color: white;
+                    font-weight: bold;
+                    font-size: 11px;
+                    padding: 2px 6px;
+                    border-radius: 10px;
+                    border: 1.5px solid white;
+                    white-space: nowrap;
+                    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+                    transform: translateY(-4px);
+                    z-index: 2;
+                ">${vanNumber ? 'Van ' + vanNumber : 'Asset'}</div>
+                <div style="
+                    width: 12px;
+                    height: 12px;
+                    background: ${isSelected ? '#e53936' : '#1e88e5'};
+                    border: 2px solid white;
+                    border-radius: 50%;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+                    z-index: 1;
+                "></div>
+            </div>
+        `,
+        iconSize: [40, 40],
+        iconAnchor: [20, 36]
+    });
+}
+
+// -----------------------------------------------------
+// DROPDOWN FILTERING + 10m PROXIMITY LOGIC
+// -----------------------------------------------------
+function populateDropdown(vehicles) {
+    const dropdown = document.getElementById("vehicleDropdown");
+    if (!dropdown) return;
+
+    // Preserve selection context
+    const currentSelection = dropdown.value;
+
+    // Clear previous option lists cleanly
+    dropdown.innerHTML = '<option value="__show_all__">📱 Show All Vehicles</option>';
+
+    vehicles.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true })).forEach(vehicle => {
+        const opt = document.createElement("option");
+        opt.value = vehicle.name;
+        opt.textContent = `${vehicle.name} (${vehicle.driver || 'No Driver'})`;
+        dropdown.appendChild(opt);
+    });
+
+    if (currentSelection && vehicles.some(v => v.name === currentSelection)) {
+        dropdown.value = currentSelection;
+    } else if (selectedVehicleName) {
+        dropdown.value = selectedVehicleName;
+    }
+}
+
+// Dynamic elements binding securely behind target elements hooks verification
+const vehicleDropdown = document.getElementById("vehicleDropdown");
+if (vehicleDropdown) {
+    vehicleDropdown.addEventListener("change", e => {
+        const dropdown = document.getElementById("vehicleDropdown");
+        const resetButton = document.getElementById("resetButton");
+        const navButton = document.getElementById("navButton");
+        const name = e.target.value;
+
+        if (name === "__show_all__") {
+            selectedVehicleName = null;
+            trackingSelectedVehicle = false;
+            if (navButton) navButton.style.display = "none";
+            if (resetButton) resetButton.style.display = "none";
+            fetchData(); // Reset layout bounds completely
+            return;
+        }
+
+        if (resetButton) resetButton.style.display = "block";
+        if (navButton) navButton.style.display = "block";
+        selectedVehicleName = name;
+        trackingSelectedVehicle = true;
+
+        fetchData(); // Trigger instant view map transformation
+    });
+}
+
+const resetButton = document.getElementById("resetButton");
+if (resetButton) {
+    resetButton.addEventListener("click", () => {
+        selectedVehicleName = null;
+        trackingSelectedVehicle = false;
+        
+        const dropdown = document.getElementById("vehicleDropdown");
+        const resetButtonEl = document.getElementById("resetButton");
+        const navButton = document.getElementById("navButton");
+
+        if (dropdown) dropdown.value = "__show_all__";
+        if (resetButtonEl) resetButtonEl.style.display = "none";
+        if (navButton) navButton.style.display = "none";
+
+        fetchData();
+    });
+}
+
+const navButton = document.getElementById("navButton");
+if (navButton) {
+    navButton.addEventListener("click", () => {
+        if (!selectedVehicleName || !markerLookup[selectedVehicleName]) return;
+        const targetLatLng = markerLookup[selectedVehicleName].getLatLng();
+        
+        // Native Apple Maps or Google Maps deep routing injection
+        const mapsUrl = `https://maps.google.com/?daddr=${targetLatLng.lat},${targetLatLng.lng}`;
+        window.open(mapsUrl, '_blank');
+    });
+}
+
+// Camera control helper targeting adaptive boundaries boxes
+function zoomToUserAndVehicle(vehicleLatLng) {
+    if (lastKnownUserPos) {
+        const bounds = L.latLngBounds([lastKnownUserPos, vehicleLatLng]);
+        map.fitBounds(bounds.pad(0.25), { maxZoom: 17, animate: true });
+    } else {
+        map.setView(vehicleLatLng, 16, { animate: true });
+    }
+}
+
+function showAllVehicles() {
+    Object.keys(markerLookup).forEach(vName => {
+        const marker = markerLookup[vName];
+        marker.setOpacity(1);
+        const vanNumber = vName.match(/\d+(?!.*\d)/)?.[0] || "";
+        marker.setIcon(buildIcon(vName, vanNumber));
+        if (!map.hasLayer(marker)) marker.addTo(map);
+    });
     
-    <div id="userInfo"></div>
-    
-    <div id="actions">
-        <button id="navButton" style="display: none;">Navigate</button>
-        <button id="resetButton" style="display: none;">Reset View</button>
-        <button onclick="changeVan()">Change Van</button>
-        <button onclick="logout()">Logout</button>
-    </div>
-</div>
-
-<div id="map"></div>
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<script src="assets/js/app.js"></script>
-
-<script>
-    // Load session
-    const session = JSON.parse(localStorage.getItem("dfnaSession") || "{}");
-
-    if (!session.user || !session.numericVan) {
-        // No session → send back to login
-        window.location.href = "login.html";
+    if (Object.keys(markerLookup).length > 0) {
+        const group = L.featureGroup(Object.values(markerLookup));
+        map.fitBounds(group.getBounds().pad(0.1));
     }
-
-    const vanNumber = session.numericVan;
-    const user = session.user;
-
-    // Update UI Header Content
-    document.getElementById("vanInfo").textContent = `Tracking Van ${vanNumber}`;
-    document.getElementById("userInfo").textContent = `${user.name} — ${user.division}`;
-
-    // Inline global handlers for baseline tracking navigation
-    function changeVan() {
-        localStorage.removeItem("dfnaSession");
-        window.location.href = "login.html";
-    }
-
-    function logout() {
-        localStorage.clear();
-        window.location.href = "login.html";
-    }
-</script>
-
-</body>
-</html>
+}
