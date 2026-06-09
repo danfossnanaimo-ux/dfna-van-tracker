@@ -302,8 +302,8 @@ if (navButton) {
         if (!selectedVehicleName || !markerLookup[selectedVehicleName]) return;
         const targetLatLng = markerLookup[selectedVehicleName].getLatLng();
         
-        // Native Apple Maps or Google Maps deep routing injection
-        const mapsUrl = `https://maps.google.com/?daddr=${targetLatLng.lat},${targetLatLng.lng}`;
+        // Corrected string interpolation using ${ } instead of 2{ }
+        const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${targetLatLng.lat},${targetLatLng.lng}`;
         window.open(mapsUrl, '_blank');
     });
 }
