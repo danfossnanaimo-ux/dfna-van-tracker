@@ -100,8 +100,13 @@ function fetchData() {
             return response.json();
         })
         .then(data => {
-            updateMarkers(data);
-            populateDropdown(data);
+            // Convert data object to an array format if needed, handling both formats seamlessly
+            const vehicleList = Array.isArray(data) 
+                ? data 
+                : Object.keys(data).map(key => ({ name: key, ...data[key] }));
+
+            updateMarkers(vehicleList);
+            populateDropdown(vehicleList);
         })
         .catch(err => console.error("Error loading vehicle data:", err));
 }
@@ -119,7 +124,7 @@ function updateMarkers(vehicles) {
     });
 
     vehicles.forEach(vehicle => {
-        // Safe check: look inside vehicle.gps if it exists, otherwise fall back to top level
+        // Look inside vehicle.gps if it exists, otherwise fall back to top level
         const gpsData = vehicle.gps || {};
         
         const latRaw = gpsData.latitude || gpsData.lat || vehicle.latitude || vehicle.lat;
@@ -321,7 +326,6 @@ if (navButton) {
         if (!selectedVehicleName || !markerLookup[selectedVehicleName]) return;
         const targetLatLng = markerLookup[selectedVehicleName].getLatLng();
         
-        // Corrected modern string template configuration
         const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${targetLatLng.lat},${targetLatLng.lng}`;
         window.open(mapsUrl, '_blank');
     });
