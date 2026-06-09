@@ -191,36 +191,45 @@ function updateMarkers(vehicles) {
 // Custom DivIcon UI Pipeline to render explicit Van numbering badges above assets
 function buildIcon(name, vanNumber) {
     const isSelected = (name === selectedVehicleName);
+    const pinColor = isSelected ? '#e53935' : '#1e88e5';
+    
     return L.divIcon({
         className: 'custom-van-marker',
         html: `
-            <div style="position: relative; display: flex; flex-direction: column; align-items: center;">
+            <div style="
+                display: flex; 
+                flex-direction: column; 
+                align-items: center; 
+                justify-content: center;
+                width: 50px;
+                height: 45px;
+            ">
                 <div style="
-                    background: ${isSelected ? '#e53936' : '#1e88e5'};
+                    background: ${pinColor};
                     color: white;
                     font-weight: bold;
                     font-size: 11px;
+                    font-family: system-ui, sans-serif;
                     padding: 2px 6px;
-                    border-radius: 10px;
-                    border: 1.5px solid white;
+                    border-radius: 8px;
+                    border: 1px solid white;
                     white-space: nowrap;
-                    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-                    transform: translateY(-4px);
-                    z-index: 2;
-                ">${vanNumber ? 'Van ' + vanNumber : 'Asset'}</div>
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+                    line-height: 12px;
+                ">${vanNumber ? vanNumber : 'Asset'}</div>
                 <div style="
-                    width: 12px;
-                    height: 12px;
-                    background: ${isSelected ? '#e53936' : '#1e88e5'};
-                    border: 2px solid white;
+                    width: 8px;
+                    height: 8px;
+                    background: ${pinColor};
+                    border: 1px solid white;
                     border-radius: 50%;
-                    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
-                    z-index: 1;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+                    margin-top: 2px;
                 "></div>
             </div>
         `,
-        iconSize: [40, 40],
-        iconAnchor: [20, 36]
+        iconSize: [50, 45],
+        iconAnchor: [25, 45] // Anchors the bottom center of the pin directly to the GPS coordinate
     });
 }
 
