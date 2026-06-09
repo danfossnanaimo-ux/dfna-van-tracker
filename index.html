@@ -43,10 +43,6 @@
         gap: 12px;
     }
 
-    #vanInfo {
-        font-weight: 600;
-    }
-
     #vehicleDropdown {
         background: #333;
         color: white;
@@ -55,11 +51,6 @@
         border-radius: 4px;
         font-size: 14px;
         cursor: pointer;
-    }
-
-    #userInfo {
-        opacity: 0.8;
-        font-size: 14px;
     }
 
     #actions {
@@ -101,19 +92,14 @@
 
 <div id="topBar">
     <div id="leftControls">
-        <div id="vanInfo">Tracking Van —</div>
         <select id="vehicleDropdown">
             <option value="__show_all__">📱 Show All Vehicles</option>
         </select>
     </div>
     
-    <div id="userInfo"></div>
-    
     <div id="actions">
         <button id="navButton" style="display: none;">Navigate</button>
         <button id="resetButton" style="display: none;">Reset View</button>
-        <button onclick="changeVan()">Change Van</button>
-        <button onclick="logout()">Logout</button>
     </div>
 </div>
 
@@ -124,28 +110,11 @@
 <script src="assets/js/app.js" defer></script>
 
 <script>
-    // Load session info if it exists, otherwise use defaults
+    // Load baseline session configuration placeholders to protect historical scripts
     const session = JSON.parse(localStorage.getItem("dfnaSession") || "{}");
-
-    // Fallback defaults so the page never crashes if local storage is empty
     const vanNumber = session.numericVan || "1"; 
     const userName = session.user?.name || "Viewer";
     const userDivision = session.user?.division || "DFNA";
-
-    // Update UI Header Content
-    document.getElementById("vanInfo").textContent = `Tracking Van ${vanNumber}`;
-    document.getElementById("userInfo").textContent = `${userName} — ${userDivision}`;
-
-    // Simple clear function if you ever need to reset app variables
-    function changeVan() {
-        localStorage.removeItem("dfnaSession");
-        location.reload();
-    }
-
-    function logout() {
-        localStorage.clear();
-        location.reload();
-    }
 </script>
 
 </body>
