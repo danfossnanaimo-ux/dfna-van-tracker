@@ -119,9 +119,11 @@ function updateMarkers(vehicles) {
     });
 
     vehicles.forEach(vehicle => {
-        // Fallback checks to match any coordinate key shape from the JSON feed
-        const latRaw = vehicle.latitude || vehicle.lat || vehicle.Latitude;
-        const lngRaw = vehicle.longitude || vehicle.lng || vehicle.lon || vehicle.Longitude;
+        // Safe check: look inside vehicle.gps if it exists, otherwise fall back to top level
+        const gpsData = vehicle.gps || {};
+        
+        const latRaw = gpsData.latitude || gpsData.lat || vehicle.latitude || vehicle.lat;
+        const lngRaw = gpsData.longitude || gpsData.lng || gpsData.lon || vehicle.longitude || vehicle.lon;
         
         const lat = parseFloat(latRaw);
         const lng = parseFloat(lngRaw);
@@ -168,7 +170,7 @@ function updateMarkers(vehicles) {
                 <div style="font-family:system-ui, sans-serif; font-size:13px;">
                     <strong style="font-size:14px; color:#1e88e5;">${vehicleName}</strong><br/>
                     <span style="color:#666;">Driver:</span> ${vehicle.driver || 'Unassigned'}<br/>
-                    <span style="color:#666;">Last Updated:</span> ${vehicle.time || 'Just now'}
+                    <span style="color:#666;">Last Updated:</span> ${gpsData.dateTime || vehicle.time || 'Just now'}
                 </div>
             `);
             
@@ -226,7 +228,7 @@ function buildIcon(name, vanNumber) {
                     white-space: nowrap;
                     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
                     line-height: 12px;
-                ">${vanNumber ? vanNumber : 'Asset'}</div>
+                ">${vanNumber ? 'Van ' + vanNumber : 'Asset'}</div>
                 <div style="
                     width: 8px;
                     height: 8px;
@@ -319,7 +321,7 @@ if (navButton) {
         if (!selectedVehicleName || !markerLookup[selectedVehicleName]) return;
         const targetLatLng = markerLookup[selectedVehicleName].getLatLng();
         
-        // Corrected modern string interpolation
+        // Corrected modern string template configuration
         const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${targetLatLng.lat},${targetLatLng.lng}`;
         window.open(mapsUrl, '_blank');
     });
