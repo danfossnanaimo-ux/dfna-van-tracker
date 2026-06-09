@@ -124,30 +124,27 @@
 <script src="assets/js/app.js" defer></script>
 
 <script>
-    // Load session
+    // Load session info if it exists, otherwise use defaults
     const session = JSON.parse(localStorage.getItem("dfnaSession") || "{}");
 
-    if (!session.user || !session.numericVan) {
-        // No session → send back to login
-        window.location.href = "login.html";
-    }
-
-    const vanNumber = session.numericVan;
-    const user = session.user;
+    // Fallback defaults so the page never crashes if local storage is empty
+    const vanNumber = session.numericVan || "1"; 
+    const userName = session.user?.name || "Viewer";
+    const userDivision = session.user?.division || "DFNA";
 
     // Update UI Header Content
     document.getElementById("vanInfo").textContent = `Tracking Van ${vanNumber}`;
-    document.getElementById("userInfo").textContent = `${user.name} — ${user.division}`;
+    document.getElementById("userInfo").textContent = `${userName} — ${userDivision}`;
 
-    // Inline global handlers for baseline tracking navigation
+    // Simple clear function if you ever need to reset app variables
     function changeVan() {
         localStorage.removeItem("dfnaSession");
-        window.location.href = "login.html";
+        location.reload();
     }
 
     function logout() {
         localStorage.clear();
-        window.location.href = "login.html";
+        location.reload();
     }
 </script>
 
