@@ -28,11 +28,10 @@
         width: 100%;
         background: rgba(0,0,0,0.85);
         color: white;
-        padding: 10px 15px;
+        padding: 8px 12px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-size: 16px;
         z-index: 9999;
         box-sizing: border-box;
     }
@@ -40,37 +39,53 @@
     #leftControls {
         display: flex;
         align-items: center;
-        gap: 12px;
+        flex-grow: 1;
     }
 
     #vehicleDropdown {
         background: #333;
         color: white;
         border: 1px solid #555;
-        padding: 6px 10px;
-        border-radius: 4px;
+        padding: 8px;
+        border-radius: 6px;
         font-size: 14px;
         cursor: pointer;
+        width: 100%;
+        max-width: 240px;
     }
 
     #actions {
         display: flex;
         gap: 8px;
+        align-items: center;
+        margin-left: 8px;
     }
 
+    /* Icon Button Styles */
     #actions button {
-        padding: 6px 12px;
-        background: #1e88e5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
         border: none;
-        border-radius: 6px;
+        border-radius: 50%;
         color: white;
         cursor: pointer;
-        font-size: 14px;
-        font-weight: 500;
+        padding: 0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        transition: transform 0.1s ease;
     }
 
-    #actions button:hover {
-        background: #1565c0;
+    #actions button:active {
+        transform: scale(0.92);
+    }
+
+    #navButton {
+        background: #43a047 !important;
+    }
+    #navButton:hover {
+        background: #2e7d32 !important;
     }
 
     #resetButton {
@@ -79,11 +94,12 @@
     #resetButton:hover {
         background: #c62828 !important;
     }
-    #navButton {
-        background: #43a047 !important;
-    }
-    #navButton:hover {
-        background: #2e7d32 !important;
+
+    /* Embedded Inline SVG Icon Dimensions */
+    #actions svg {
+        width: 18px;
+        height: 18px;
+        fill: currentColor;
     }
 </style>
 </head>
@@ -98,8 +114,17 @@
     </div>
     
     <div id="actions">
-        <button id="navButton" style="display: none;">Navigate</button>
-        <button id="resetButton" style="display: none;">Reset View</button>
+        <button id="navButton" style="display: none;" title="Navigate">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/>
+            </svg>
+        </button>
+
+        <button id="resetButton" style="display: none;" title="Reset View">
+            <svg viewBox="0 0 24 24">
+                <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4z"/>
+            </svg>
+        </button>
     </div>
 </div>
 
@@ -110,7 +135,6 @@
 <script src="assets/js/app.js" defer></script>
 
 <script>
-    // Load baseline session configuration placeholders to protect historical scripts
     const session = JSON.parse(localStorage.getItem("dfnaSession") || "{}");
     const vanNumber = session.numericVan || "1"; 
     const userName = session.user?.name || "Viewer";
