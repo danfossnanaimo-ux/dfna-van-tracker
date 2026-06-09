@@ -51,7 +51,7 @@ function initLocationTracking() {
             // Custom Blue Pulse Marker for User
             const blueDotIcon = L.divIcon({
                 className: 'user-location-marker',
-                html: '<div class="pulse-dot"></div>',
+                html: '<div class="pulse-dot" style="width:12px; height:12px; background:#1e88e5; border:2px solid white; border-radius:50%; box-shadow:0 0 8px #1e88e5;"></div>',
                 iconSize: [20, 20],
                 iconAnchor: [10, 10]
             });
@@ -107,7 +107,8 @@ function fetchData() {
 }
 
 function updateMarkers(vehicles) {
-    const currentNames = vehicles.map(v => v.name);
+    const getVehicleName = (v) => v.name || v.id || v.vehicle_name || v.label || "Unknown Asset";
+    const currentNames = vehicles.map(v => getVehicleName(v));
 
     // Remove any markers from the map that are no longer in the feed
     Object.keys(markerLookup).forEach(name => {
@@ -118,19 +119,28 @@ function updateMarkers(vehicles) {
     });
 
     vehicles.forEach(vehicle => {
-        const lat = parseFloat(vehicle.latitude);
-        const lng = parseFloat(vehicle.longitude);
-        if (isNaN(lat) || isNaN(lng)) return;
+        // Fallback checks to match any coordinate key shape from the JSON feed
+        const latRaw = vehicle.latitude || vehicle.lat || vehicle.Latitude;
+        const lngRaw = vehicle.longitude || vehicle.lng || vehicle.lon || vehicle.Longitude;
+        
+        const lat = parseFloat(latRaw);
+        const lng = parseFloat(lngRaw);
+        
+        if (isNaN(lat) || isNaN(lng)) {
+            console.warn(`Skipping ${getVehicleName(vehicle)}: Invalid coordinates (${latRaw}, ${lngRaw})`);
+            return;
+        }
 
         const pos = [lat, lng];
-        const vanNumber = vehicle.name.match(/\d+(?!.*\d)/)?.[0] || "";
+        const vehicleName = getVehicleName(vehicle);
+        const vanNumber = vehicleName.match(/\d+(?!.*\d)/)?.[0] || "";
 
         // If filtering is enabled, regulate opacities/visibilities natively
         let opacity = 1;
         let isVisible = true;
 
         if (selectedVehicleName) {
-            if (vehicle.name === selectedVehicleName) {
+            if (vehicleName === selectedVehicleName) {
                 opacity = 1;
             } else {
                 const selMarker = markerLookup[selectedVehicleName];
@@ -145,10 +155,10 @@ function updateMarkers(vehicles) {
             }
         }
 
-        if (!markerLookup[vehicle.name]) {
+        if (!markerLookup[vehicleName]) {
             // New Vehicle Marker Entry
             const marker = L.marker(pos, {
-                icon: buildIcon(vehicle.name, vanNumber),
+                icon: buildIcon(vehicleName, vanNumber),
                 opacity: opacity
             });
             
@@ -156,19 +166,19 @@ function updateMarkers(vehicles) {
 
             marker.bindPopup(`
                 <div style="font-family:system-ui, sans-serif; font-size:13px;">
-                    <strong style="font-size:14px; color:#1e88e5;">${vehicle.name}</strong><br/>
+                    <strong style="font-size:14px; color:#1e88e5;">${vehicleName}</strong><br/>
                     <span style="color:#666;">Driver:</span> ${vehicle.driver || 'Unassigned'}<br/>
                     <span style="color:#666;">Last Updated:</span> ${vehicle.time || 'Just now'}
                 </div>
             `);
             
-            markerLookup[vehicle.name] = marker;
+            markerLookup[vehicleName] = marker;
         } else {
             // Existing Vehicle Update Route
-            const marker = markerLookup[vehicle.name];
+            const marker = markerLookup[vehicleName];
             marker.setLatLng(pos);
             marker.setOpacity(opacity);
-            marker.setIcon(buildIcon(vehicle.name, vanNumber));
+            marker.setIcon(buildIcon(vehicleName, vanNumber));
 
             if (isVisible && !map.hasLayer(marker)) {
                 marker.addTo(map);
@@ -229,7 +239,7 @@ function buildIcon(name, vanNumber) {
             </div>
         `,
         iconSize: [50, 45],
-        iconAnchor: [25, 45] // Anchors the bottom center of the pin directly to the GPS coordinate
+        iconAnchor: [25, 45]
     });
 }
 
@@ -240,31 +250,30 @@ function populateDropdown(vehicles) {
     const dropdown = document.getElementById("vehicleDropdown");
     if (!dropdown) return;
 
-    // Preserve selection context
     const currentSelection = dropdown.value;
+    const getVehicleName = (v) => v.name || v.id || v.vehicle_name || v.label || "Unknown Asset";
 
-    // Clear previous option lists cleanly
     dropdown.innerHTML = '<option value="__show_all__">📱 Show All Vehicles</option>';
 
-    vehicles.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true })).forEach(vehicle => {
+    vehicles.sort((a, b) => getVehicleName(a).localeCompare(getVehicleName(b), undefined, { numeric: true })).forEach(vehicle => {
+        const vehicleName = getVehicleName(vehicle);
         const opt = document.createElement("option");
-        opt.value = vehicle.name;
-        opt.textContent = `${vehicle.name} (${vehicle.driver || 'No Driver'})`;
+        opt.value = vehicleName;
+        opt.textContent = `${vehicleName} (${vehicle.driver || 'No Driver'})`;
         dropdown.appendChild(opt);
     });
 
-    if (currentSelection && vehicles.some(v => v.name === currentSelection)) {
+    if (currentSelection && vehicles.some(v => getVehicleName(v) === currentSelection)) {
         dropdown.value = currentSelection;
     } else if (selectedVehicleName) {
         dropdown.value = selectedVehicleName;
     }
 }
 
-// Dynamic elements binding securely behind target elements hooks verification
+// Dynamic elements binding verified securely
 const vehicleDropdown = document.getElementById("vehicleDropdown");
 if (vehicleDropdown) {
     vehicleDropdown.addEventListener("change", e => {
-        const dropdown = document.getElementById("vehicleDropdown");
         const resetButton = document.getElementById("resetButton");
         const navButton = document.getElementById("navButton");
         const name = e.target.value;
@@ -274,7 +283,7 @@ if (vehicleDropdown) {
             trackingSelectedVehicle = false;
             if (navButton) navButton.style.display = "none";
             if (resetButton) resetButton.style.display = "none";
-            fetchData(); // Reset layout bounds completely
+            fetchData(); 
             return;
         }
 
@@ -283,7 +292,7 @@ if (vehicleDropdown) {
         selectedVehicleName = name;
         trackingSelectedVehicle = true;
 
-        fetchData(); // Trigger instant view map transformation
+        fetchData(); 
     });
 }
 
@@ -294,11 +303,10 @@ if (resetButton) {
         trackingSelectedVehicle = false;
         
         const dropdown = document.getElementById("vehicleDropdown");
-        const resetButtonEl = document.getElementById("resetButton");
         const navButton = document.getElementById("navButton");
 
         if (dropdown) dropdown.value = "__show_all__";
-        if (resetButtonEl) resetButtonEl.style.display = "none";
+        if (resetButton) resetButton.style.display = "none";
         if (navButton) navButton.style.display = "none";
 
         fetchData();
@@ -311,7 +319,7 @@ if (navButton) {
         if (!selectedVehicleName || !markerLookup[selectedVehicleName]) return;
         const targetLatLng = markerLookup[selectedVehicleName].getLatLng();
         
-        // Corrected string interpolation using ${ } instead of 2{ }
+        // Corrected modern string interpolation
         const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${targetLatLng.lat},${targetLatLng.lng}`;
         window.open(mapsUrl, '_blank');
     });
