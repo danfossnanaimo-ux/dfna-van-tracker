@@ -40,10 +40,8 @@ window.addEventListener("load", () => {
 });
 
 function initMap() {
-    const vanVIN = localStorage.getItem("dfnaVIN");
-    
-    // Initialize map container
-    map = L.map("map", { zoomControl: true, minZoom: 5, maxZoom: 20 });
+    // Initialize map container centered roughly near the yard
+    map = L.map("map", { zoomControl: true, minZoom: 5, maxZoom: 20 }).setView([49.0405, -123.8665], 17);
     
     // Add base tile layer
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { 
@@ -134,7 +132,7 @@ function updateMarkers(vehicles) {
             proximityCircle = null;
         }
 
-        if (!selectedVehicleName && Object.keys(markerLookup).length > 0 && !lastKnownUserPos) {
+        if (!selectedVehicleName && Object.keys(markerLookup).length > 0 && !userReady) {
             const group = L.featureGroup(Object.values(markerLookup));
             map.fitBounds(group.getBounds().pad(0.1));
         }
@@ -169,8 +167,8 @@ function populateDropdown(vehicles) {
 }
 
 // Handle changes when a user selects an item from your dropdown UI menu
-function onDropdownChange(e) {
-    const val = e.target.value;
+function onDropdownChange(event) {
+    const val = event.target.value;
     if (val === "__show_all__") {
         selectedVehicleName = null;
     } else {
