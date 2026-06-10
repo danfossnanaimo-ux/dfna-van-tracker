@@ -4,12 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DFNA Van Tracker</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #f0f0f0; font-family: Arial, sans-serif; }
-        #map { width: 100%; height: 100%; z-index: 1; }
+        body, html { 
+            margin: 0; 
+            padding: 0; 
+            height: 100%; 
+            overflow: hidden; 
+            background: #f0f0f0; 
+            font-family: Arial, sans-serif; 
+        }
+        #map { 
+            width: 100%; 
+            height: 100%; 
+            z-index: 1; 
+        }
         
-        /* Dropdown Control Styling overlay */
+        /* Dropdown Control Styling Overlay */
         .control-panel {
             position: absolute;
             top: 10px;
@@ -31,13 +42,25 @@
             outline: none;
             cursor: pointer;
         }
-        #navButton { width: 34px; height: 34px; border-radius: 50%; border: none; background: #fff; font-size: 18px; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+        #navButton { 
+            width: 34px; 
+            height: 34px; 
+            border-radius: 50%; 
+            border: none; 
+            background: #fff; 
+            font-size: 18px; 
+            cursor: pointer; 
+            box-shadow: 0 1px 4px rgba(0,0,0,0.2); 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
 
     <div class="control-panel">
-        <select id="vehicleDropdown" onchange="onDropdownChange(e)">
+        <select id="vehicleDropdown" onchange="onDropdownChange(event)">
             <option value="__show_all__">📱 Show All Vehicles</option>
         </select>
         <button id="navButton" onclick="openNavigation()">🧭</button>
