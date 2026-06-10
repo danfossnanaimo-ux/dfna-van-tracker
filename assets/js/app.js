@@ -194,7 +194,15 @@ function populateDropdown(vehicles) {
 
 function onDropdownChange(event) {
     const val = event.target.value;
-    selectedVehicleName = (val === "__show_all__") ? null : val;
+    const navBtn = document.getElementById("navButton");
+
+    if (val === "__show_all__") {
+        selectedVehicleName = null;
+        if (navBtn) navBtn.style.display = "none"; // Hide map button when clearing selection
+    } else {
+        selectedVehicleName = val;
+        if (navBtn) navBtn.style.display = "flex"; // Show map button when van is chosen
+    }
     fetchLocations(); 
 }
 
@@ -203,15 +211,16 @@ function resetToAllVehicles() {
     selectedVehicleName = null;
     const dropdown = document.getElementById("vehicleDropdown");
     if (dropdown) dropdown.value = "__show_all__";
+    
+    const navBtn = document.getElementById("navButton");
+    if (navBtn) navBtn.style.display = "none"; // Hide map button on reset
+    
     fetchLocations();
 }
 
 // ACTION HANDLER FOR OPENING MAP DIRECTIONS
 function openDirectionsLink() {
-    if (!selectedVehicleName) {
-        alert("Please select a specific vehicle first using the dropdown menu!");
-        return;
-    }
+    if (!selectedVehicleName) return;
 
     const targetedVehicle = latestVehiclesData.find(v => (v.name || v.id || "") === selectedVehicleName);
     if (!targetedVehicle || !targetedVehicle.gps) {
@@ -222,7 +231,7 @@ function openDirectionsLink() {
     const lat = targetedVehicle.gps.latitude;
     const lng = targetedVehicle.gps.longitude;
     
-    // Fixed standard URL mapping logic linking to Google Maps driving endpoints
+    // Fixed standard URL mapping logic linking directly to active Google Maps endpoints
     const navUrl = (userReady && userLat && userLng) 
         ? `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${lat},${lng}&travelmode=driving`
         : `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
