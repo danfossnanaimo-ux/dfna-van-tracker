@@ -222,7 +222,7 @@ function openDirectionsLink() {
     const lat = targetedVehicle.gps.latitude;
     const lng = targetedVehicle.gps.longitude;
     
-    // Fall back cleanly to user position metrics if GPS parameters hold true
+    // Fixed standard URL mapping logic linking to Google Maps driving endpoints
     const navUrl = (userReady && userLat && userLng) 
         ? `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${lat},${lng}&travelmode=driving`
         : `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
