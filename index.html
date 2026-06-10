@@ -60,10 +60,10 @@
 <body>
 
     <div class="control-panel">
-        <select id="vehicleDropdown" onchange="onDropdownChange(event)">
+        <select id="vehicleDropdown">
             <option value="__show_all__">📱 Show All Vehicles</option>
         </select>
-        <button id="navButton" onclick="openNavigation()">🧭</button>
+        <button id="navButton" onclick="typeof openNavigation === 'function' && openNavigation()">🧭</button>
     </div>
 
     <div id="map"></div>
