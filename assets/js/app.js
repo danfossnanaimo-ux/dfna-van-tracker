@@ -72,7 +72,7 @@ function initMap() {
 // -----------------------------------------------------
 function updateMarkers(vehicles) {
     if (!vehicles || !Array.isArray(vehicles)) return;
-    latestVehiclesData = vehicles; // Cache current payload details safely
+    latestVehiclesData = vehicles; 
 
     let baseSelectionMarker = null;
 
@@ -231,7 +231,7 @@ function openDirectionsLink() {
     const lat = targetedVehicle.gps.latitude;
     const lng = targetedVehicle.gps.longitude;
     
-    // Clean string interpolation formatting targeting external Google Maps standard directions engine
+    // Corrected standard format linking directly to Google Maps navigation URLs
     const navUrl = (userReady && userLat && userLng) 
         ? "https://www.google.com/maps/dir/?api=1&origin=" + userLat + "," + userLng + "&destination=" + lat + "," + lng + "&travelmode=driving"
         : "https://www.google.com/maps/search/?api=1&query=" + lat + "," + lng;
