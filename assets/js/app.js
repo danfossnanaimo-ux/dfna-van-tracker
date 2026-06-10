@@ -1,257 +1,148 @@
+// -----------------------------------------------------
+// GLOBAL VARIABLES & CONFIGURATION
+// -----------------------------------------------------
 let map;
-let markerLookup = {};
-let selectedVehicleName = null;
-let trackingSelectedVehicle = false;
+let vanMarker = null;
 let userMarker = null;
-let userAccuracyCircle = null;
-let lastKnownUserPos = null;
+let yardBoundaryLayer = null;
+let proximityCircle = null; // Tracks the 10m dynamic visual circle
 
-// Initialize the application once the DOM is ready
-document.addEventListener("DOMContentLoaded", () => {
-    initMap();
-    initLocationTracking();
-    fetchData();
-    // Poll for fresh coordinates every 30 seconds
-    setInterval(fetchData, 30000);
-});
+let vanLat = null;
+let vanLng = null;
+let userLat = null;
+let userLng = null;
+let vanReady = false;
+let userReady = false;
+let userWatchId = null;
+let selectedVehicleName = null;
+let trackingSelectedVehicle = true;
+let markerLookup = {};
+
+/* YARD BOUNDARY COORDINATES */
+const yardBoundaryCoords = [
+    [49.04099970424841, -123.86796072616107],
+    [49.04104856987419, -123.8678059019293],
+    [49.041067364333145, -123.865328714224],
+    [49.04103729319556, -123.86520256114628],
+    [49.04099594535228, -123.86513948460765],
+    [49.04029302675602, -123.86516242153071],
+    [49.04014266854696, -123.86700310961727],
+    [49.04099970424841, -123.86796072616107]
+];
 
 // -----------------------------------------------------
 // MAP INITIALIZATION
 // -----------------------------------------------------
-function initMap() {
-    // Center initially on Nanaimo area, zoomed out
-    map = L.map('map', {
-        zoomControl: false
-    }).setView([49.1659, -123.9401], 11);
+window.addEventListener("load", () => {
+    requestAnimationFrame(() => {
+        requestAnimationFrame(initMap);
+    });
+});
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '© OpenStreetMap contributors'
+function initMap() {
+    const vanVIN = localStorage.getItem("dfnaVIN");
+    
+    // Initialize map container
+    map = L.map("map", { zoomControl: true, minZoom: 5, maxZoom: 20 });
+    
+    // Add base tile layer
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { 
+        maxZoom: 20 
     }).addTo(map);
 
-    L.control.zoom({ position: 'bottomright' }).addTo(map);
+    // DRAW PERMANENT YARD BOUNDARY
+    yardBoundaryLayer = L.polygon(yardBoundaryCoords, {
+        color: "#ff0000",      // Red outline matching your specifications
+        weight: 3,
+        fillColor: "#ff0000",
+        fillOpacity: 0.15
+    }).addTo(map);
+
+    // Kick off data polling and user tracking
+    fetchLocations(); 
+    setInterval(fetchLocations, 5000); // Poll server every 5s
+    startUserWatch();
 }
 
 // -----------------------------------------------------
-// USER LOCATION TRACKING (GPS)
+// MARKER UPDATES & PROXIMITY HALO LOGIC
 // -----------------------------------------------------
-function initLocationTracking() {
-    if (!navigator.geolocation) {
-        console.warn("Geolocation not supported by this browser.");
-        return;
-    }
-
-    navigator.geolocation.watchPosition(
-        (position) => {
-            const lat = position.coords.latitude;
-            const lng = position.coords.longitude;
-            const accuracy = position.coords.accuracy;
-            lastKnownUserPos = L.latLng(lat, lng);
-
-            // Custom Blue Pulse Marker for User
-            const blueDotIcon = L.divIcon({
-                className: 'user-location-marker',
-                html: '<div class="pulse-dot" style="width:12px; height:12px; background:#1e88e5; border:2px solid white; border-radius:50%; box-shadow:0 0 8px #1e88e5;"></div>',
-                iconSize: [20, 20],
-                iconAnchor: [10, 10]
-            });
-
-            if (!userMarker) {
-                userMarker = L.marker(lastKnownUserPos, { icon: blueDotIcon }).addTo(map);
-                userAccuracyCircle = L.circle(lastKnownUserPos, {
-                    radius: accuracy,
-                    color: '#1e88e5',
-                    fillColor: '#1e88e5',
-                    fillOpacity: 0.15,
-                    weight: 1
-                }).addTo(map);
-            } else {
-                userMarker.setLatLng(lastKnownUserPos);
-                userAccuracyCircle.setLatLng(lastKnownUserPos);
-                userAccuracyCircle.setRadius(accuracy);
-            }
-
-            // Continuous camera tracking loop if a specific van is isolated
-            if (trackingSelectedVehicle && selectedVehicleName) {
-                const vehicleMarker = markerLookup[selectedVehicleName];
-                if (vehicleMarker) {
-                    zoomToUserAndVehicle(vehicleMarker.getLatLng());
-                }
-            }
-        },
-        (error) => {
-            console.warn("Error tracking user location:", error.message);
-        },
-        {
-            enableHighAccuracy: true,
-            maximumAge: 10000,
-            timeout: 27000
-        }
-    );
-}
-
-// -----------------------------------------------------
-// DATA FETCHING & MARKER UPDATE
-// -----------------------------------------------------
-function fetchData() {
-    fetch('data/locations.json', { cache: 'no-store' })
-        .then(response => {
-            if (!response.ok) throw new Error("HTTP error " + response.status);
-            return response.json();
-        })
-        .then(data => {
-            // Convert data object to an array format if needed, handling both formats seamlessly
-            const vehicleList = Array.isArray(data) 
-                ? data 
-                : Object.keys(data).map(key => ({ name: key, ...data[key] }));
-
-            updateMarkers(vehicleList);
-            populateDropdown(vehicleList);
-        })
-        .catch(err => console.error("Error loading vehicle data:", err));
-}
-
 function updateMarkers(vehicles) {
-    const getVehicleName = (v) => v.name || v.id || v.vehicle_name || v.label || "Unknown Asset";
-    const currentNames = vehicles.map(v => getVehicleName(v));
-
-    // Remove any markers from the map that are no longer in the feed
-    Object.keys(markerLookup).forEach(name => {
-        if (!currentNames.includes(name)) {
-            map.removeLayer(markerLookup[name]);
-            delete markerLookup[name];
-        }
-    });
-
+    // Basic marker rendering step loop
     vehicles.forEach(vehicle => {
-        // Look inside vehicle.gps if it exists, otherwise fall back to top level
-        const gpsData = vehicle.gps || {};
+        const vehicleName = vehicle.name || vehicle.id || "Unknown Asset";
+        const pos = [vehicle.gps.latitude, vehicle.gps.longitude];
         
-        const latRaw = gpsData.latitude || gpsData.lat || vehicle.latitude || vehicle.lat;
-        const lngRaw = gpsData.longitude || gpsData.lng || gpsData.lon || vehicle.longitude || vehicle.lon;
-        
-        const lat = parseFloat(latRaw);
-        const lng = parseFloat(lngRaw);
-        
-        if (isNaN(lat) || isNaN(lng)) {
-            console.warn(`Skipping ${getVehicleName(vehicle)}: Invalid coordinates (${latRaw}, ${lngRaw})`);
-            return;
-        }
-
-        const pos = [lat, lng];
-        const vehicleName = getVehicleName(vehicle);
-        const vanNumber = vehicleName.match(/\d+(?!.*\d)/)?.[0] || "";
-
-        // If filtering is enabled, regulate opacities/visibilities natively
-        let opacity = 1;
+        let opacity = 1.0;
         let isVisible = true;
 
+        // Apply proximity isolation rules if a specific asset is selected
         if (selectedVehicleName) {
             if (vehicleName === selectedVehicleName) {
-                opacity = 1;
+                opacity = 1.0;
             } else {
                 const selMarker = markerLookup[selectedVehicleName];
                 if (selMarker) {
                     const dist = selMarker.getLatLng().distanceTo(L.latLng(pos));
                     if (dist <= 10) {
-                        opacity = 0.3; // ghost adjacent vehicles within 10 meters
+                        opacity = 0.3; // Dim background noise nearby
                     } else {
-                        isVisible = false; // eliminate external noise completely
+                        isVisible = false; // Hide completely if further than 10m
                     }
                 }
             }
         }
 
-        if (!markerLookup[vehicleName]) {
-            // New Vehicle Marker Entry
-            const marker = L.marker(pos, {
-                icon: buildIcon(vehicleName, vanNumber),
-                opacity: opacity
-            });
-            
-            if (isVisible) marker.addTo(map);
-
-            marker.bindPopup(`
-                <div style="font-family:system-ui, sans-serif; font-size:13px;">
-                    <strong style="font-size:14px; color:#1e88e5;">${vehicleName}</strong><br/>
-                    <span style="color:#666;">Driver:</span> ${vehicle.driver || 'Unassigned'}<br/>
-                    <span style="color:#666;">Last Updated:</span> ${gpsData.dateTime || vehicle.time || 'Just now'}
-                </div>
-            `);
-            
-            markerLookup[vehicleName] = marker;
+        // Manage marker visibility on map layer
+        if (isVisible) {
+            if (!markerLookup[vehicleName]) {
+                markerLookup[vehicleName] = L.marker(pos, { icon: vanIcon(vehicleName.split(" ")[0]) }).addTo(map);
+            } else {
+                markerLookup[vehicleName].setLatLng(pos);
+            }
+            markerLookup[vehicleName].setOpacity(opacity);
         } else {
-            // Existing Vehicle Update Route
-            const marker = markerLookup[vehicleName];
-            marker.setLatLng(pos);
-            marker.setOpacity(opacity);
-            marker.setIcon(buildIcon(vehicleName, vanNumber));
-
-            if (isVisible && !map.hasLayer(marker)) {
-                marker.addTo(map);
-            } else if (!isVisible && map.hasLayer(marker)) {
-                map.removeLayer(marker);
+            if (markerLookup[vehicleName]) {
+                map.removeLayer(markerLookup[vehicleName]);
+                delete markerLookup[vehicleName];
             }
         }
     });
 
-    // Auto-adjust zoom bounding box if active selection context exists
+    // DYNAMIC 10m RADIUS DRAW LOGIC
     if (trackingSelectedVehicle && selectedVehicleName && markerLookup[selectedVehicleName]) {
-        zoomToUserAndVehicle(markerLookup[selectedVehicleName].getLatLng());
-    } else if (!selectedVehicleName && Object.keys(markerLookup).length > 0 && !lastKnownUserPos) {
-        // Fallback default frame bound for initial payload load
-        const group = L.featureGroup(Object.values(markerLookup));
-        map.fitBounds(group.getBounds().pad(0.1));
+        const selectedLatLng = markerLookup[selectedVehicleName].getLatLng();
+        
+        if (!proximityCircle) {
+            proximityCircle = L.circle(selectedLatLng, {
+                radius: 10,         // Rigid 10m physical limit
+                color: '#e53935',   // Crimson halo edge
+                fillColor: '#e53935',
+                fillOpacity: 0.1,
+                weight: 1.5,
+                dashArray: '5, 5'   // Dashed border styling
+            }).addTo(map);
+        } else {
+            proximityCircle.setLatLng(selectedLatLng);
+        }
+        
+        zoomToUserAndVehicle(selectedLatLng);
+    } else {
+        // Clear active proximity circle if dropdown selection is removed
+        if (proximityCircle) {
+            map.removeLayer(proximityCircle);
+            proximityCircle = null;
+        }
+
+        if (!selectedVehicleName && Object.keys(markerLookup).length > 0 && !lastKnownUserPos) {
+            const group = L.featureGroup(Object.values(markerLookup));
+            map.fitBounds(group.getBounds().pad(0.1));
+        }
     }
 }
 
-// Custom DivIcon UI Pipeline to render explicit Van numbering badges above assets
-function buildIcon(name, vanNumber) {
-    const isSelected = (name === selectedVehicleName);
-    const pinColor = isSelected ? '#e53935' : '#1e88e5';
-    
-    return L.divIcon({
-        className: 'custom-van-marker',
-        html: `
-            <div style="
-                display: flex; 
-                flex-direction: column; 
-                align-items: center; 
-                justify-content: center;
-                width: 50px;
-                height: 45px;
-            ">
-                <div style="
-                    background: ${pinColor};
-                    color: white;
-                    font-weight: bold;
-                    font-size: 11px;
-                    font-family: system-ui, sans-serif;
-                    padding: 2px 6px;
-                    border-radius: 8px;
-                    border: 1px solid white;
-                    white-space: nowrap;
-                    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-                    line-height: 12px;
-                ">${vanNumber ? 'Van ' + vanNumber : 'Asset'}</div>
-                <div style="
-                    width: 8px;
-                    height: 8px;
-                    background: ${pinColor};
-                    border: 1px solid white;
-                    border-radius: 50%;
-                    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
-                    margin-top: 2px;
-                "></div>
-            </div>
-        `,
-        iconSize: [50, 45],
-        iconAnchor: [25, 45]
-    });
-}
-
 // -----------------------------------------------------
-// DROPDOWN FILTERING + 10m PROXIMITY LOGIC
+// DROPDOWN FILTERING
 // -----------------------------------------------------
 function populateDropdown(vehicles) {
     const dropdown = document.getElementById("vehicleDropdown");
@@ -277,81 +168,65 @@ function populateDropdown(vehicles) {
     }
 }
 
-// Dynamic elements binding verified securely
-const vehicleDropdown = document.getElementById("vehicleDropdown");
-if (vehicleDropdown) {
-    vehicleDropdown.addEventListener("change", e => {
-        const resetButton = document.getElementById("resetButton");
-        const navButton = document.getElementById("navButton");
-        const name = e.target.value;
-
-        if (name === "__show_all__") {
-            selectedVehicleName = null;
-            trackingSelectedVehicle = false;
-            if (navButton) navButton.style.display = "none";
-            if (resetButton) resetButton.style.display = "none";
-            fetchData(); 
-            return;
-        }
-
-        if (resetButton) resetButton.style.display = "block";
-        if (navButton) navButton.style.display = "block";
-        selectedVehicleName = name;
-        trackingSelectedVehicle = true;
-
-        fetchData(); 
-    });
-}
-
-const resetButton = document.getElementById("resetButton");
-if (resetButton) {
-    resetButton.addEventListener("click", () => {
+// Handle changes when a user selects an item from your dropdown UI menu
+function onDropdownChange(e) {
+    const val = e.target.value;
+    if (val === "__show_all__") {
         selectedVehicleName = null;
-        trackingSelectedVehicle = false;
-        
-        const dropdown = document.getElementById("vehicleDropdown");
-        const navButton = document.getElementById("navButton");
-
-        if (dropdown) dropdown.value = "__show_all__";
-        if (resetButton) resetButton.style.display = "none";
-        if (navButton) navButton.style.display = "none";
-
-        fetchData();
-    });
-}
-
-const navButton = document.getElementById("navButton");
-if (navButton) {
-    navButton.addEventListener("click", () => {
-        if (!selectedVehicleName || !markerLookup[selectedVehicleName]) return;
-        const targetLatLng = markerLookup[selectedVehicleName].getLatLng();
-        
-        const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${targetLatLng.lat},${targetLatLng.lng}`;
-        window.open(mapsUrl, '_blank');
-    });
-}
-
-// Camera control helper targeting adaptive boundaries boxes
-function zoomToUserAndVehicle(vehicleLatLng) {
-    if (lastKnownUserPos) {
-        const bounds = L.latLngBounds([lastKnownUserPos, vehicleLatLng]);
-        map.fitBounds(bounds.pad(0.25), { maxZoom: 17, animate: true });
     } else {
-        map.setView(vehicleLatLng, 16, { animate: true });
+        selectedVehicleName = val;
+    }
+    fetchLocations(); // Immediately recalculate maps visual layer representation
+}
+
+// -----------------------------------------------------
+// HELPER MAP UTILITIES (API FALLBACKS)
+// -----------------------------------------------------
+function fetchLocations() {
+    fetch("/dfna-van-tracker-dev/data/locations.json")
+        .then(res => res.json())
+        .then(data => {
+            populateDropdown(data);
+            updateMarkers(data);
+        })
+        .catch(err => console.error("Error pooling vehicle assets:", err));
+}
+
+function startUserWatch() {
+    if (!navigator.geolocation) return;
+    userWatchId = navigator.geolocation.watchPosition(pos => {
+        userLat = pos.coords.latitude;
+        userLng = pos.coords.longitude;
+        if (!userMarker) {
+            userMarker = L.marker([userLat, userLng], { icon: userIcon() }).addTo(map);
+        } else {
+            userMarker.setLatLng([userLat, userLng]);
+        }
+        userReady = true;
+    }, err => {
+        console.warn("User Location tracking failed:", err);
+    }, { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 });
+}
+
+function zoomToUserAndVehicle(selectedLatLng) {
+    if (userReady && userLat && userLng) {
+        const bounds = L.latLngBounds([selectedLatLng, [userLat, userLng]]);
+        map.fitBounds(bounds.pad(0.2));
+    } else {
+        map.setView(selectedLatLng, 18);
     }
 }
 
-function showAllVehicles() {
-    Object.keys(markerLookup).forEach(vName => {
-        const marker = markerLookup[vName];
-        marker.setOpacity(1);
-        const vanNumber = vName.match(/\d+(?!.*\d)/)?.[0] || "";
-        marker.setIcon(buildIcon(vName, vanNumber));
-        if (!map.hasLayer(marker)) marker.addTo(map);
+function vanIcon(number) {
+    return L.divIcon({
+        html: `<div style="width:34px;height:34px;border-radius:50%;background:#1976d2;color:white;font-weight:bold;display:flex;align-items:center;justify-content:center;font-size:14px;border:2px solid white;box-shadow:0 0 6px rgba(0,0,0,0.4);">${number}</div>`,
+        className: "", iconSize: [34, 34]
     });
-    
-    if (Object.keys(markerLookup).length > 0) {
-        const group = L.featureGroup(Object.values(markerLookup));
-        map.fitBounds(group.getBounds().pad(0.1));
-    }
+}
+
+function userIcon() {
+    return L.divIcon({
+        html: '<div style="position:relative;width:34px;height:34px;"><div style="position:absolute;top:50%;left:50%;width:20px;height:20px;background:#00e676;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 12px rgba(0,230,118,0.9);"></div></div>',
+        className: "", iconSize: [34, 34]
+    });
 }
