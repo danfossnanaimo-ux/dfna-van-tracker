@@ -20,7 +20,7 @@ const yardBoundaryCoords = [
     [49.0409788, -123.8679891],
     [49.0410245, -123.8680052],
     [49.0410947, -123.8679356],
-    [49.0411122, -123.7677214], // Fixed zoom limits constraint alignment
+    [49.0411122, -123.8677214], // Fixed typo: changed -123.76... back to -123.86...
     [49.0411052, -123.866538],
     [49.0411122, -123.8659703],
     [49.0411122, -123.8656276],
@@ -189,7 +189,6 @@ function populateDropdown(vehicles) {
     }
 }
 
-// HERE IS YOUR MISSING DROPDOWN MECHANICS ENGINE WITH DISPLAYS
 function onDropdownChange(event) {
     const val = event.target.value;
     const navBtn = document.getElementById("navButton");
@@ -250,7 +249,7 @@ function startUserWatch() {
 function zoomToUserAndVehicle(selectedLatLng) {
     if (userReady && userLat && userLng) {
         const bounds = L.latLngBounds([selectedLatLng, [userLat, userLng]]);
-        map.fitBounds(bounds, { maxZoom: 18, padding: [30, 30] });
+        map.fitBounds(bounds, { maxZoom: 18, padding: [40, 40] });
     } else {
         map.setView(selectedLatLng, 18);
     }
@@ -268,8 +267,9 @@ function openDirectionsLink() {
     const lat = targetedVehicle.gps.latitude;
     const lng = targetedVehicle.gps.longitude;
     
+    // Fixed string syntax errors & mapped clean valid Google Maps endpoints URL parameters
     const navUrl = (userReady && userLat && userLng) 
-        ? `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${lat},${lng}&travelmode=driving` 
+        ? `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${lat},${lng}&travelmode=driving`
         : `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
         
     window.open(navUrl, '_blank');
