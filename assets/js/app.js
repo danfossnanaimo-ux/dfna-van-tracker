@@ -20,7 +20,7 @@ const yardBoundaryCoords = [
     [49.0409788, -123.8679891],
     [49.0410245, -123.8680052],
     [49.0410947, -123.8679356],
-    [49.0411122, -123.8677214], // Fixed typo: changed -123.76... back to -123.86...
+    [49.0411122, -123.8677214],
     [49.0411052, -123.866538],
     [49.0411122, -123.8659703],
     [49.0411122, -123.8656276],
@@ -41,11 +41,11 @@ window.addEventListener("load", () => {
 });
 
 function initMap() {
-    // Center map view on your yard perimeter coordinates
-    map = L.map("map", { zoomControl: true, minZoom: 5, maxZoom: 19 }).setView([49.0405, -123.8665], 17);
+    // Generate Leaflet structural view frame centered broadly on the yard
+    map = L.map("map", { zoomControl: true, minZoom: 5, maxZoom: 18 }).setView([49.0405, -123.8665], 17);
     
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { 
-        maxZoom: 19 
+        maxZoom: 18 
     }).addTo(map);
 
     // RENDER THE YARD POLYNOMIAL OVERLAY MAPPING BOUNDS
@@ -56,7 +56,7 @@ function initMap() {
         fillOpacity: 0.12
     }).addTo(map);
 
-    // ATTACH EVENT LISTENERS SAFELY
+    // BIND THE UI EVENT LISTENERS DIRECTLY & CLEANLY
     const dropdown = document.getElementById("vehicleDropdown");
     if (dropdown) dropdown.addEventListener("change", onDropdownChange);
 
@@ -67,7 +67,7 @@ function initMap() {
     if (navBtn) navBtn.addEventListener("click", openDirectionsLink);
 
     fetchLocations(); 
-    setInterval(fetchLocations, 5000); 
+    setInterval(fetchLocations, 5000); // Continuous polling sync every 5 seconds
     startUserWatch();
 }
 
@@ -247,7 +247,11 @@ function startUserWatch() {
 }
 
 function zoomToUserAndVehicle(selectedLatLng) {
-    if (userReady && userLat && userLng) {
+    // If the user marker is farther than 500 meters from the yard, do not include it in bounds calculations
+    const yardCenter = L.latLng([49.0405, -123.8665]);
+    const isUserNearby = userReady && userLat && userLng && (yardCenter.distanceTo(L.latLng([userLat, userLng])) < 500);
+
+    if (isUserNearby) {
         const bounds = L.latLngBounds([selectedLatLng, [userLat, userLng]]);
         map.fitBounds(bounds, { maxZoom: 18, padding: [40, 40] });
     } else {
@@ -267,7 +271,7 @@ function openDirectionsLink() {
     const lat = targetedVehicle.gps.latitude;
     const lng = targetedVehicle.gps.longitude;
     
-    // Fixed string syntax errors & mapped clean valid Google Maps endpoints URL parameters
+    // Completely fixed template literal strings mapping standard Google Maps parameters
     const navUrl = (userReady && userLat && userLng) 
         ? `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${lat},${lng}&travelmode=driving`
         : `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
