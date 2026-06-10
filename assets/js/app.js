@@ -13,7 +13,7 @@ let userWatchId = null;
 let selectedVehicleName = null;
 let trackingSelectedVehicle = true;
 let markerLookup = {};
-let latestVehiclesData = []; // Caches layout elements for directions parsing
+let latestVehiclesData = []; 
 
 /* SPECIFIC YARD BOUNDARY COORDINATES PERIMETER */
 const yardBoundaryCoords = [
@@ -198,10 +198,10 @@ function onDropdownChange(event) {
 
     if (val === "__show_all__") {
         selectedVehicleName = null;
-        if (navBtn) navBtn.style.display = "none"; // Hide map button when clearing selection
+        if (navBtn) navBtn.style.display = "none"; 
     } else {
         selectedVehicleName = val;
-        if (navBtn) navBtn.style.display = "flex"; // Show map button when van is chosen
+        if (navBtn) navBtn.style.display = "flex"; 
     }
     fetchLocations(); 
 }
@@ -213,7 +213,7 @@ function resetToAllVehicles() {
     if (dropdown) dropdown.value = "__show_all__";
     
     const navBtn = document.getElementById("navButton");
-    if (navBtn) navBtn.style.display = "none"; // Hide map button on reset
+    if (navBtn) navBtn.style.display = "none"; 
     
     fetchLocations();
 }
@@ -231,10 +231,10 @@ function openDirectionsLink() {
     const lat = targetedVehicle.gps.latitude;
     const lng = targetedVehicle.gps.longitude;
     
-    // Fixed standard URL mapping logic linking directly to active Google Maps endpoints
+    // Clean string interpolation formatting targeting external Google Maps standard directions engine
     const navUrl = (userReady && userLat && userLng) 
-        ? `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${lat},${lng}&travelmode=driving`
-        : `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+        ? "https://www.google.com/maps/dir/?api=1&origin=" + userLat + "," + userLng + "&destination=" + lat + "," + lng + "&travelmode=driving"
+        : "https://www.google.com/maps/search/?api=1&query=" + lat + "," + lng;
         
     window.open(navUrl, '_blank');
 }
