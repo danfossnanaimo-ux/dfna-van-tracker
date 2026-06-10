@@ -247,11 +247,7 @@ function startUserWatch() {
 }
 
 function zoomToUserAndVehicle(selectedLatLng) {
-    // If the user marker is farther than 500 meters from the yard, do not include it in bounds calculations
-    const yardCenter = L.latLng([49.0405, -123.8665]);
-    const isUserNearby = userReady && userLat && userLng && (yardCenter.distanceTo(L.latLng([userLat, userLng])) < 500);
-
-    if (isUserNearby) {
+    if (userReady && userLat && userLng) {
         const bounds = L.latLngBounds([selectedLatLng, [userLat, userLng]]);
         map.fitBounds(bounds, { maxZoom: 18, padding: [40, 40] });
     } else {
@@ -271,10 +267,9 @@ function openDirectionsLink() {
     const lat = targetedVehicle.gps.latitude;
     const lng = targetedVehicle.gps.longitude;
     
-    // Completely fixed template literal strings mapping standard Google Maps parameters
     const navUrl = (userReady && userLat && userLng) 
-        ? `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${lat},${lng}&travelmode=driving`
-        : `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+        ? "https://www.google.com/maps/dir/?api=1&origin=" + userLat + "," + userLng + "&destination=" + lat + "," + lng + "&travelmode=driving"
+        : "https://www.google.com/maps/search/?api=1&query=" + lat + "," + lng;
         
     window.open(navUrl, '_blank');
 }
